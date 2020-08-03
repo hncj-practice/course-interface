@@ -12,6 +12,23 @@
 </head>
 <body>
 
-<a href="hello">测试链接</a>
+<form method="post" action="student/login">
+    <span>
+        <jsp:text>学号</jsp:text>
+        <input type="text" name="username" placeholder="请输入学号" value="081417162">
+    </span><br>
+    <span>
+        <jsp:text>密码</jsp:text>
+        <input type="text" name="password" placeholder="请输入密码" value="000000">
+    </span><br>
+
+    <span>
+        <input type="submit" value="提交">
+    </span>
+
+
+</form>
+
+<a href="student/login">测试链接</a>
 </body>
 </html>

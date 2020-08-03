@@ -14,12 +14,13 @@ import java.util.List;
 public class testMybatis {
     public static void main(String[] args) {
         System.out.println("start");
-        InputStream in = Resources.class.getResourceAsStream("/mybatis-config.xml");
-        System.out.println(in);
-        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-        SqlSessionFactory factory = builder.build(in);
+//        InputStream in = Resources.class.getResourceAsStream("/mybatis-config.xml");
+//        System.out.println(in);
+//        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+//        SqlSessionFactory factory = builder.build(in);
 
-        SqlSession session = factory.openSession();
+//        SqlSession session = factory.openSession();
+        SqlSession session=util.MyBatis.getSession();
 
         IStudentDao studentDao=session.getMapper(IStudentDao.class);
 
@@ -31,10 +32,10 @@ public class testMybatis {
         }
 
         session.close();
-        try {
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            in.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }
