@@ -29,6 +29,5 @@
 
 </form>
 
-<a href="student/login">测试链接</a>
 </body>
 </html>
