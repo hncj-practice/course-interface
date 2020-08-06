@@ -25,5 +25,7 @@
     <!-- 映射配置文件 -->
     <mappers>
         <mapper class="dao.IStudentDao"/>
+        <mapper class="dao.ITeacherDao"/>
+        <mapper class="dao.IAdminDao"/>
     </mappers>
 </configuration>
