@@ -1,7 +1,9 @@
 package controller;
 
+import dao.ICourseDao;
 import dao.ITeacherDao;
 import domain.Account;
+import domain.Course;
 import domain.Student;
 import domain.Teacher;
 import org.apache.ibatis.session.SqlSession;
@@ -17,22 +19,19 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "/teacher")
 public class TeacherController {
-        @RequestMapping(path = "/login",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+        @RequestMapping(path = "/teach",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
         @ResponseBody
-        public APIResult StudentLogin(Account account){
+        public APIResult StudentLogin(String tno){
             //查询数据库
             SqlSession session=util.MyBatis.getSession();
-            ITeacherDao teacherDao=session.getMapper(ITeacherDao.class);
-            Teacher teacher=teacherDao.findByTnoAndPwd(account.getUsername(),account.getPassword());
-//            List<Teacher> teacher=teacherDao.findAll();
-
-            if(teacher!=null){
-                System.out.println(teacher.toString());
-//                for(Teacher t:teacher)
-//                    System.out.println(t.toString());
-                return APIResult.createOk("登录成功",teacher);
+            ICourseDao iCourseDao=session.getMapper(ICourseDao.class);
+            List<Course> courses=iCourseDao.findTeachCourse(tno);
+            if(!courses.isEmpty()){
+                for(Course course:courses)
+                    System.out.println(course.toString());
+                return APIResult.createOk("查询成功",courses);
             }else{
-                return APIResult.createNg("用户名或密码错误");
+                return APIResult.createNg("没有授课记录，请先添加课程");
             }
         }
     }

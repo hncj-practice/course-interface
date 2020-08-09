@@ -49,21 +49,4 @@ public class StudentController {
 //        return APIResult.createOk(student);
     }
 
-    @RequestMapping(path = "/add",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
-    @ResponseBody
-    public APIResult StudentAdd(Student student){
-        //查询数据库
-        SqlSession session=util.MyBatis.getSession();
-        IStudentDao studentDao=session.getMapper(IStudentDao.class);
-        int status=studentDao.addStudent(student);
-        session.commit();
-        System.out.println(status+"###");
-        session.close();
-        if(status==1){
-            System.out.println(student.toString());
-            return APIResult.createOk("添加成功",student);
-        }else{
-            return APIResult.createNg("添加失败");
-        }
-    }
 }

@@ -20,17 +20,23 @@ public interface IStudentDao {
     @Select("select * from xs")
     List<Student> findAll();
 
+
+    //学生登录
     @Select("select * from xs where xs_xh=#{username} and xs_mm=#{password}")
     @ResultMap(value = {"studentMap"})
     Student findBySnoAndPwd(@Param("username") String username,@Param("password") String password);
 
-//    @Insert("insert into xs values(#{student.sno},#{student.cla},#{student.pwd},#{student.name},#{student.sex},#{student.email},#{student.avatar},#{student.status})")
+    //添加学生
     @Insert("insert into xs(xs_xh,bj_bh,xs_mm,xs_xm,xs_xb,xs_yx,xs_tx,xs_zt) values(#{sno},#{cla},#{pwd},#{name},#{sex},#{email},#{avatar},#{status})")
-    int addStudent(Student student);
-//    @Insert("insert into xs values(#{sno},#{cla},#{pwd},#{name},#{sex},#{email},#{avatar},#{status})")
-//    void addStudent(@Param("sno") String sno,@Param("cla") String cla,
-//                    @Param("pwd") String pwd,@Param("name") String name,
-//                    @Param("sex") String sex,@Param("email") String email,
-//                    @Param("avatar") String avatar,@Param("status") String status);
-//    List<Movie> findZ3();
+    void addStudent(Student student);
+
+    //删除学生
+//    @Delete("delete from xs where xs_xh=#{username} and xs_mm=#{password}")
+    @Delete("delete from xs where xs_xh=#{sno} and #{admin_pwd}=(select gly_mm from gly where gly_zh=#{admin_user} )")
+    int deleteStudent(@Param("sno") String sno,@Param("admin_user") String admin_user,@Param("admin_pwd") String admin_pwd);
+
+    //重置学生密码
+    @Update("update xs set xs_mm=#{newpwd} where xs_xh=#{username} and xs_mm=#{oldpwd}")
+    int updatePwd(@Param("username") String username,@Param("oldpwd") String oldpwd,@Param("newpwd") String newpwd);
+
 }
