@@ -1,5 +1,6 @@
 package dao;
 
+import domain.Chapter;
 import domain.Course;
 import domain.Teacher;
 import org.apache.ibatis.annotations.*;
@@ -27,4 +28,15 @@ public interface ICourseDao {
             "group by kc_bh")
     @ResultMap(value = {"courseMap"})
     List<Course> findTeachCourse(@Param("tno") String tno);
+
+    //查询某课程的所有章节
+    @Results(id = "chapterMap",value = {
+            @Result(column = "zj_bh",property = "chapterid",id = true),
+            @Result(column = "kc_bh",property = "cno"),
+            @Result(column = "zj_mc",property = "chaptername")
+    })
+    @Select("select zj_bh,kc_bh,zj_mc\n" +
+            "from zj\n" +
+            "where zj.kc_bh=#{cno}")
+    List<Chapter> findChapterByCno(@Param("cno") String cno);
 }

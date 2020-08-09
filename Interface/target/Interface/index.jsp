@@ -47,6 +47,12 @@
 <a href="account/resetpwd?username=test&password=000000&newpwd=newpwd!!!&type=3">更新管理员密码get</a>
 <br>
 <a href="teacher/teach?tno=888888888">查询教师所授课程</a>
+<a href="course/chapter?cno=1">查询某课程所有章节</a>
+<a href="chapter/problem?chapterid=1">查询某章节所有题目</a>
+<br>
+<a href="chapter/addchapter?cid=1&chaptername=第九九九章">添加章节</a>
+<a href="chapter/addproblem?chapterid=1&ptype=3&question=gfhfg说的话上方谷&panswer=X">添加问题</a>
+
 
 </body>
 </html>
