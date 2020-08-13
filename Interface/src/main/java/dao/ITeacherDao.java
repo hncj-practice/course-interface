@@ -1,5 +1,6 @@
 package dao;
 
+import domain.Clase;
 import domain.Course;
 import domain.Student;
 import domain.Teacher;
@@ -39,4 +40,6 @@ public interface ITeacherDao {
     //重置教师密码
     @Update("update js set js_mm=#{newpwd} where js_gh=#{username} and js_mm=#{oldpwd}")
     int updatePwd(@Param("username") String username,@Param("oldpwd") String oldpwd,@Param("newpwd") String newpwd);
+
+
 }

@@ -2,6 +2,7 @@ package dao;
 
 import domain.Chapter;
 import domain.Course;
+import domain.Semester;
 import domain.Teacher;
 import org.apache.ibatis.annotations.*;
 
@@ -39,4 +40,13 @@ public interface ICourseDao {
             "from zj\n" +
             "where zj.kc_bh=#{cno}")
     List<Chapter> findChapterByCno(@Param("cno") String cno);
+
+
+    //添加课程
+    @Insert("insert into kc(xq_bh,js_gh,kc_mc,kc_fm,kc_zt) values(#{semester},#{tno},#{cname},#{coverimg},#{status})")
+    void addCourse(Course course);
+
+    //删除课程
+    @Delete("delete from kc where kc_bh=#{courseid}")
+    int delCourse(@Param("courseid") String courseid);
 }

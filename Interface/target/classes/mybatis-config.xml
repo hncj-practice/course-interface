@@ -29,5 +29,7 @@
         <mapper class="dao.IAdminDao"/>
         <mapper class="dao.ICourseDao"/>
         <mapper class="dao.IChapterDao"/>
+        <mapper class="dao.IClassDao"/>
+        <mapper class="dao.ISemesterDao"/>
     </mappers>
 </configuration>

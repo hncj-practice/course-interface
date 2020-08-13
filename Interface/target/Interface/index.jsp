@@ -52,7 +52,14 @@
 <br>
 <a href="chapter/addchapter?cid=1&chaptername=第九九九章">添加章节</a>
 <a href="chapter/addproblem?chapterid=1&ptype=3&question=gfhfg说的话上方谷&panswer=X">添加问题</a>
-
-
+<br>
+<a href="class/addclass?classid=0814172&classname=计算机科学与技术二班">添加班级</a>
+<a href="class/delclass?classid=0814172">删除班级</a>
+<br>
+<a href="semester/addsemester?semesterid=2020_02&semestername=2019-2020学年第二学期">添加学期</a>
+<a href="semester/delsemester?semesterid=2020_02">删除学期</a>
+<br>
+<a href="course/addcourse?semester=2020_09&tno=888888888&cname=人工智能&coverimg=https://i0.hdslb.com/bfs/sycp/creative_img/202008/26449dd779b45fca0fec993f66de6192.png&status=1">添加课程</a>
+<a href="course/delcourse?courseid=6">删除课程</a>
 </body>
 </html>
