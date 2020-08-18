@@ -31,5 +31,9 @@
         <mapper class="dao.IChapterDao"/>
         <mapper class="dao.IClassDao"/>
         <mapper class="dao.ISemesterDao"/>
+        <mapper class="dao.ITopicDao"/>
+        <mapper class="dao.ICommentDao"/>
+        <mapper class="dao.IProblemDao"/>
+        <mapper class="dao.IDataDao"/>
     </mappers>
 </configuration>

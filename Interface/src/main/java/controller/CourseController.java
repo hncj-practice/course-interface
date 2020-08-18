@@ -1,10 +1,8 @@
 package controller;
 
 import dao.ICourseDao;
-import dao.ISemesterDao;
 import domain.Chapter;
 import domain.Course;
-import domain.Semester;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

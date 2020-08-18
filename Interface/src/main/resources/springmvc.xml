@@ -29,6 +29,11 @@
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
         <property name="serializationInclusion" value="NON_NULL"/>
     </bean>
+
+    <!--    开启跨域访问-->
+    <mvc:cors>
+        <mvc:mapping path="/**"/>
+    </mvc:cors>
     <!--    开启springmvc框架注解的支持-->
     <mvc:annotation-driven>
         <mvc:message-converters>

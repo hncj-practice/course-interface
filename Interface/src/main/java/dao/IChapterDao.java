@@ -21,9 +21,11 @@ public interface IChapterDao {
     @Insert("insert into zj(kc_bh,zj_mc) values(#{cid},#{chaptername})")
     void addChapter(Chapter chapter);
 
-    //创建章节
-    @Insert("insert into tm(zj_bh,tmlx_bh,tm_tg,tm_da) values(#{chapterid},#{ptype},#{question},#{panswer})")
-    void addProblem(Problem problem);
+    //删除章节
+    @Delete("delete from zj where zj_bh=#{chapterid}")
+    int delChapter(@Param("chapterid") String chapterid);
+
+
 
 
     //查询指定章节中的所有题目

@@ -51,7 +51,7 @@
 <a href="chapter/problem?chapterid=1">查询某章节所有题目</a>
 <br>
 <a href="chapter/addchapter?cid=1&chaptername=第九九九章">添加章节</a>
-<a href="chapter/addproblem?chapterid=1&ptype=3&question=gfhfg说的话上方谷&panswer=X">添加问题</a>
+<a href="chapter/delchapter?chapterid=10">删除章节</a>
 <br>
 <a href="class/addclass?classid=0814172&classname=计算机科学与技术二班">添加班级</a>
 <a href="class/delclass?classid=0814172">删除班级</a>
@@ -61,5 +61,17 @@
 <br>
 <a href="course/addcourse?semester=2020_09&tno=888888888&cname=人工智能&coverimg=https://i0.hdslb.com/bfs/sycp/creative_img/202008/26449dd779b45fca0fec993f66de6192.png&status=1">添加课程</a>
 <a href="course/delcourse?courseid=6">删除课程</a>
+<br>
+<a href="topic/addtopic?courseid=1&topictitle=标题&topiccontent=内容&committime=2020-08-31 14:34:24&topicstatus=1">添加话题</a>
+<a href="topic/deltopic?topicid=2">删除话题</a>
+<br>
+<a href="comment/addcomment?sno=081417162&topicid=1&commentcontent=回复一个试试&commenttime=2020-08-31 14:34:24">添加评论</a>
+<a href="comment/delcomment?commentid=2">删除评论</a>
+<br>
+<a href="problem/addproblem?chapterid=1&ptype=3&question=这是一道测试题&panswer=答案：略">添加题目</a>
+<a href="problem/delproblem?problemid=2">删除题目</a>
+<br>
+<a href="data/adddata?courseid=1&dataname=测试资料&datalink=https://blog.csdn.net/xy_hdl/article/details/106223305">添加资料</a>
+<a href="data/deldata?dataid=2">删除资料</a>
 </body>
 </html>

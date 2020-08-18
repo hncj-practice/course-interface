@@ -40,27 +40,26 @@ public class ChapterController {
     }
 
     /**
-     * 添加题目
-     * @param problem
+     * 删除章节
+     * @param chapterid
      * @return
      */
-    @RequestMapping(path = "/addproblem",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/delchapter", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult AddProblem(Problem problem){
+    public APIResult DeleteClase(String chapterid) {
         //查询数据库
-        SqlSession session=util.MyBatis.getSession();
-        IChapterDao iChapterDao=session.getMapper(IChapterDao.class);
-        try {
-            iChapterDao.addProblem(problem);
-            session.commit();
-            return APIResult.createOk("添加成功", problem);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return APIResult.createNg("添加失败");
-        } finally {
-            session.close();
+        SqlSession session = util.MyBatis.getSession();
+        int status=0;       //学生
+        IChapterDao chapterDao = session.getMapper(IChapterDao.class);
+        status=chapterDao.delChapter(chapterid);
+        session.commit();
+        if(status!=0){
+            return APIResult.createOKMessage("删除成功");
+        }else{
+            return APIResult.createNg("删除失败");
         }
     }
+
 
     /**
      * 查询某章节的所有题目
