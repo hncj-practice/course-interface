@@ -1,5 +1,6 @@
 package controller;
 
+import dao.IClassDao;
 import dao.IStudentDao;
 import domain.Account;
 import domain.Student;
@@ -42,11 +43,24 @@ public class StudentController {
             return APIResult.createNg("用户名或密码错误");
         }
 
+    }
 
-//        model.addAttribute("user",student);
-//        return "success";
-
-//        return APIResult.createOk(student);
+    /**
+     * 查找某班级的所有学生
+     * @param classid
+     * @return 账号信息或错误信息
+     */
+    @RequestMapping(path = "/allstudent", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @ResponseBody
+    public APIResult Login(String classid) {
+        SqlSession session = util.MyBatis.getSession();
+        IStudentDao studentDao = session.getMapper(IStudentDao.class);
+        List<Student> students = studentDao.findAllStudentByCid(classid);
+        if (!students.isEmpty()) {
+            return APIResult.createOk("查找成功", students);
+        } else {
+            return APIResult.createNg("查询结果为空");
+        }
     }
 
 }

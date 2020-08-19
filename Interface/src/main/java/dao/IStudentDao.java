@@ -39,4 +39,9 @@ public interface IStudentDao {
     @Update("update xs set xs_mm=#{newpwd} where xs_xh=#{username} and xs_mm=#{oldpwd}")
     int updatePwd(@Param("username") String username,@Param("oldpwd") String oldpwd,@Param("newpwd") String newpwd);
 
+    //查找某班级的所有学生
+    @Select("select xs_xh,bj_bh,xs_xm,xs_xb,xs_yx from xs \n" +
+            "where bj_bh=#{classid}")
+    @ResultMap(value = {"studentMap"})
+    List<Student> findAllStudentByCid(@Param("classid") String classid);
 }

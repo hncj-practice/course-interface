@@ -35,5 +35,6 @@
         <mapper class="dao.ICommentDao"/>
         <mapper class="dao.IProblemDao"/>
         <mapper class="dao.IDataDao"/>
+        <mapper class="dao.IPaperDao"/>
     </mappers>
 </configuration>

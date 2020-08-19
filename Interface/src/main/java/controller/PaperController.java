@@ -1,10 +1,9 @@
 package controller;
 
-import dao.IAdminDao;
-import dao.IClassDao;
-import dao.IStudentDao;
-import dao.ITeacherDao;
-import domain.*;
+import dao.IDataDao;
+import dao.IPaperDao;
+import domain.Data;
+import domain.Paper;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,27 +11,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
 
-import java.util.List;
-
 //控制器类
 @Controller
-@RequestMapping(path = "/class")
-public class ClassController {
+@RequestMapping(path = "/paper")
+public class PaperController {
+
+
     /**
-     * 添加班级
-     * @param clase
+     * 添加试卷
+     * @param paper
      * @return
      */
-    @RequestMapping(path = "/addclass",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addpaper",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addClass(Clase clase){
+    public APIResult addPaper(Paper paper){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
-        IClassDao classDao=session.getMapper(IClassDao.class);
+        IPaperDao paperDao=session.getMapper(IPaperDao.class);
         try {
-            classDao.addClase(clase);
+            paperDao.addPaper(paper);
             session.commit();
-            return APIResult.createOk("添加成功", clase);
+            return APIResult.createOk("添加成功", paper);
         } catch (Exception e) {
             e.printStackTrace();
             return APIResult.createNg("添加失败");
@@ -42,18 +41,18 @@ public class ClassController {
     }
 
     /**
-     * 删除班级
-     * @param classid
+     * 删除试卷
+     * @param paperid
      * @return
      */
-    @RequestMapping(path = "/delclass", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/delpaper", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteClase(String classid) {
+    public APIResult DeletePaper(int paperid) {
         //查询数据库
         SqlSession session = util.MyBatis.getSession();
-        int status=0;       //学生
-        IClassDao classDao = session.getMapper(IClassDao.class);
-        status=classDao.delClase(classid);
+        int status=0;
+        IPaperDao paperDao = session.getMapper(IPaperDao.class);
+        status=paperDao.delPaper(paperid);
         session.commit();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
@@ -61,6 +60,4 @@ public class ClassController {
             return APIResult.createNg("删除失败");
         }
     }
-
-
 }

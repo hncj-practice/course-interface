@@ -73,5 +73,11 @@
 <br>
 <a href="data/adddata?courseid=1&dataname=测试资料&datalink=https://blog.csdn.net/xy_hdl/article/details/106223305">添加资料</a>
 <a href="data/deldata?dataid=2">删除资料</a>
+<br>
+<a href="paper/addpaper?courseid=1&papername=测试试卷&choicepoints=5&judgepoints=6&fillpoints=4&starttime=2020-07-31 14:25:24&endtime=2020-07-31 14:25:24&status=1">添加试卷</a>
+<a href="paper/delpaper?paperid=3">删除试卷</a>
+<br>
+<a href="student/allstudent?classid=0814171">查询某班级所有学生</a>
+<a href="teacher/allteacher">查询所有的教师信息</a>
 </body>
 </html>

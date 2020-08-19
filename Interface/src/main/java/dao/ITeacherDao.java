@@ -18,7 +18,8 @@ public interface ITeacherDao {
             @Result(column = "js_tx",property = "avatar"),
             @Result(column = "js_zt",property = "status")
     })
-    @Select("select * from js")
+    //查询所有教师的信息
+    @Select("select js_gh,js_xm,js_xb,js_yx,js_zt from js;")
     List<Teacher> findAll();
 
 
