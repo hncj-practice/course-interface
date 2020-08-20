@@ -1,6 +1,7 @@
 package controller;
 
 import dao.IChapterDao;
+import dao.ICourseDao;
 import domain.Chapter;
 import domain.Problem;
 import org.apache.ibatis.session.SqlSession;
@@ -62,23 +63,21 @@ public class ChapterController {
 
 
     /**
-     * 查询某章节的所有题目
-     * @param chapterid
+     * 按课程号查找章节
+     * @param courseid
      * @return
      */
-    @RequestMapping(path = "/problem",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/getchapterbycourseid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult StudentLogin(String chapterid){
+    public APIResult GetChapterByCid(int courseid){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
-        IChapterDao iChapterDao=session.getMapper(IChapterDao.class);
-        List<Problem> problems =iChapterDao.findProblemByChapterId(chapterid);
-        if(!problems.isEmpty()){
-            for(Problem problem : problems)
-                System.out.println(problem.toString());
-            return APIResult.createOk("查询成功", problems);
+        IChapterDao chapterDao=session.getMapper(IChapterDao.class);
+        List<Chapter> chapters=chapterDao.findChapterByCourseid(courseid);
+        if(!chapters.isEmpty()){
+            return APIResult.createOk("查询成功",chapters);
         }else{
-            return APIResult.createNg("此章节尚未添加题目");
+            return APIResult.createNg("暂无章节，请添加章节");
         }
     }
-    }
+}

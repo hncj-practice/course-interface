@@ -16,26 +16,7 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "/course")
 public class CourseController {
-    /**
-     * 查询某课程下的所有章节
-     * @param cno
-     * @return
-     */
-    @RequestMapping(path = "/chapter",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
-    @ResponseBody
-    public APIResult StudentLogin(String cno){
-        //查询数据库
-        SqlSession session=util.MyBatis.getSession();
-        ICourseDao iCourseDao=session.getMapper(ICourseDao.class);
-        List<Chapter> chapters=iCourseDao.findChapterByCno(cno);
-        if(!chapters.isEmpty()){
-            for(Chapter chapter:chapters)
-                System.out.println(chapter.toString());
-            return APIResult.createOk("查询成功",chapters);
-        }else{
-            return APIResult.createNg("暂无章节，请添加章节");
-        }
-    }
+
 
     /**
      * 添加课程
@@ -78,6 +59,46 @@ public class CourseController {
             return APIResult.createOKMessage("删除成功");
         }else{
             return APIResult.createNg("删除失败");
+        }
+    }
+
+    /**
+     * 按课程号查找课程
+     * @param courseid
+     * @return
+     */
+    @RequestMapping(path = "/getcoursebycid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult GetCourseByCid(int courseid){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ICourseDao courseDao=session.getMapper(ICourseDao.class);
+        Course course=courseDao.getCourseByCid(courseid);
+        if(course!=null){
+            return APIResult.createOk("查询成功",course);
+        }else{
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
+     * 按教师号查找课程
+     * @param tno
+     * @return
+     */
+    @RequestMapping(path = "/getcoursebytno",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult StudentLogin(String tno){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ICourseDao iCourseDao=session.getMapper(ICourseDao.class);
+        List<Course> courses=iCourseDao.findTeachCourse(tno);
+        if(!courses.isEmpty()){
+            for(Course course:courses)
+                System.out.println(course.toString());
+            return APIResult.createOk("查询成功",courses);
+        }else{
+            return APIResult.createNg("没有授课记录，请先添加课程");
         }
     }
 }

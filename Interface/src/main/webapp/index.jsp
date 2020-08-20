@@ -46,10 +46,6 @@
 <a href="account/resetpwd?username=111111&password=000000&newpwd=newpwd!!!&type=2">更新教师密码get</a>
 <a href="account/resetpwd?username=test&password=000000&newpwd=newpwd!!!&type=3">更新管理员密码get</a>
 <br>
-<a href="teacher/teach?tno=888888888">查询教师所授课程</a>
-<a href="course/chapter?cno=1">查询某课程所有章节</a>
-<a href="chapter/problem?chapterid=1">查询某章节所有题目</a>
-<br>
 <a href="chapter/addchapter?cid=1&chaptername=第九九九章">添加章节</a>
 <a href="chapter/delchapter?chapterid=10">删除章节</a>
 <br>
@@ -79,5 +75,12 @@
 <br>
 <a href="student/allstudent?classid=0814171">查询某班级所有学生</a>
 <a href="teacher/allteacher">查询所有的教师信息</a>
+<br>
+<a href="course/getcoursebycid?courseid=1">按课程号查找课程</a>
+<a href="topic/gettopicbycid?courseid=1">按课程号查找话题</a>
+<a href="problem/getproblembychapterid?chapterid=2">按章节号查找题目</a>
+<a href="chapter/getchapterbycourseid?courseid=1">按课程号查找章节</a>
+<a href="course/getcoursebytno?tno=888888888">按教师号查找课程</a>
+<br>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package controller;
 
+import dao.ICourseDao;
 import dao.ITopicDao;
+import domain.Course;
 import domain.Topic;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+
+import java.util.List;
 
 //控制器类
 @Controller
@@ -56,6 +60,25 @@ public class TopicController {
             return APIResult.createOKMessage("删除成功");
         }else{
             return APIResult.createNg("删除失败");
+        }
+    }
+
+    /**
+     * 按课程号查找话题
+     * @param courseid
+     * @return
+     */
+    @RequestMapping(path = "/gettopicbycid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult GetTopicByCid(int courseid){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ITopicDao topicDao=session.getMapper(ITopicDao.class);
+        List<Topic> topics=topicDao.getTopicByCid(courseid);
+        if(!topics.isEmpty()){
+            return APIResult.createOk("查询成功",topics);
+        }else{
+            return APIResult.createNg("查询结果为空");
         }
     }
 }

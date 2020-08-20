@@ -26,11 +26,18 @@ public interface IChapterDao {
     int delChapter(@Param("chapterid") String chapterid);
 
 
+    //按课程号查找章节
+    @Results(id = "chapterMap",value = {
+            @Result(column = "zj_bh",property = "chapterid",id = true),
+            @Result(column = "kc_bh",property = "courseid"),
+            @Result(column = "zj_mc",property = "chaptername")
+    })
+    @Select("select zj_bh,kc_bh,zj_mc\n" +
+            "from zj\n" +
+            "where zj.kc_bh=#{courseid}")
+    List<Chapter> findChapterByCourseid(@Param("courseid") int courseid);
 
 
-    //查询指定章节中的所有题目
-    @Select("select * from tm\n" +
-            "where zj_bh=#{chapterid};")
-    @ResultMap(value = {"examinationMap"})
-    List<Problem> findProblemByChapterId(@Param("chapterid") String chapterid);
+
+
 }

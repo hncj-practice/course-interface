@@ -2,14 +2,19 @@ package dao;
 
 import domain.Comment;
 import domain.Problem;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import domain.Topic;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 public interface IProblemDao {
+    @Results(id = "chapterMap",value = {
+            @Result(column = "tm_bh",property = "pid",id = true),
+            @Result(column = "zj_bh",property = "chapterid"),
+            @Result(column = "bmlx_bh",property = "ptype"),
+            @Result(column = "tm_tg",property = "question"),
+            @Result(column = "tm_da",property = "panswer")
+    })
     @Select("select * from tm")
     List<Problem> findAll();
 
@@ -21,4 +26,9 @@ public interface IProblemDao {
     //删除题目
     @Delete("delete from tm where tm_bh=#{problemid}")
     int delProblem(@Param("problemid") String problemid);
+
+    //按章节查找题目
+    @Select("select * from tm where zj_bh=#{chapterid}")
+    @ResultMap(value = {"chapterMap"})
+    List<Problem> getProblemByChapterid(@Param("chapterid") int chapterid);
 }

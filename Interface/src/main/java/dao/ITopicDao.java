@@ -8,17 +8,16 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 public interface ITopicDao {
-    @Results(id = "courseMap",value = {
-            @Result(column = "kc_bh",property = "cid",id = true),
-            @Result(column = "xq_bh",property = "semester"),
-            @Result(column = "js_gh",property = "tno"),
-            @Result(column = "kc_mc",property = "cname"),
-            @Result(column = "kc_fm",property = "coverimg"),
-            @Result(column = "kc_zt",property = "status"),
-            @Result(column = "count(xskc.xs_xh)",property = "snum")
+    @Results(id = "topicMap",value = {
+            @Result(column = "ht_bh",property = "topicid",id = true),
+            @Result(column = "kc_bh",property = "courseid"),
+            @Result(column = "ht_bt",property = "topictitle"),
+            @Result(column = "ht_nr",property = "topiccontent"),
+            @Result(column = "ht_fbsj",property = "committime"),
+            @Result(column = "ht_zt",property = "topicstatus")
     })
     @Select("select * from ht")
-    List<Course> findAll();
+    List<Topic> findAll();
 
 
     //添加话题
@@ -28,4 +27,9 @@ public interface ITopicDao {
     //删除话题
     @Delete("delete from ht where ht_bh=#{topicid}")
     int delTopic(@Param("topicid") String topicid);
+
+    //按课程号查找话题
+    @Select("select * from ht where kc_bh=#{courseid}")
+    @ResultMap(value = {"topicMap"})
+    List<Topic> getTopicByCid(@Param("courseid") int courseid);
 }

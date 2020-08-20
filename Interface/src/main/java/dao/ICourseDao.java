@@ -30,16 +30,7 @@ public interface ICourseDao {
     @ResultMap(value = {"courseMap"})
     List<Course> findTeachCourse(@Param("tno") String tno);
 
-    //查询某课程的所有章节
-    @Results(id = "chapterMap",value = {
-            @Result(column = "zj_bh",property = "chapterid",id = true),
-            @Result(column = "kc_bh",property = "cno"),
-            @Result(column = "zj_mc",property = "chaptername")
-    })
-    @Select("select zj_bh,kc_bh,zj_mc\n" +
-            "from zj\n" +
-            "where zj.kc_bh=#{cno}")
-    List<Chapter> findChapterByCno(@Param("cno") String cno);
+
 
 
     //添加课程
@@ -49,4 +40,9 @@ public interface ICourseDao {
     //删除课程
     @Delete("delete from kc where kc_bh=#{courseid}")
     int delCourse(@Param("courseid") String courseid);
+
+    //按课程号查找课程
+    @Select("select * from kc where kc_bh=#{courseid}")
+    @ResultMap(value = {"courseMap"})
+    Course getCourseByCid(@Param("courseid") int courseid);
 }

@@ -2,7 +2,7 @@ package domain;
 
 public class Chapter {
     private int chapterid;          //章节号
-    private int cid;                //课程号
+    private int courseid;                //课程号
     private String chaptername;     //章节名
 
     public int getChapterid() {
@@ -13,12 +13,12 @@ public class Chapter {
         this.chapterid = chapterid;
     }
 
-    public int getCid() {
-        return cid;
+    public int getCourseid() {
+        return courseid;
     }
 
-    public void setCid(int cid) {
-        this.cid = cid;
+    public void setCourseid(int courseid) {
+        this.courseid = courseid;
     }
 
     public String getChaptername() {
@@ -33,7 +33,7 @@ public class Chapter {
     public String toString() {
         return "Chapter{" +
                 "chapterid=" + chapterid +
-                ", cno=" + cid +
+                ", cno=" + courseid +
                 ", chaptername='" + chaptername + '\'' +
                 '}';
     }
