@@ -9,6 +9,35 @@
 <html>
 <head>
     <title>index</title>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script>
+        function onClick() {
+            console.log('请求');
+            let url = 'http://localhost:8080/Interface_war/paper/addproblems';
+
+            let param = {
+                paperid: 1,
+                problemids: [1, 2, 3, 4, 5]
+            };
+
+
+            $.ajax({
+                type: "get",
+                url: url,
+                data: param,
+                traditional: true,
+                success: (e) => {
+                    console.log(e.data);
+                    console.log('成功');
+                },
+                error: (e) => {
+                    console.log('失败');
+                }
+            });
+        }
+
+    </script>
 </head>
 <body>
 <h2>用户登录</h2>
@@ -74,7 +103,8 @@
 <a href="paper/delpaper?paperid=3">删除试卷</a>
 <br>
 <a href="student/allstudent?classid=0814171">查询某班级所有学生</a>
-<a href="teacher/allteacher">查询所有的教师信息</a>
+<a href="teacher/allteacher?page=1&num=3">查询所有的教师信息</a>
+<a href="student/allstudent?page=1&num=3">查询所有的学生信息</a>
 <br>
 <a href="course/getcoursebycid?courseid=1">按课程号查找课程</a>
 <a href="topic/gettopicbycid?courseid=1">按课程号查找话题</a>
@@ -82,5 +112,10 @@
 <a href="chapter/getchapterbycourseid?courseid=1">按课程号查找章节</a>
 <a href="course/getcoursebytno?tno=888888888">按教师号查找课程</a>
 <br>
+<a href="teacher/getteacherbytno?tno=888888888">按教师号查找教师</a>
+<a href="paper/addproblems?paperid=1&problemids=1&problemids=2&problemids=3&problemids=4&problemids=5">向一张试卷中添加多个问题</a>
+
+
+<button id="test" onclick="onClick()">测试</button>
 </body>
 </html>

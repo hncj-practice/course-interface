@@ -113,6 +113,15 @@ public class Student {
     private String email;
     private String avatar;
     private int status;
+    private int total;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public String getSno() {
         return sno;

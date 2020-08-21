@@ -25,11 +25,34 @@ public class TeacherController {
      */
     @RequestMapping(path = "/allteacher",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult AllTeacher(){
+    public APIResult AllTeacher(int page,int num){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         ITeacherDao teacherDao=session.getMapper(ITeacherDao.class);
-        List<Teacher> teachers=teacherDao.findAll();
+        List<Teacher> teachers=teacherDao.findAll((page-1)*num,num);
+        int total=0;
+        total=teacherDao.Total();
+        if(!teachers.isEmpty()&&total!=0){
+            for(Teacher teacher:teachers)
+                teacher.setTotal(total);
+            return APIResult.createOk("查询成功",teachers);
+        }else{
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
+     * 按教师号查找教师信息
+     * @param tno
+     * @return
+     */
+    @RequestMapping(path = "/getteacherbytno",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult GetTeacherByTno(int tno){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ITeacherDao teacherDao=session.getMapper(ITeacherDao.class);
+        List<Teacher> teachers=teacherDao.getTeacherByTno(tno);
         if(!teachers.isEmpty()){
             return APIResult.createOk("查询成功",teachers);
         }else{

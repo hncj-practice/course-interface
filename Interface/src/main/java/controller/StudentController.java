@@ -2,8 +2,10 @@ package controller;
 
 import dao.IClassDao;
 import dao.IStudentDao;
+import dao.ITeacherDao;
 import domain.Account;
 import domain.Student;
+import domain.Teacher;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,13 @@ import java.util.List;
 @RequestMapping(path = "/student")
 public class StudentController {
 //    ,params = {"sno","pwd"}
+
+    /**
+     * 学生登录
+     * @param account
+     * @param model
+     * @return
+     */
     @RequestMapping(path = "/login",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
     public APIResult StudentLogin(Account account, Model model){
@@ -46,11 +55,33 @@ public class StudentController {
     }
 
     /**
-     * 查找某班级的所有学生
+     * 查询所有的学生信息
+     * @return
+     */
+    @RequestMapping(path = "/allstudent",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult AllTeacher(int page,int num){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IStudentDao studentDao=session.getMapper(IStudentDao.class);
+        List<Student> students=studentDao.findAll((page-1)*num,num);
+        int total=0;
+        total=studentDao.Total();
+        if(!students.isEmpty()&&total!=0){
+            for(Student student:students)
+                student.setTotal(total);
+            return APIResult.createOk("查询成功",students);
+        }else{
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
+     * 按班级编号查找学生
      * @param classid
      * @return 账号信息或错误信息
      */
-    @RequestMapping(path = "/allstudent", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/getstudentbycid", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
     public APIResult Login(String classid) {
         SqlSession session = util.MyBatis.getSession();

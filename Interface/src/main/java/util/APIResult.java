@@ -1,5 +1,7 @@
 package util;
 
+import org.apache.ibatis.jdbc.Null;
+
 public class APIResult {
     private int code;
     private String message;
@@ -8,9 +10,15 @@ public class APIResult {
     private static final int OK=200;
     private static final int NG=401;
 
+//    public static APIResult createOk(String message,Object data){
+//        return createWithCodeAndData(OK,message,data);
+//    }
     public static APIResult createOk(String message,Object data){
         return createWithCodeAndData(OK,message,data);
     }
+//    public static APIResult createOkWithTotal(String message,Object data,int total){
+//        return createWithCodeAndDataAndTotal(OK,message,data,total);
+//    }
 
     public static APIResult createOKMessage(String message){
         APIResult result =new APIResult();
@@ -30,6 +38,14 @@ public class APIResult {
         result.setData(data);
         return result;
     }
+//    private static APIResult createWithCodeAndDataAndTotal(int code,String message,Object data,int total){
+//        APIResult result=new APIResult();
+//        result.setCode(code);
+//        result.setMessage(message);
+//        result.setData(data);
+//        result.setTotal(total);
+//        return result;
+//    }
 
     public int getCode() {
         return code;
@@ -54,4 +70,5 @@ public class APIResult {
     public void setData(Object data) {
         this.data = data;
     }
+
 }

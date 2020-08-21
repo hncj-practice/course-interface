@@ -60,4 +60,28 @@ public class PaperController {
             return APIResult.createNg("删除失败");
         }
     }
+
+    /**
+     * 向指定试卷中添加若干试题
+     * @param paperid
+     * @param problemids
+     * @return
+     */
+    @RequestMapping(path = "/addproblems",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult addProblems(int paperid,int [] problemids){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IPaperDao paperDao=session.getMapper(IPaperDao.class);
+        try {
+            paperDao.addProblemsToPaper(paperid,problemids);
+            session.commit();
+            return APIResult.createOk("添加成功", problemids);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("添加失败");
+        } finally {
+            session.close();
+        }
+    }
 }

@@ -21,4 +21,13 @@ public interface IPaperDao {
     //删除试卷
     @Delete("delete from sj where sj_bh=#{paperid}")
     int delPaper(@Param("paperid") int paperid);
+
+    //向指定试卷中添加若干试题
+    @Insert("<script>"  +
+            "INSERT INTO sjst(sj_bh,tm_bh) VALUES" +
+            "<foreach collection=\"problemids\" item=\"item\" index=\"index\"  separator=\",\">" +
+            "(#{paperid},#{item})" +
+            "</foreach>" +
+            "</script>")
+    void addProblemsToPaper(@Param("paperid") int paperid,@Param("problemids") int [] problemids);
 }

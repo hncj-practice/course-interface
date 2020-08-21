@@ -1,6 +1,7 @@
 package dao;
 
 import domain.Student;
+import domain.Teacher;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -17,8 +18,15 @@ public interface IStudentDao {
             @Result(column = "xs_zt",property = "status")
     })
 
-    @Select("select * from xs")
-    List<Student> findAll();
+    //查询所有的学生信息
+    @Select("select xs_xh,xs_xm,xs_xb,xs_yx,xs_tx,xs_zt " +
+            "from xs " +
+            "limit #{start},#{end};")
+    List<Student> findAll(@Param("start") int start, @Param("end") int end);
+
+    //统计学生的总数
+    @Select("select count(*) from xs")
+    int Total();
 
 
     //学生登录

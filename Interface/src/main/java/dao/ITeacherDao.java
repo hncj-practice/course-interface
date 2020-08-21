@@ -16,11 +16,23 @@ public interface ITeacherDao {
             @Result(column = "js_xb",property = "sex"),
             @Result(column = "js_yx",property = "email"),
             @Result(column = "js_tx",property = "avatar"),
-            @Result(column = "js_zt",property = "status")
+            @Result(column = "js_zt",property = "status"),
+            @Result(column = "count(js_gh)",property = "status")
     })
     //查询所有教师的信息
-    @Select("select js_gh,js_xm,js_xb,js_yx,js_zt from js;")
-    List<Teacher> findAll();
+    @Select("select js_gh,js_xm,js_xb,js_yx,js_tx,js_zt " +
+            "from js " +
+            "limit #{start},#{end};")
+    List<Teacher> findAll(@Param("start") int start,@Param("end") int end);
+
+    //统计教师的总数
+    @Select("select count(*) from js")
+    int Total();
+
+    //按教师编号查找教师
+    @Select("select js_gh,js_xm,js_xb,js_yx,js_tx,js_zt from js where js_gh=#{tno}")
+    @ResultMap(value = {"teacherMap"})
+    List<Teacher> getTeacherByTno(@Param("tno") int tno);
 
 
     //教师登录
