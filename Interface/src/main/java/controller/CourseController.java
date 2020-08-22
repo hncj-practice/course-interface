@@ -101,4 +101,29 @@ public class CourseController {
             return APIResult.createNg("没有授课记录，请先添加课程");
         }
     }
+
+
+    /**
+     * 修改课程状态(未开课/进行中/归档)
+     * @param courseid  修改哪门课程
+     * @param status    修改为哪种状态
+     * @return
+     */
+    @RequestMapping(path = "/changestatus",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult changeStatus(int courseid,int status){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ICourseDao courseDao=session.getMapper(ICourseDao.class);
+        try {
+            courseDao.changeStatus(courseid,status);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
+        } finally {
+            session.close();
+        }
+    }
 }

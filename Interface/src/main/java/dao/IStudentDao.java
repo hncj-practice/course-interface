@@ -52,4 +52,14 @@ public interface IStudentDao {
             "where bj_bh=#{classid}")
     @ResultMap(value = {"studentMap"})
     List<Student> findAllStudentByCid(@Param("classid") String classid);
+
+    //将课程同学生教师关联
+    //指定某课程由哪个老师教、以及教哪些班级的学生
+    @Insert("<script>"  +
+            "INSERT INTO xskc(kc_bh,xs_xh) select #{courseid},xs_xh from xs where bj_bh=" +
+            "<foreach collection=\"classid\" item=\"item\" index=\"index\" separator=\"or\">" +
+            "#{item}" +
+            "</foreach>" +
+            "</script>")
+    void ChoiceCourse(@Param("courseid") int courseid,@Param("classid") String[] classid);
 }

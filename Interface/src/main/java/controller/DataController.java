@@ -1,6 +1,7 @@
 package controller;
 
 import dao.ICommentDao;
+import dao.ICourseDao;
 import dao.IDataDao;
 import domain.Comment;
 import domain.Data;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+
+import java.util.List;
 
 //控制器类
 @Controller
@@ -58,6 +61,55 @@ public class DataController {
             return APIResult.createOKMessage("删除成功");
         }else{
             return APIResult.createNg("删除失败");
+        }
+    }
+
+    /**
+     * 按课程号查找资料
+     * @param courseid
+     * @return
+     */
+    @RequestMapping(path = "/getdatabycourseid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult GetDataByCourseid(int courseid,int page,int num){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IDataDao dataDao=session.getMapper(IDataDao.class);
+        List<Data> comments=dataDao.getDataByCourseid(courseid,(page-1)*num,num);
+        int total=0;
+        total=dataDao.Total(courseid);
+        if(!comments.isEmpty()&&total!=0){
+            for(Data data:comments){
+                data.setTotal(total);
+            }
+            return APIResult.createOk("查询成功",comments);
+        }else{
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
+     * 修改资料信息(资料名称、资料链接)
+     * @param dataid    资料编号
+     * @param name      资料名称
+     * @param link      资料链接
+     * @return
+     */
+    @RequestMapping(path = "/changedata",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult changeData(int dataid,String name,String link){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IDataDao dataDao=session.getMapper(IDataDao.class);
+        try {
+            dataDao.changeData(dataid,name,link);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
+        } finally {
+            session.close();
         }
     }
 }

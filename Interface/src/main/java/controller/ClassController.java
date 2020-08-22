@@ -1,9 +1,6 @@
 package controller;
 
-import dao.IAdminDao;
-import dao.IClassDao;
-import dao.IStudentDao;
-import dao.ITeacherDao;
+import dao.*;
 import domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
@@ -62,5 +59,27 @@ public class ClassController {
         }
     }
 
-
+    /**
+     * 修改班级名称
+     * @param classid    班级编号
+     * @param classname      新的班级名称
+     * @return
+     */
+    @RequestMapping(path = "/changeclassname",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult changeClassname(int classid,String classname){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IClassDao classDao=session.getMapper(IClassDao.class);
+        try {
+            classDao.changeClassname(classid,classname);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
+        } finally {
+            session.close();
+        }
+    }
 }

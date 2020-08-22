@@ -83,4 +83,23 @@ public class ProblemController {
             return APIResult.createNg("查询结果为空");
         }
     }
+
+    /**
+     * 按试卷编号查找题目
+     * @param paperid
+     * @return
+     */
+    @RequestMapping(path = "/getproblembypaperid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult GetProblemByPaperid(int paperid){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IProblemDao problemDao=session.getMapper(IProblemDao.class);
+        List<Problem> problems=problemDao.getProblemByPaperid(paperid);
+        if(!problems.isEmpty()){
+            return APIResult.createOk("查询成功",problems);
+        }else{
+            return APIResult.createNg("查询结果为空");
+        }
+    }
 }

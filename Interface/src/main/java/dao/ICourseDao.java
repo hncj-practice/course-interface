@@ -45,4 +45,8 @@ public interface ICourseDao {
     @Select("select * from kc where kc_bh=#{courseid}")
     @ResultMap(value = {"courseMap"})
     Course getCourseByCid(@Param("courseid") int courseid);
+
+    //修改课程状态(未开课/进行中/归档)
+    @Update("update kc set kc_zt=#{status} where kc_bh=#{courseid}")
+    void changeStatus(@Param("courseid") int courseid,@Param("status") int status);
 }

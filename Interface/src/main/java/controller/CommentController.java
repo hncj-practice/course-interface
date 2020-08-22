@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
 
+import java.util.List;
+
 //控制器类
 @Controller
 @RequestMapping(path = "/comment")
@@ -59,6 +61,30 @@ public class CommentController {
             return APIResult.createOKMessage("删除成功");
         }else{
             return APIResult.createNg("删除失败");
+        }
+    }
+
+    /**
+     * 按话题号查找评论
+     * @param topicid
+     * @return
+     */
+    @RequestMapping(path = "/getcommentbytopicid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult GetCommentByTopicid(int topicid,int page,int num){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ICommentDao commentDao=session.getMapper(ICommentDao.class);
+        List<Comment> comments=commentDao.getCommentByTopicid(topicid,(page-1)*num,num);
+        int total=0;
+        total=commentDao.Total(topicid);
+        if(!comments.isEmpty()&&total!=0){
+            for(Comment comment:comments){
+                comment.setTotal(total);
+            }
+            return APIResult.createOk("查询成功",comments);
+        }else{
+            return APIResult.createNg("查询结果为空");
         }
     }
 }

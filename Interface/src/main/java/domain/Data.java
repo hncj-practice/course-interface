@@ -5,6 +5,15 @@ public class Data {
     private int courseid;       //课程编号
     private String dataname;    //资料名称
     private String datalink;    //资料链接
+    private int total;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public int getDataid() {
         return dataid;

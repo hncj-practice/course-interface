@@ -1,6 +1,7 @@
 package controller;
 
 import dao.IClassDao;
+import dao.IPaperDao;
 import dao.IStudentDao;
 import dao.ITeacherDao;
 import domain.Account;
@@ -91,6 +92,31 @@ public class StudentController {
             return APIResult.createOk("查找成功", students);
         } else {
             return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
+     * 将课程同学生教师关联
+     * 指定某课程由哪个老师教、以及教哪些班级的学生
+     * @param courseid
+     * @param classid
+     * @return
+     */
+    @RequestMapping(path = "/choicecourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult addProblems(int courseid,String [] classid){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IStudentDao studentDao=session.getMapper(IStudentDao.class);
+        try {
+            studentDao.ChoiceCourse(courseid,classid);
+            session.commit();
+            return APIResult.createOk("添加成功", classid);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("添加失败,请检查是否已经添加");
+        } finally {
+            session.close();
         }
     }
 

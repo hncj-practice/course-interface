@@ -20,5 +20,7 @@ public interface IClassDao {
     @Delete("delete from bj where bj_bh=#{classid}")
     int delClase(@Param("classid") String classid);
 
-
+    //修改班级名称
+    @Update("update bj set bj_mc=#{classname} where bj_bh=#{classid}")
+    void changeClassname(@Param("classid") int classid,@Param("classname") String classname);
 }

@@ -6,6 +6,15 @@ public class Comment {
     private int topicid;            //话题编号
     private String commentcontent;  //评论内容
     private String commenttime;     //评论时间
+    private int total;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public int getCommentid() {
         return commentid;

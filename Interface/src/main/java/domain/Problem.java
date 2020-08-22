@@ -4,8 +4,18 @@ public class Problem {
     private int pid;            //题目编号
     private int chapterid;      //章节编号
     private int ptype;          //题目类型
-    private String question;     //题目题干
+    private String question;    //题目题干
     private String panswer;     //题目答案
+
+    private String ptypename;   //题目类型名称
+
+    public String getPtypename() {
+        return ptypename;
+    }
+
+    public void setPtypename(String ptypename) {
+        this.ptypename = ptypename;
+    }
 
     public int getPid() {
         return pid;
