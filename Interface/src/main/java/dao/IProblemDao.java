@@ -29,9 +29,14 @@ public interface IProblemDao {
     int delProblem(@Param("problemid") String problemid);
 
     //按章节查找题目
-    @Select("select * from tm where zj_bh=#{chapterid}")
+    @Select("<script>"  +
+            "select * from tm where " +
+            "<foreach collection=\"chapterid\" item=\"item\" index=\"index\"  separator=\"or\">" +
+            "zj_bh=#{item}<if test='type!=null'> and tmlx_bh=#{type} </if>" +
+            "</foreach>" +
+            "</script>")
     @ResultMap(value = {"problemMap"})
-    List<Problem> getProblemByChapterid(@Param("chapterid") int chapterid);
+    List<Problem> getProblemByChapterid(@Param("chapterid") Integer[] chapterid,@Param("type") Integer type);
 
     //按试卷编号查找题目(查找某张试卷的全部试题)
     @Select("select tm_bh,zj_bh,tm.tmlx_bh,tm_tg,tm_da,tmlx.tmlx_mc from tm,tmlx\n" +

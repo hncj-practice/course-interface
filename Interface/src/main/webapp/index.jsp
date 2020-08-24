@@ -74,6 +74,7 @@
 <a href="account/resetpwd?username=081417162&password=000000&newpwd=newpwd!!!&type=1">更新学生密码get</a>
 <a href="account/resetpwd?username=111111&password=000000&newpwd=newpwd!!!&type=2">更新教师密码get</a>
 <a href="account/resetpwd?username=test&password=000000&newpwd=newpwd!!!&type=3">更新管理员密码get</a>
+<a href="account/resetpwdbyadmin?username=081417101&admin_user=wsgly&admin_pwd=000000&type=1">管理员重置学生密码（无需知道用户密码）</a>
 <br>
 <a href="chapter/addchapter?cid=1&chaptername=第九九九章">添加章节</a>
 <a href="chapter/delchapter?chapterid=10">删除章节</a>
@@ -108,7 +109,7 @@
 <br>
 <a href="course/getcoursebycid?courseid=1">按课程号查找课程</a>
 <a href="topic/gettopicbycid?courseid=1">按课程号查找话题</a>
-<a href="problem/getproblembychapterid?chapterid=2">按章节号查找题目</a>
+<a href="problem/getproblembychapterid?chapterid=1&chapterid=2&type=0">按章节号查找题目</a>
 <a href="chapter/getchapterbycourseid?courseid=1">按课程号查找章节</a>
 <a href="course/getcoursebytno?tno=888888888">按教师号查找课程</a>
 <br>
@@ -122,6 +123,11 @@
 <a href="course/changestatus?courseid=1&status=2">修改课程状态</a>
 <a href="data/changedata?dataid=1&name=新的资料名称&link=https://blog.csdn.net/little_nai/article/details/53436453">修改资料名称及链接</a>
 <a href="class/changeclassname?classid=0814171&classname=计科一班">修改班级名称</a>
-<a></a>
+<br>
+<a href="paper/randomgenerate?chapterid=1&chapterid=2&num=5&type=1">随机组卷</a>
+<a href="paper/randomgenerate?chapterid=1&chapterid=2&choice=3&fill=0&judge=2&type=2">按各类型数量组卷</a>
+<a href="paper/getpaperbycourseid?courseid=1">按课程号查找试卷</a>
+<a href="paper/releasepaper?paperid=1&courseid=1">教师发布试卷</a>
+<a href="paper/updatetestgrade?sno=081417162&paperid=1&grade=95.5">更新学生测验成绩</a>
 </body>
 </html>

@@ -195,4 +195,38 @@ public class AccountController {
             return APIResult.createNg("密码重置失败");
         }
     }
+
+
+    /**
+     * 管理员重置学生/教师密码（无需知道用户密码）
+     * @param account
+     * @return
+     */
+    @RequestMapping(path = "/resetpwdbyadmin", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @ResponseBody
+    public APIResult ResetPwdByAdmin(Account account) {
+        //查询数据库
+        SqlSession session = util.MyBatis.getSession();
+        int status=0;
+        IAdminDao adminDao=session.getMapper(IAdminDao.class);
+        if(adminDao.findByTnoAndPwd(account.getAdmin_user(),account.getAdmin_pwd())==null){
+            //没有传入管理员账号和密码或传入信息错误，退出该操作
+            return APIResult.createNg("无操作权限");
+        }
+        if (account.getType() == 1) {           //学生
+            IStudentDao studentDao = session.getMapper(IStudentDao.class);
+            status=studentDao.updatePwdByAdmin(account.getUsername());
+        } else if (account.getType() == 2) {    //教师
+            ITeacherDao teacherDao = session.getMapper(ITeacherDao.class);
+            status=teacherDao.updatePwdByAdmin(account.getUsername());
+        } else {
+            return APIResult.createNg("请求参数不合法");
+        }
+        session.commit();
+        if(status!=0){
+            return APIResult.createOKMessage("密码重置成功");
+        }else{
+            return APIResult.createNg("密码重置失败");
+        }
+    }
 }

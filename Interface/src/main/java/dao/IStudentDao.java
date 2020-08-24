@@ -19,7 +19,7 @@ public interface IStudentDao {
     })
 
     //查询所有的学生信息
-    @Select("select xs_xh,xs_xm,xs_xb,xs_yx,xs_tx,xs_zt " +
+    @Select("select xs_xh,bj_bh,xs_xm,xs_xb,xs_yx,xs_zt " +
             "from xs " +
             "limit #{start},#{end};")
     List<Student> findAll(@Param("start") int start, @Param("end") int end);
@@ -47,11 +47,22 @@ public interface IStudentDao {
     @Update("update xs set xs_mm=#{newpwd} where xs_xh=#{username} and xs_mm=#{oldpwd}")
     int updatePwd(@Param("username") String username,@Param("oldpwd") String oldpwd,@Param("newpwd") String newpwd);
 
+
+    //管理员重置学生密码（无需知道用户密码）
+    @Update("update xs set xs_mm='000000' where xs_xh=#{username}")
+    int updatePwdByAdmin(@Param("username") String usernamed);
+
+
     //查找某班级的所有学生
     @Select("select xs_xh,bj_bh,xs_xm,xs_xb,xs_yx from xs \n" +
             "where bj_bh=#{classid}")
     @ResultMap(value = {"studentMap"})
-    List<Student> findAllStudentByCid(@Param("classid") String classid);
+    List<Student> findAllStudentByCid(@Param("classid") int classid);
+
+    //统计某班级的学生的总数
+    @Select("select count(*) from xs where bj_bh=#{classid}")
+    int TotalByClassid(@Param("classid") int classid);
+
 
     //将课程同学生教师关联
     //指定某课程由哪个老师教、以及教哪些班级的学生

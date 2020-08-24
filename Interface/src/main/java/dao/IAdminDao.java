@@ -16,6 +16,7 @@ public interface IAdminDao {
 
 
     //管理员登录
+    //也可用于判断传入账号是否为管理员账号
     @Select("select * from gly where gly_zh=#{username} and gly_mm=#{password}")
     @ResultMap(value = {"adminMap"})
     Admin findByTnoAndPwd(@Param("username") String username, @Param("password") String password);
@@ -28,7 +29,12 @@ public interface IAdminDao {
     @Delete("delete from gly where gly_zh=#{admin_user} and gly_mm=#{admin_pwd}")
     int deleteAdmin(@Param("admin_user") String admin_user,@Param("admin_pwd") String admin_pwd);
 
-    //重置学生密码
+    //重置管理员密码
     @Update("update gly set gly_mm=#{newpwd} where gly_zh=#{username} and gly_mm=#{oldpwd}")
     int updatePwd(@Param("username") String username,@Param("oldpwd") String oldpwd,@Param("newpwd") String newpwd);
+
+
+
+
+
 }

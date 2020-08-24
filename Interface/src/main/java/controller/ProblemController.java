@@ -72,11 +72,11 @@ public class ProblemController {
      */
     @RequestMapping(path = "/getproblembychapterid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetProblemByChapterid(int chapterid){
+    public APIResult GetProblemByChapterid(Integer[] chapterid,Integer type){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         IProblemDao problemDao=session.getMapper(IProblemDao.class);
-        List<Problem> problems=problemDao.getProblemByChapterid(chapterid);
+        List<Problem> problems=problemDao.getProblemByChapterid(chapterid,type);
         if(!problems.isEmpty()){
             return APIResult.createOk("查询成功",problems);
         }else{

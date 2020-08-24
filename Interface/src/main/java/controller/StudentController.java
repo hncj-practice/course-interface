@@ -84,16 +84,22 @@ public class StudentController {
      */
     @RequestMapping(path = "/getstudentbycid", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult Login(String classid) {
+    public APIResult Login(int classid) {
         SqlSession session = util.MyBatis.getSession();
         IStudentDao studentDao = session.getMapper(IStudentDao.class);
         List<Student> students = studentDao.findAllStudentByCid(classid);
+        int total =0;
+        total=studentDao.TotalByClassid(classid);
         if (!students.isEmpty()) {
+            for(Student student:students){
+                student.setTotal(total);
+            }
             return APIResult.createOk("查找成功", students);
         } else {
             return APIResult.createNg("查询结果为空");
         }
     }
+
 
     /**
      * 将课程同学生教师关联
