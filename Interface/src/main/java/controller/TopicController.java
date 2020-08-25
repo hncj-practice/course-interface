@@ -4,6 +4,8 @@ import dao.ICourseDao;
 import dao.ITopicDao;
 import domain.Course;
 import domain.Topic;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,32 @@ public class TopicController {
         } catch (Exception e) {
             e.printStackTrace();
             return APIResult.createNg("添加失败");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * 修改话题
+     * @param topicid
+     * @param title
+     * @param content
+     * @param status
+     * @return
+     */
+    @RequestMapping(path = "/updatetopic",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult changeData(Integer topicid,String title,String content,Integer status){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ITopicDao topicDao=session.getMapper(ITopicDao.class);
+        try {
+            topicDao.UpdateTopic(topicid,title,content,status);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
         } finally {
             session.close();
         }

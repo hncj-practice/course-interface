@@ -1,13 +1,16 @@
 package domain;
 
 public class Course {
-    private int cid;
-    private String semester;
-    private String tno;
-    private String cname;
-    private String coverimg;
-    private String status;
-    private String snum;
+    private int cid;            //课程编号
+    private String semester;    //学期编号
+    private String tno;         //教师学号
+    private String tname;       //教师姓名
+    private String cname;       //课程名称
+    private String coverimg;    //课程封面
+    private String status;      //课程状态
+    private String snum;        //学习本门课程的人数
+//    private int total;          //
+
 
     public int getCid() {
         return cid;
@@ -31,6 +34,14 @@ public class Course {
 
     public void setTno(String tno) {
         this.tno = tno;
+    }
+
+    public String getTname() {
+        return tname;
+    }
+
+    public void setTname(String tname) {
+        this.tname = tname;
     }
 
     public String getCname() {
@@ -71,6 +82,7 @@ public class Course {
                 "cid=" + cid +
                 ", semester='" + semester + '\'' +
                 ", tno='" + tno + '\'' +
+                ", tname='" + tname + '\'' +
                 ", cname='" + cname + '\'' +
                 ", coverimg='" + coverimg + '\'' +
                 ", status='" + status + '\'' +

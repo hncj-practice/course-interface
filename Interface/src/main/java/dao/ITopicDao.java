@@ -24,6 +24,19 @@ public interface ITopicDao {
     @Insert("insert into ht(kc_bh,ht_bt,ht_nr,ht_fbsj,ht_zt) values(#{courseid},#{topictitle},#{topiccontent},#{committime},#{topicstatus})")
     void addTopic(Topic topic);
 
+    //修改话题(话题标题、话题内容、话题状态)
+    @Update("<script>" +
+            "update ht" +
+            "<set>" +
+            "<if test='title!=null'> ht_bt=#{title}, </if>" +
+            "<if test='content!=null'> ht_nr=#{content}, </if>" +
+            "<if test='status!=null'> ht_zt=#{status} </if>" +
+            "<if test='status!=null||content!=null||title!=null'>where ht_bh=#{topicid}</if>" +
+            "</set>" +
+            "</script>")
+    void UpdateTopic(@Param("topicid") Integer topicid,@Param("title") String title,@Param("content") String content,@Param("status") Integer status);
+
+
     //删除话题
     @Delete("delete from ht where ht_bh=#{topicid}")
     int delTopic(@Param("topicid") String topicid);

@@ -1,6 +1,7 @@
 package controller;
 
 import dao.ICourseDao;
+import dao.IDataDao;
 import domain.Chapter;
 import domain.Course;
 import org.apache.ibatis.session.SqlSession;
@@ -36,6 +37,32 @@ public class CourseController {
         } catch (Exception e) {
             e.printStackTrace();
             return APIResult.createNg("添加失败");
+        } finally {
+            session.close();
+        }
+    }
+
+     /**
+     * 修改课程
+     * @param courseid
+     * @param name
+     * @param avatar
+     * @param status
+     * @return
+     */
+    @RequestMapping(path = "/updatecourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult changeData(Integer courseid,String name,String avatar,Integer status){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ICourseDao courseDao=session.getMapper(ICourseDao.class);
+        try {
+            courseDao.UpdateCourse(courseid,name,avatar,status);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
         } finally {
             session.close();
         }
@@ -81,49 +108,41 @@ public class CourseController {
         }
     }
 
+
     /**
-     * 按教师号查找课程
-     * @param tno
+     * 按教师号查找课程或按课程名称模糊查询
+     * @param condition 可以为教师号或者课程名称
+     * @param page
+     * @param num
+     * @param type
      * @return
      */
-    @RequestMapping(path = "/getcoursebytno",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/getcoursebytnoorcoursename",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult StudentLogin(String tno){
+    public APIResult StudentLogin(String condition,Integer page,Integer num,Integer type){
         //查询数据库
+        if(page==null||num==null||page<1||num<1){
+            return APIResult.createNg("参数不合法");
+        }
+        if(type==1){//按教师号查询
+            condition="js.js_gh="+condition;
+        }else if(type==2){//按课程名称模糊查询
+            condition="kc.kc_mc like "+"'%"+condition+"%'";
+        }else{
+            return APIResult.createNg("参数不合法，请检查");
+        }
         SqlSession session=util.MyBatis.getSession();
         ICourseDao iCourseDao=session.getMapper(ICourseDao.class);
-        List<Course> courses=iCourseDao.findTeachCourse(tno);
+        List<Course> courses=iCourseDao.findTeachCourse(condition,(page-1)*num,num);
         if(!courses.isEmpty()){
             for(Course course:courses)
-                System.out.println(course.toString());
+                if(course.getTname()==null){
+                    course.setTname("暂未分配教师");
+                }
             return APIResult.createOk("查询成功",courses);
         }else{
-            return APIResult.createNg("没有授课记录，请先添加课程");
+            return APIResult.createNg("查询结果为空");
         }
     }
 
-
-    /**
-     * 修改课程状态(未开课/进行中/归档)
-     * @param courseid  修改哪门课程
-     * @param status    修改为哪种状态
-     * @return
-     */
-    @RequestMapping(path = "/changestatus",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
-    @ResponseBody
-    public APIResult changeStatus(int courseid,int status){
-        //查询数据库
-        SqlSession session=util.MyBatis.getSession();
-        ICourseDao courseDao=session.getMapper(ICourseDao.class);
-        try {
-            courseDao.changeStatus(courseid,status);
-            session.commit();
-            return APIResult.createOKMessage("修改成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return APIResult.createNg("修改失败");
-        } finally {
-            session.close();
-        }
-    }
 }

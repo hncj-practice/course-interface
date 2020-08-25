@@ -111,7 +111,6 @@
 <a href="topic/gettopicbycid?courseid=1">按课程号查找话题</a>
 <a href="problem/getproblembychapterid?chapterid=1&chapterid=2&type=0">按章节号查找题目</a>
 <a href="chapter/getchapterbycourseid?courseid=1">按课程号查找章节</a>
-<a href="course/getcoursebytno?tno=888888888">按教师号查找课程</a>
 <br>
 <a href="teacher/getteacherbytno?tno=888888888">按教师号查找教师</a>
 <a href="comment/getcommentbytopicid?topicid=1&page=1&num=2">按话题号查找评论</a>
@@ -120,7 +119,6 @@
 <br>
 <a href="student/choicecourse?courseid=1&classid=0814171">选课</a>
 <a href="problem/getproblembypaperid?paperid=1">按试卷编号查找试题</a>
-<a href="course/changestatus?courseid=1&status=2">修改课程状态</a>
 <a href="data/changedata?dataid=1&name=新的资料名称&link=https://blog.csdn.net/little_nai/article/details/53436453">修改资料名称及链接</a>
 <a href="class/changeclassname?classid=0814171&classname=计科一班">修改班级名称</a>
 <br>
@@ -129,5 +127,11 @@
 <a href="paper/getpaperbycourseid?courseid=1">按课程号查找试卷</a>
 <a href="paper/releasepaper?paperid=1&courseid=1">教师发布试卷</a>
 <a href="paper/updatetestgrade?sno=081417162&paperid=1&grade=95.5">更新学生测验成绩</a>
+<br>
+<a href="grade/gettestgradebyclassidandpaperid?classid=0814171&paperid=1&sort=3">成绩排序</a>
+<a href="course/updatecourse?courseid=1&name=移动终端开发新名称&avatar=http://i0.hdslb.com/bfs/archive/15c333700bf0c23e481110eab37a9531d1fe7ef7.png@880w_388h_1c_95q&status=2">修改课程信息</a>
+<a href="course/getcoursebytnoorcoursename?condition=888888888&page=1&num=3&type=1">按教师号查找课程</a>
+<a href="course/getcoursebytnoorcoursename?condition=移动&page=1&num=3&type=2">按课程名模糊查找课程</a>
+<a href="topic/updatetopic?topicid=1&title=这是一个测试话题新名称&content=新内容&status=2">更新话题信息</a>
 </body>
 </html>
