@@ -2,8 +2,12 @@ package controller;
 
 import dao.ICourseDao;
 import dao.IDataDao;
+import dao.IStudentDao;
+import dao.ITeacherDao;
 import domain.Chapter;
 import domain.Course;
+import domain.Teacher;
+import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,19 +30,58 @@ public class CourseController {
      */
     @RequestMapping(path = "/addcourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addClass(Course course){
+    public APIResult addClass(Course course,String[] classid){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         ICourseDao courseDao=session.getMapper(ICourseDao.class);
         try {
             courseDao.addCourse(course);
+            //将classid班级中的所有学生学习刚添加的课程
+            IStudentDao studentDao=session.getMapper(IStudentDao.class);
+            studentDao.ChoiceCourse(course.getCid(),classid);
+            //提交修改
             session.commit();
             return APIResult.createOk("添加成功", course);
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
-            return APIResult.createNg("添加失败");
+            //出现错误，回滚数据库
+            session.rollback();
+            return APIResult.createNg("添加失败，请稍后重试");
         } finally {
             session.close();
+        }
+    }
+
+    /**
+     * 查询所有的课程
+     * @return
+     */
+    @RequestMapping(path = "/allcourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult AllTeacher(Integer page,Integer num){
+        //查询数据库
+        String limit;
+        if(page==null||num==null){
+            limit="";
+        }else{
+            limit="limit "+(page-1)*num+","+num;
+        }
+
+        SqlSession session=util.MyBatis.getSession();
+        ICourseDao courseDao=session.getMapper(ICourseDao.class);
+        List<Course> teachers=courseDao.findAll(limit);
+        int total=0;
+        total=courseDao.Total();
+        if(!teachers.isEmpty()&&total!=0){
+            for(Course course:teachers){
+                course.setTotal(total);
+                if(course.getTname()==null){
+                    course.setTname("暂未分配教师");
+                }
+            }
+            return APIResult.createOk("查询成功",teachers);
+        }else{
+            return APIResult.createNg("查询结果为空");
         }
     }
 

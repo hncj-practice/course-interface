@@ -24,6 +24,19 @@ public interface IProblemDao {
     @Insert("insert into tm(zj_bh,tmlx_bh,tm_tg,tm_da) values(#{chapterid},#{ptype},#{question},#{panswer})")
     void addProblem(Problem problem);
 
+    //修改题目
+    @Update("<script>" +
+            "update tm" +
+            "<set>" +
+            "<if test='ptype!=null'> tmlx_bh=#{ptype},</if>" +
+            "<if test='content!=null'> tm_tg=#{content},</if>" +
+            "<if test='answer!=null'> tm_da=#{answer},</if>" +
+            "</set>" +
+            "where tm_bh=#{problemid}" +
+            "</script>")
+    void UpdateCourse(@Param("problemid") Integer problemid,@Param("ptype") Integer ptype,@Param("content") String content,@Param("answer") String answer);
+
+
     //删除题目
     @Delete("delete from tm where tm_bh=#{problemid}")
     int delProblem(@Param("problemid") String problemid);

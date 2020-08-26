@@ -19,10 +19,6 @@ public interface ICourseDao {
             @Result(column = "kc_zt",property = "status"),
             @Result(column = "count(xskc.xs_xh)",property = "snum")
     })
-    @Select("select * from kc")
-    List<Course> findAll();
-
-
     //教师教授的所有课程
     //或按课程名称模糊查找
     @Select("<script>" +
@@ -34,7 +30,6 @@ public interface ICourseDao {
             "group by kc_bh " +
             " limit #{start},#{end};" +
             "</script>")
-    @ResultMap(value = {"courseMap"})
     List<Course> findTeachCourse(@Param("condition") String condition,@Param("start") int start, @Param("end") int end);
 
 
@@ -42,6 +37,7 @@ public interface ICourseDao {
 
     //添加课程
     @Insert("insert into kc(xq_bh,js_gh,kc_mc,kc_fm,kc_zt) values(#{semester},#{tno},#{cname},#{coverimg},#{status})")
+    @SelectKey(statement="select last_insert_id();",before=false,keyColumn="kc_bh",resultType=int.class,keyProperty="cid")
     void addCourse(Course course);
 
 
@@ -49,14 +45,29 @@ public interface ICourseDao {
     @Update("<script>" +
             "update kc" +
             "<set>" +
-            "<if test='name!=null'> kc_mc=#{name}, </if>" +
-            "<if test='avatar!=null'> kc_fm=#{avatar}, </if>" +
-            "<if test='status!=null'> kc_zt=#{status} </if>" +
-            "<if test='status!=null||avatar!=null||name!=null'>where kc_bh=#{courseid}</if>" +
+            "<if test='name!=null'> kc_mc=#{name},</if>" +
+            "<if test='avatar!=null'> kc_fm=#{avatar},</if>" +
+            "<if test='status!=null'> kc_zt=#{status},</if>" +
             "</set>" +
+            "where kc_bh=#{courseid}" +
+
             "</script>")
     void UpdateCourse(@Param("courseid") Integer courseid,@Param("name") String name,@Param("avatar") String avatar,@Param("status") Integer status);
 
+    //查询所有课程的信息
+    @Select("<script>" +
+            "select kc.kc_bh,kc.xq_bh,kc.js_gh,js.js_xm,kc.kc_mc,kc.kc_fm,kc.kc_zt\n" +
+            "from js,kc\n" +
+            "where js.js_gh=kc.js_gh\n" +
+            "group by kc_bh " +
+            "${limit}"+
+            "</script>")
+    @ResultMap(value = {"courseMap"})
+    List<Course> findAll(@Param("limit") String limit);
+
+    //统计课程的总数
+    @Select("select count(*) from kc")
+    int Total();
 
     //删除课程
     @Delete("delete from kc where kc_bh=#{courseid}")

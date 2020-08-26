@@ -21,6 +21,16 @@ public interface IChapterDao {
     @Insert("insert into zj(kc_bh,zj_mc) values(#{cid},#{chaptername})")
     void addChapter(Chapter chapter);
 
+    //修改章节信息
+    @Update("<script>" +
+            "update zj" +
+            "<set>" +
+            "<if test='name!=null'>zj_mc=#{name},</if>" +
+            "</set>" +
+            " where zj_bh=#{chapterid}" +
+            "</script>")
+    void updateChapter(@Param("chapterid") Integer chapterid, @Param("name") String name);
+
     //删除章节
     @Delete("delete from zj where zj_bh=#{chapterid}")
     int delChapter(@Param("chapterid") String chapterid);

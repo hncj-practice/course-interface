@@ -82,10 +82,10 @@
 <a href="class/addclass?classid=0814172&classname=计算机科学与技术二班">添加班级</a>
 <a href="class/delclass?classid=0814172">删除班级</a>
 <br>
-<a href="semester/addsemester?semesterid=2020_02&semestername=2019-2020学年第二学期">添加学期</a>
-<a href="semester/delsemester?semesterid=2020_02">删除学期</a>
+<a href="semester/addsemester?semestername=2019-2020学年第二学期">添加学期</a>
+<a href="semester/delsemester?semesterid=2">删除学期</a>
 <br>
-<a href="course/addcourse?semester=2020_09&tno=888888888&cname=人工智能&coverimg=https://i0.hdslb.com/bfs/sycp/creative_img/202008/26449dd779b45fca0fec993f66de6192.png&status=1">添加课程</a>
+<a href="course/addcourse?semester=1&tno=888888888&cname=人工智能&coverimg=https://i0.hdslb.com/bfs/sycp/creative_img/202008/26449dd779b45fca0fec993f66de6192.png&status=1&classid=0814171">添加课程</a>
 <a href="course/delcourse?courseid=6">删除课程</a>
 <br>
 <a href="topic/addtopic?courseid=1&topictitle=标题&topiccontent=内容&committime=2020-08-31 14:34:24&topicstatus=1">添加话题</a>
@@ -106,6 +106,8 @@
 <a href="student/getstudentbycid?classid=0814171">查询某班级所有学生</a>
 <a href="teacher/allteacher?page=1&num=3">查询所有的教师信息</a>
 <a href="student/allstudent?page=1&num=3">查询所有的学生信息</a>
+<a href="class/allclass?page=1&num=3">查询所有的班级信息</a>
+<a href="course/allcourse?page=1&num=3">查询所有的课程信息</a>
 <br>
 <a href="course/getcoursebycid?courseid=1">按课程号查找课程</a>
 <a href="topic/gettopicbycid?courseid=1">按课程号查找话题</a>
@@ -119,7 +121,7 @@
 <br>
 <a href="student/choicecourse?courseid=1&classid=0814171">选课</a>
 <a href="problem/getproblembypaperid?paperid=1">按试卷编号查找试题</a>
-<a href="data/changedata?dataid=1&name=新的资料名称&link=https://blog.csdn.net/little_nai/article/details/53436453">修改资料名称及链接</a>
+<a href="data/updatedata?dataid=1&name=新的资料名称&link=https://blog.csdn.net/little_nai/article/details/53436453">修改资料名称及链接</a>
 <a href="class/changeclassname?classid=0814171&classname=计科一班">修改班级名称</a>
 <br>
 <a href="paper/randomgenerate?chapterid=1&chapterid=2&num=5&type=1">随机组卷</a>
@@ -133,5 +135,13 @@
 <a href="course/getcoursebytnoorcoursename?condition=888888888&page=1&num=3&type=1">按教师号查找课程</a>
 <a href="course/getcoursebytnoorcoursename?condition=移动&page=1&num=3&type=2">按课程名模糊查找课程</a>
 <a href="topic/updatetopic?topicid=1&title=这是一个测试话题新名称&content=新内容&status=2">更新话题信息</a>
+<br>
+<a href="comment/updatecomment?commentid=1&content=这是修改后的内容">更新评论信息</a>
+<a href="problem/updateproblem?problemid=9&content=这是修改后的题目&answer=A">更新题目信息</a>
+<a href="semester/updatesemester?semesterid=1&name=2020-2021学年第一学期新名称">更新学期信息</a>
+<a href="paper/updatepaper?paperid=2&name=新的试卷名称&choice=12">更新试卷信息</a>
+<a href="chapter/updatechapter?chapterid=1&name=第一章：新的名字">更新章节信息</a>
+<a href="student/updatestudent?sno=081417162&password=123456&status=2">更新学生信息</a>
+<a href="teacher/updateteacher?tno=555555&password=123456&status=2">更新教师信息</a>
 </body>
 </html>

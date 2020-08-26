@@ -1,9 +1,6 @@
 package controller;
 
-import dao.IDataDao;
-import dao.IPaperDao;
-import dao.IProblemDao;
-import dao.IStudentDao;
+import dao.*;
 import domain.Data;
 import domain.Paper;
 import domain.Problem;
@@ -47,6 +44,35 @@ public class PaperController {
             session.close();
         }
     }
+
+    /**
+     * 修改试卷
+     * @param paperid
+     * @param name
+     * @param choice
+     * @param judge
+     * @param fill
+     * @param status
+     * @return
+     */
+    @RequestMapping(path = "/updatepaper",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult updatePaper(Integer paperid,String name,Integer choice,Integer judge,Integer fill,Integer status){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IPaperDao paperDao=session.getMapper(IPaperDao.class);
+        try {
+            paperDao.UpdatePaper(paperid,name,choice,judge,fill,status);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
+        } finally {
+            session.close();
+        }
+    }
+
 
     /**
      * 按课程编号查找试卷

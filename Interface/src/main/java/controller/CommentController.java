@@ -1,6 +1,7 @@
 package controller;
 
 import dao.ICommentDao;
+import dao.ICourseDao;
 import dao.ITopicDao;
 import domain.Comment;
 import domain.Topic;
@@ -38,6 +39,30 @@ public class CommentController {
         } catch (Exception e) {
             e.printStackTrace();
             return APIResult.createNg("添加失败");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * 修改评论
+     * @param commentid
+     * @param content
+     * @return
+     */
+    @RequestMapping(path = "/updatecomment",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult updateComment(Integer commentid,String content){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ICommentDao commentDao=session.getMapper(ICommentDao.class);
+        try {
+            commentDao.UpdateComment(commentid,content);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
         } finally {
             session.close();
         }

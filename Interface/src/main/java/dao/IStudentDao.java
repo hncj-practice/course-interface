@@ -38,6 +38,25 @@ public interface IStudentDao {
     @Insert("insert into xs(xs_xh,bj_bh,xs_mm,xs_xm,xs_xb,xs_yx,xs_tx,xs_zt) values(#{sno},#{cla},#{pwd},#{name},#{sex},#{email},#{avatar},#{status})")
     void addStudent(Student student);
 
+    //修改学生信息
+    @Update("<script>" +
+            "update xs" +
+            "<set>" +
+            "<if test='cla!=null'> bj_bh=#{cla},</if>" +
+            "<if test='password!=null'> xs_mm=#{password},</if>" +
+            "<if test='name!=null'> xs_xm=#{name},</if>" +
+            "<if test='sex!=null'> xs_xb=#{sex},</if>" +
+            "<if test='email!=null'> xs_yx=#{email},</if>" +
+            "<if test='avatar!=null'> xs_tx=#{avatar},</if>" +
+            "<if test='status!=null'> xs_zt=#{status},</if>" +
+            "</set>" +
+            "where xs_xh=#{sno}" +
+            "</script>")
+    void UpdateCourse(@Param("sno") String sno,@Param("cla") String cla,@Param("password") String password,
+                      @Param("name") String name,@Param("sex") String sex,@Param("email") String email,
+                      @Param("avatar") String avatar,@Param("status") Integer status);
+
+
     //删除学生
 //    @Delete("delete from xs where xs_xh=#{username} and xs_mm=#{password}")
     @Delete("delete from xs where xs_xh=#{sno} and #{admin_pwd}=(select gly_mm from gly where gly_zh=#{admin_user} )")

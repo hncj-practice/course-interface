@@ -39,6 +39,13 @@ public interface IDataDao {
     int Total(@Param("courseid") int courseid);
 
     //修改资料(资料名、资料链接)
-    @Update("update zl set zl_mc=#{name},zl_lj=#{link} where zl_bh=#{dataid}")
-    void changeData(@Param("dataid") int dataid,@Param("name") String name,@Param("link") String link);
+    @Update("<script>" +
+            "update zl" +
+            "<set>" +
+            "<if test='name!=null'>zl_mc=#{name},</if>" +
+            "<if test='link!=null'>zl_lj=#{link},</if>" +
+            "</set>" +
+            " where zl_bh=#{dataid}" +
+            "</script>")
+    void updateData(@Param("dataid") int dataid, @Param("name") String name, @Param("link") String link);
 }

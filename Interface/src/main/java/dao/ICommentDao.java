@@ -22,6 +22,17 @@ public interface ICommentDao {
             "limit #{start},#{end};")
     List<Comment> findAll(@Param("start") int start, @Param("end") int end);
 
+    //修改评论
+    @Update("<script>" +
+            "update pl" +
+            "<set>" +
+            "<if test='content!=null'> pl_nr=#{content},</if>" +
+            "</set>" +
+            "where pl_bh=#{commentid}" +
+
+            "</script>")
+    void UpdateComment(@Param("commentid") Integer commentid,@Param("content") String content);
+
 
     //添加评论
     @Insert("insert into pl(xs_xh,ht_bh,pl_nr,pl_sj) values(#{sno},#{topicid},#{commentcontent},#{commenttime})")

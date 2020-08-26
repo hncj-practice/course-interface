@@ -28,11 +28,11 @@ public interface ITopicDao {
     @Update("<script>" +
             "update ht" +
             "<set>" +
-            "<if test='title!=null'> ht_bt=#{title}, </if>" +
-            "<if test='content!=null'> ht_nr=#{content}, </if>" +
-            "<if test='status!=null'> ht_zt=#{status} </if>" +
-            "<if test='status!=null||content!=null||title!=null'>where ht_bh=#{topicid}</if>" +
+            "<if test='title!=null'> ht_bt=#{title},</if>" +
+            "<if test='content!=null'> ht_nr=#{content},</if>" +
+            "<if test='status!=null'> ht_zt=#{status},</if>" +
             "</set>" +
+            "where ht_bh=#{topicid}" +
             "</script>")
     void UpdateTopic(@Param("topicid") Integer topicid,@Param("title") String title,@Param("content") String content,@Param("status") Integer status);
 

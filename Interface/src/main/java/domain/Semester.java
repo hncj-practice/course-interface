@@ -1,14 +1,15 @@
 package domain;
 
 public class Semester {
-    private String semesterid;
+    private int semesterid;
     private String semestername;
 
-    public String getSemesterid() {
+
+    public int getSemesterid() {
         return semesterid;
     }
 
-    public void setSemesterid(String semesterid) {
+    public void setSemesterid(int semesterid) {
         this.semesterid = semesterid;
     }
 

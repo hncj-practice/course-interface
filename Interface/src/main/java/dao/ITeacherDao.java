@@ -22,8 +22,8 @@ public interface ITeacherDao {
     //查询所有教师的信息
     @Select("select js_gh,js_xm,js_xb,js_yx,js_tx,js_zt " +
             "from js " +
-            "limit #{start},#{end};")
-    List<Teacher> findAll(@Param("start") int start,@Param("end") int end);
+            "${limit}")
+    List<Teacher> findAll(@Param("limit") String limit);
 
     //统计教师的总数
     @Select("select count(*) from js")
@@ -43,6 +43,23 @@ public interface ITeacherDao {
     //添加教师
     @Insert("insert into js values(#{tno},#{pwd},#{name},#{sex},#{email},#{avatar},#{status})")
     void addTeacher(Teacher teacher);
+
+    //修改教师信息
+    @Update("<script>" +
+            "update js" +
+            "<set>" +
+            "<if test='password!=null'> js_mm=#{password},</if>" +
+            "<if test='name!=null'> js_xm=#{name},</if>" +
+            "<if test='sex!=null'> js_xb=#{sex},</if>" +
+            "<if test='email!=null'> js_yx=#{email},</if>" +
+            "<if test='avatar!=null'> js_tx=#{avatar},</if>" +
+            "<if test='status!=null'> js_zt=#{status},</if>" +
+            "</set>" +
+            "where js_gh=#{tno}" +
+            "</script>")
+    void UpdateTeacher(@Param("tno") String tno,@Param("password") String password,
+                      @Param("name") String name,@Param("sex") String sex,@Param("email") String email,
+                      @Param("avatar") String avatar,@Param("status") Integer status);
 
     //删除教师
     @Delete("delete from js where js_gh=#{tno} and #{admin_pwd}=(select gly_mm from gly where gly_zh=#{admin_user} )")

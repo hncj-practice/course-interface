@@ -1,6 +1,7 @@
 package controller;
 
 import dao.IClassDao;
+import dao.ICourseDao;
 import dao.ISemesterDao;
 import domain.Clase;
 import domain.Semester;
@@ -29,10 +30,34 @@ public class SemesterController {
         try {
             semesterDao.addSemester(semester);
             session.commit();
-            return APIResult.createOk("添加成功", semester);
+            return APIResult.createOk("添加成功", semester.getSemestername());
         } catch (Exception e) {
             e.printStackTrace();
             return APIResult.createNg("添加失败");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * 修改学期
+     * @param semesterid
+     * @param name
+     * @return
+     */
+    @RequestMapping(path = "/updatesemester",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult updateSemester(Integer semesterid,String name){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ISemesterDao semesterDao=session.getMapper(ISemesterDao.class);
+        try {
+            semesterDao.UpdateSemester(semesterid,name);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
         } finally {
             session.close();
         }
@@ -45,7 +70,7 @@ public class SemesterController {
      */
     @RequestMapping(path = "/delsemester", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteClase(String semesterid) {
+    public APIResult DeleteClase(int semesterid) {
         //查询数据库
         SqlSession session = util.MyBatis.getSession();
         int status=0;       //学生

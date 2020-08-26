@@ -2,6 +2,7 @@ package controller;
 
 import dao.IChapterDao;
 import dao.ICourseDao;
+import dao.IDataDao;
 import domain.Chapter;
 import domain.Problem;
 import org.apache.ibatis.session.SqlSession;
@@ -35,6 +36,30 @@ public class ChapterController {
         } catch (Exception e) {
             e.printStackTrace();
             return APIResult.createNg("添加失败");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * 更新章节信息
+     * @param chapterid
+     * @param name
+     * @return
+     */
+    @RequestMapping(path = "/updatechapter",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult updateChapter(Integer chapterid,String name){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IChapterDao chapterDao=session.getMapper(IChapterDao.class);
+        try {
+            chapterDao.updateChapter(chapterid,name);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
         } finally {
             session.close();
         }

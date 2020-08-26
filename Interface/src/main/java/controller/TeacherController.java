@@ -1,6 +1,7 @@
 package controller;
 
 import dao.ICourseDao;
+import dao.IStudentDao;
 import dao.ITeacherDao;
 import domain.Course;
 import domain.Teacher;
@@ -18,6 +19,35 @@ import java.util.List;
 @RequestMapping(path = "/teacher")
 public class TeacherController {
 
+    /**
+     * 修改教师信息
+     * @param tno
+     * @param password
+     * @param name
+     * @param sex
+     * @param email
+     * @param avatar
+     * @param status
+     * @return
+     */
+    @RequestMapping(path = "/updateteacher",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult updateTeacher(String tno,String password,String name,String sex,String email,String avatar,Integer status){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ITeacherDao teacherDao=session.getMapper(ITeacherDao.class);
+        try {
+            teacherDao.UpdateTeacher(tno,password,name,sex,email,avatar,status);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
+        } finally {
+            session.close();
+        }
+    }
+
 
     /**
      * 查询所有的教师信息
@@ -25,11 +55,18 @@ public class TeacherController {
      */
     @RequestMapping(path = "/allteacher",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult AllTeacher(int page,int num){
+    public APIResult AllTeacher(Integer page,Integer num){
         //查询数据库
+        String limit;
+        if(page==null||num==null){
+            limit="";
+        }else{
+            limit="limit "+(page-1)*num+","+num;
+        }
+
         SqlSession session=util.MyBatis.getSession();
         ITeacherDao teacherDao=session.getMapper(ITeacherDao.class);
-        List<Teacher> teachers=teacherDao.findAll((page-1)*num,num);
+        List<Teacher> teachers=teacherDao.findAll(limit);
         int total=0;
         total=teacherDao.Total();
         if(!teachers.isEmpty()&&total!=0){

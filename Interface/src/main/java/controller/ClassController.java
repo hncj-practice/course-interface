@@ -39,6 +39,36 @@ public class ClassController {
     }
 
     /**
+     * 查询所有的班级信息
+     * @return
+     */
+    @RequestMapping(path = "/allclass",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult AllTeacher(Integer page,Integer num){
+        //查询数据库
+        String limit;
+        if(page==null||num==null){
+            limit="";
+        }else{
+            limit="limit "+(page-1)*num+","+num;
+        }
+
+        SqlSession session=util.MyBatis.getSession();
+        IClassDao classDao=session.getMapper(IClassDao.class);
+        List<Clase> teachers=classDao.findAll(limit);
+        int total=0;
+        total=classDao.Total();
+        if(!teachers.isEmpty()&&total!=0){
+            for(Clase clase:teachers)
+                clase.setTotal(total);
+            return APIResult.createOk("查询成功",teachers);
+        }else{
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+
+    /**
      * 删除班级
      * @param classid
      * @return

@@ -1,9 +1,6 @@
 package controller;
 
-import dao.ICommentDao;
-import dao.ICourseDao;
 import dao.IDataDao;
-import domain.Comment;
 import domain.Data;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
@@ -89,20 +86,20 @@ public class DataController {
     }
 
     /**
-     * 修改资料信息(资料名称、资料链接)
+     * 更新资料信息(资料名称、资料链接)
      * @param dataid    资料编号
      * @param name      资料名称
      * @param link      资料链接
      * @return
      */
-    @RequestMapping(path = "/changedata",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatedata",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
     public APIResult changeData(int dataid,String name,String link){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         IDataDao dataDao=session.getMapper(IDataDao.class);
         try {
-            dataDao.changeData(dataid,name,link);
+            dataDao.updateData(dataid,name,link);
             session.commit();
             return APIResult.createOKMessage("修改成功");
         } catch (Exception e) {

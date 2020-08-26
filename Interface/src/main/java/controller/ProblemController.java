@@ -45,6 +45,32 @@ public class ProblemController {
     }
 
     /**
+     * 修改题目信息
+     * @param problemid
+     * @param ptype
+     * @param content
+     * @param answer
+     * @return
+     */
+    @RequestMapping(path = "/updateproblem",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult changeData(Integer problemid,Integer ptype,String content,String answer){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IProblemDao problemDao=session.getMapper(IProblemDao.class);
+        try {
+            problemDao.UpdateCourse(problemid,ptype,content,answer);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
      * 删除题目
      * @param problemid
      * @return

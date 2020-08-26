@@ -2,14 +2,15 @@ package domain;
 
 public class Course {
     private int cid;            //课程编号
-    private String semester;    //学期编号
+    private int semester;       //学期编号
     private String tno;         //教师学号
     private String tname;       //教师姓名
     private String cname;       //课程名称
     private String coverimg;    //课程封面
     private String status;      //课程状态
     private String snum;        //学习本门课程的人数
-//    private int total;          //
+
+    private int total;          //课程总数
 
 
     public int getCid() {
@@ -20,11 +21,11 @@ public class Course {
         this.cid = cid;
     }
 
-    public String getSemester() {
+    public int getSemester() {
         return semester;
     }
 
-    public void setSemester(String semester) {
+    public void setSemester(int semester) {
         this.semester = semester;
     }
 
@@ -74,6 +75,14 @@ public class Course {
 
     public void setSnum(String snum) {
         this.snum = snum;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     @Override

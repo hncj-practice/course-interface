@@ -33,6 +33,21 @@ public interface IPaperDao {
     @ResultMap(value = {"paperMap"})
     List<Paper> getPaperByCourseid(@Param("courseid") int courseid);
 
+    //修改试卷
+    @Update("<script>" +
+            "update sj" +
+            "<set>" +
+            "<if test='name!=null'> sj_mc=#{name},</if>" +
+            "<if test='choice!=null'> sj_xzfz=#{choice},</if>" +
+            "<if test='judge!=null'> sj_pdfz=#{judge},</if>" +
+            "<if test='fill!=null'> sj_tkfz=#{fill},</if>" +
+            "<if test='status!=null'> sj_zt=#{status},</if>" +
+            "</set>" +
+            "where sj_bh=#{paperid}" +
+            "</script>")
+    void UpdatePaper(@Param("paperid") Integer paperid,@Param("name") String name,@Param("choice") Integer choice,@Param("judge") Integer judge,@Param("fill") Integer fill,@Param("status") Integer status);
+
+
     //删除试卷
     @Delete("delete from sj where sj_bh=#{paperid}")
     int delPaper(@Param("paperid") int paperid);

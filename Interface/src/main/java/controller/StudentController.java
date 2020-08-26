@@ -1,9 +1,6 @@
 package controller;
 
-import dao.IClassDao;
-import dao.IPaperDao;
-import dao.IStudentDao;
-import dao.ITeacherDao;
+import dao.*;
 import domain.Account;
 import domain.Student;
 import domain.Teacher;
@@ -53,6 +50,32 @@ public class StudentController {
             return APIResult.createNg("用户名或密码错误");
         }
 
+    }
+
+    /**
+     * 修改学生信息
+     * @param sno
+     * @param cla
+     * @param password
+     * @param name
+     * @return
+     */
+    @RequestMapping(path = "/updatestudent",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult updateStudent(String sno,String cla,String password,String name,String sex,String email,String avatar,Integer status){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        IStudentDao studentDao=session.getMapper(IStudentDao.class);
+        try {
+            studentDao.UpdateCourse(sno,cla,password,name,sex,email,avatar,status);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
+        } finally {
+            session.close();
+        }
     }
 
     /**

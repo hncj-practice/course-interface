@@ -3,6 +3,7 @@ package domain;
 public class Clase {
     private String classid;
     private String classname;
+    private int total;
 
     public String getClassid() {
         return classid;
@@ -18,6 +19,14 @@ public class Clase {
 
     public void setClassname(String classname) {
         this.classname = classname;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     @Override
