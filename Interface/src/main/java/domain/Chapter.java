@@ -2,7 +2,7 @@ package domain;
 
 public class Chapter {
     private int chapterid;          //章节号
-    private int courseid;                //课程号
+    private int courseid;           //课程号
     private String chaptername;     //章节名
 
     public int getChapterid() {

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 import java.util.List;
 
@@ -24,8 +25,9 @@ public class DataController {
      */
     @RequestMapping(path = "/adddata",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addComment(Data data){
-        //查询数据库
+    public APIResult addComment(Data data,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IDataDao dataDao=session.getMapper(IDataDao.class);
         try {
@@ -40,6 +42,33 @@ public class DataController {
         }
     }
 
+
+    /**
+     * 更新资料信息(资料名称、资料链接)
+     * @param dataid    资料编号
+     * @param name      资料名称
+     * @param link      资料链接
+     * @return
+     */
+    @RequestMapping(path = "/updatedata",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult changeData(int dataid,String name,String link,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
+        SqlSession session=util.MyBatis.getSession();
+        IDataDao dataDao=session.getMapper(IDataDao.class);
+        try {
+            dataDao.updateData(dataid,name,link);
+            session.commit();
+            return APIResult.createOKMessage("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.createNg("修改失败");
+        } finally {
+            session.close();
+        }
+    }
+
     /**
      * 删除资料
      * @param dataid
@@ -47,8 +76,9 @@ public class DataController {
      */
     @RequestMapping(path = "/deldata", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteData(int dataid) {
-        //查询数据库
+    public APIResult DeleteData(int dataid,String user,String pwd) {
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
         int status=0;
         IDataDao dataDao = session.getMapper(IDataDao.class);
@@ -85,28 +115,5 @@ public class DataController {
         }
     }
 
-    /**
-     * 更新资料信息(资料名称、资料链接)
-     * @param dataid    资料编号
-     * @param name      资料名称
-     * @param link      资料链接
-     * @return
-     */
-    @RequestMapping(path = "/updatedata",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
-    @ResponseBody
-    public APIResult changeData(int dataid,String name,String link){
-        //查询数据库
-        SqlSession session=util.MyBatis.getSession();
-        IDataDao dataDao=session.getMapper(IDataDao.class);
-        try {
-            dataDao.updateData(dataid,name,link);
-            session.commit();
-            return APIResult.createOKMessage("修改成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return APIResult.createNg("修改失败");
-        } finally {
-            session.close();
-        }
-    }
+
 }

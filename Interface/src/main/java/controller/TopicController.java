@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 import java.util.List;
 
@@ -28,8 +29,9 @@ public class TopicController {
      */
     @RequestMapping(path = "/addtopic",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addTopic(Topic topic){
-        //查询数据库
+    public APIResult addTopic(Topic topic,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         ITopicDao topicDao=session.getMapper(ITopicDao.class);
         try {
@@ -54,8 +56,9 @@ public class TopicController {
      */
     @RequestMapping(path = "/updatetopic",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult changeData(Integer topicid,String title,String content,Integer status){
-        //查询数据库
+    public APIResult changeData(Integer topicid,String title,String content,Integer status,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         ITopicDao topicDao=session.getMapper(ITopicDao.class);
         try {
@@ -77,8 +80,9 @@ public class TopicController {
      */
     @RequestMapping(path = "/deltopic", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteClase(String topicid) {
-        //查询数据库
+    public APIResult DeleteClase(String topicid,String user,String pwd) {
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
         int status=0;
         ITopicDao topicDao = session.getMapper(ITopicDao.class);

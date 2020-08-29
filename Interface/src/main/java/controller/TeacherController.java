@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 import java.util.List;
 
@@ -32,8 +33,9 @@ public class TeacherController {
      */
     @RequestMapping(path = "/updateteacher",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult updateTeacher(String tno,String password,String name,String sex,String email,String avatar,Integer status){
-        //查询数据库
+    public APIResult updateTeacher(String tno,String password,String name,String sex,String email,String avatar,Integer status,String adminuser,String adminpwd){
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         ITeacherDao teacherDao=session.getMapper(ITeacherDao.class);
         try {

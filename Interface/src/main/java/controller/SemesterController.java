@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 //控制器类
 @Controller
@@ -23,8 +24,9 @@ public class SemesterController {
      */
     @RequestMapping(path = "/addsemester",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addClass(Semester semester){
-        //查询数据库
+    public APIResult addClass(Semester semester,String adminuser,String adminpwd){
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         ISemesterDao semesterDao=session.getMapper(ISemesterDao.class);
         try {
@@ -47,8 +49,9 @@ public class SemesterController {
      */
     @RequestMapping(path = "/updatesemester",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult updateSemester(Integer semesterid,String name){
-        //查询数据库
+    public APIResult updateSemester(Integer semesterid,String name,String adminuser,String adminpwd){
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         ISemesterDao semesterDao=session.getMapper(ISemesterDao.class);
         try {
@@ -70,8 +73,9 @@ public class SemesterController {
      */
     @RequestMapping(path = "/delsemester", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteClase(int semesterid) {
-        //查询数据库
+    public APIResult DeleteClase(int semesterid,String adminuser,String adminpwd) {
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
         int status=0;       //学生
         ISemesterDao semesterDao = session.getMapper(ISemesterDao.class);

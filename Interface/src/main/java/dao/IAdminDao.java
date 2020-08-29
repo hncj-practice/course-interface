@@ -19,15 +19,15 @@ public interface IAdminDao {
     //也可用于判断传入账号是否为管理员账号
     @Select("select * from gly where gly_zh=#{username} and gly_mm=#{password}")
     @ResultMap(value = {"adminMap"})
-    Admin findByTnoAndPwd(@Param("username") String username, @Param("password") String password);
+    Admin findByAdminAndPwd(@Param("username") String username, @Param("password") String password);
 
     //添加管理员
     @Insert("insert into gly values(#{adminAccount},#{adminPwd})")
     void addAdmin(Admin admin);
 
     //删除管理员
-    @Delete("delete from gly where gly_zh=#{admin_user} and gly_mm=#{admin_pwd}")
-    int deleteAdmin(@Param("admin_user") String admin_user,@Param("admin_pwd") String admin_pwd);
+    @Delete("delete from gly where gly_zh=#{username}")
+    int deleteAdmin(@Param("username") String username);
 
     //重置管理员密码
     @Update("update gly set gly_mm=#{newpwd} where gly_zh=#{username} and gly_mm=#{oldpwd}")

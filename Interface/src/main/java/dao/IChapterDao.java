@@ -18,7 +18,7 @@ public interface IChapterDao {
     List<Problem> findAll();
 
     //添加章节
-    @Insert("insert into zj(kc_bh,zj_mc) values(#{cid},#{chaptername})")
+    @Insert("insert into zj(kc_bh,zj_mc) values(#{courseid},#{chaptername})")
     void addChapter(Chapter chapter);
 
     //修改章节信息

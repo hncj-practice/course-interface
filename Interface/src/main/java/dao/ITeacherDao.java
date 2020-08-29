@@ -62,8 +62,8 @@ public interface ITeacherDao {
                       @Param("avatar") String avatar,@Param("status") Integer status);
 
     //删除教师
-    @Delete("delete from js where js_gh=#{tno} and #{admin_pwd}=(select gly_mm from gly where gly_zh=#{admin_user} )")
-    int deleteTeacher(@Param("tno") String tno,@Param("admin_user") String admin_user,@Param("admin_pwd") String admin_pwd);
+    @Delete("delete from js where js_gh=#{tno}")
+    int deleteTeacher(@Param("tno") String tno);
 
 
 

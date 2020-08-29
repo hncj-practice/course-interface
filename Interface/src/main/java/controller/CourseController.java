@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 import java.util.List;
 
@@ -30,8 +31,9 @@ public class CourseController {
      */
     @RequestMapping(path = "/addcourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addClass(Course course,String[] classid){
-        //查询数据库
+    public APIResult addClass(Course course,String[] classid,String adminuser,String adminpwd){
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         ICourseDao courseDao=session.getMapper(ICourseDao.class);
         try {
@@ -95,8 +97,9 @@ public class CourseController {
      */
     @RequestMapping(path = "/updatecourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult changeData(Integer courseid,String name,String avatar,Integer status){
-        //查询数据库
+    public APIResult changeData(Integer courseid,String name,String avatar,Integer status,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         ICourseDao courseDao=session.getMapper(ICourseDao.class);
         try {
@@ -118,8 +121,9 @@ public class CourseController {
      */
     @RequestMapping(path = "/delcourse", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteClase(String courseid) {
-        //查询数据库
+    public APIResult DeleteClase(String courseid,String adminuser,String adminpwd) {
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
         int status=0;       //学生
         ICourseDao courseDao = session.getMapper(ICourseDao.class);

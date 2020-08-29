@@ -11,7 +11,7 @@ public interface IPaperDao {
     @Results(id = "paperMap", value = {
             @Result(column = "sj_bh",property = "paperid",id = true),
             @Result(column = "kc_bh",property = "courseid"),
-            @Result(column = "js_mc",property = "papername"),
+            @Result(column = "sj_mc",property = "papername"),
             @Result(column = "sj_xzfz",property = "choicepoints"),
             @Result(column = "sj_pdfz",property = "judgepoints"),
             @Result(column = "sj_tkfz",property = "fillpoints"),
@@ -24,8 +24,9 @@ public interface IPaperDao {
 
 
     //添加试卷
+    @SelectKey(statement="select last_insert_id();",before=false,keyColumn="sj_bh",resultType=int.class,keyProperty="paperid")
     @Insert("insert into sj(kc_bh,sj_mc,sj_xzfz,sj_pdfz,sj_tkfz,sj_kssj,sj_jssj,sj_zt) values(#{courseid},#{papername},#{choicepoints},#{judgepoints},#{fillpoints},#{starttime},#{endtime},#{status})")
-    void addPaper(Paper data);
+    void addPaper(Paper paper);
 
     //按课程号查找试卷
     @Select("select * from sj " +

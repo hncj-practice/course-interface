@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 import java.util.List;
 
@@ -28,8 +29,9 @@ public class ProblemController {
      */
     @RequestMapping(path = "/addproblem",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addComment(Problem problem){
-        //查询数据库
+    public APIResult addComment(Problem problem,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IProblemDao problemDao=session.getMapper(IProblemDao.class);
         try {
@@ -54,8 +56,9 @@ public class ProblemController {
      */
     @RequestMapping(path = "/updateproblem",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult changeData(Integer problemid,Integer ptype,String content,String answer){
-        //查询数据库
+    public APIResult changeData(Integer problemid,Integer ptype,String content,String answer,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IProblemDao problemDao=session.getMapper(IProblemDao.class);
         try {
@@ -77,8 +80,9 @@ public class ProblemController {
      */
     @RequestMapping(path = "/delproblem", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteProblem(String problemid) {
-        //查询数据库
+    public APIResult DeleteProblem(String problemid,String user,String pwd) {
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
         int status=0;
         IProblemDao problemDao = session.getMapper(IProblemDao.class);

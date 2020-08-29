@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 import java.util.List;
 
@@ -22,8 +23,9 @@ public class ClassController {
      */
     @RequestMapping(path = "/addclass",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addClass(Clase clase){
-        //查询数据库
+    public APIResult addClass(Clase clase,String adminuser,String adminpwd){
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IClassDao classDao=session.getMapper(IClassDao.class);
         try {
@@ -75,8 +77,9 @@ public class ClassController {
      */
     @RequestMapping(path = "/delclass", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteClase(String classid) {
-        //查询数据库
+    public APIResult DeleteClase(String classid,String adminuser,String adminpwd) {
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
         int status=0;       //学生
         IClassDao classDao = session.getMapper(IClassDao.class);
@@ -97,8 +100,9 @@ public class ClassController {
      */
     @RequestMapping(path = "/changeclassname",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult changeClassname(int classid,String classname){
-        //查询数据库
+    public APIResult changeClassname(int classid,String classname,String adminuser,String adminpwd){
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IClassDao classDao=session.getMapper(IClassDao.class);
         try {

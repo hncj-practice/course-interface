@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 import java.util.List;
 
@@ -25,8 +26,9 @@ public class ChapterController {
      */
     @RequestMapping(path = "/addchapter",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult AddChapter(Chapter chapter){
-        //查询数据库
+    public APIResult AddChapter(Chapter chapter,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IChapterDao iChapterDao=session.getMapper(IChapterDao.class);
         try {
@@ -49,8 +51,9 @@ public class ChapterController {
      */
     @RequestMapping(path = "/updatechapter",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult updateChapter(Integer chapterid,String name){
-        //查询数据库
+    public APIResult updateChapter(Integer chapterid,String name,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IChapterDao chapterDao=session.getMapper(IChapterDao.class);
         try {
@@ -72,8 +75,9 @@ public class ChapterController {
      */
     @RequestMapping(path = "/delchapter", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteClase(String chapterid) {
-        //查询数据库
+    public APIResult DeleteClase(String chapterid,String user,String pwd) {
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
         int status=0;       //学生
         IChapterDao chapterDao = session.getMapper(IChapterDao.class);

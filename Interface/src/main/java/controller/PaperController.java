@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,9 @@ public class PaperController {
      */
     @RequestMapping(path = "/addpaper",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addPaper(Paper paper){
-        //查询数据库
+    public APIResult addPaper(Paper paper,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IPaperDao paperDao=session.getMapper(IPaperDao.class);
         try {
@@ -57,8 +59,9 @@ public class PaperController {
      */
     @RequestMapping(path = "/updatepaper",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult updatePaper(Integer paperid,String name,Integer choice,Integer judge,Integer fill,Integer status){
-        //查询数据库
+    public APIResult updatePaper(Integer paperid,String name,Integer choice,Integer judge,Integer fill,Integer status,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IPaperDao paperDao=session.getMapper(IPaperDao.class);
         try {
@@ -73,6 +76,27 @@ public class PaperController {
         }
     }
 
+    /**
+     * 删除试卷
+     * @param paperid
+     * @return
+     */
+    @RequestMapping(path = "/delpaper", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @ResponseBody
+    public APIResult DeletePaper(int paperid,String user,String pwd) {
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
+        SqlSession session = util.MyBatis.getSession();
+        int status=0;
+        IPaperDao paperDao = session.getMapper(IPaperDao.class);
+        status=paperDao.delPaper(paperid);
+        session.commit();
+        if(status!=0){
+            return APIResult.createOKMessage("删除成功");
+        }else{
+            return APIResult.createNg("删除失败");
+        }
+    }
 
     /**
      * 按课程编号查找试卷
@@ -92,26 +116,7 @@ public class PaperController {
         }
     }
 
-    /**
-     * 删除试卷
-     * @param paperid
-     * @return
-     */
-    @RequestMapping(path = "/delpaper", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
-    @ResponseBody
-    public APIResult DeletePaper(int paperid) {
-        //查询数据库
-        SqlSession session = util.MyBatis.getSession();
-        int status=0;
-        IPaperDao paperDao = session.getMapper(IPaperDao.class);
-        status=paperDao.delPaper(paperid);
-        session.commit();
-        if(status!=0){
-            return APIResult.createOKMessage("删除成功");
-        }else{
-            return APIResult.createNg("删除失败");
-        }
-    }
+
 
     /**
      * 向指定试卷中添加若干试题
@@ -121,8 +126,9 @@ public class PaperController {
      */
     @RequestMapping(path = "/addproblems",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addProblems(int paperid,int [] problemids){
-        //查询数据库
+    public APIResult addProblems(int paperid,int [] problemids,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IPaperDao paperDao=session.getMapper(IPaperDao.class);
         try {
@@ -145,8 +151,9 @@ public class PaperController {
      */
     @RequestMapping(path = "/randomgenerate",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult RandomGenerate(Integer[] chapterid,Integer num,String type,Integer choice,Integer fill,Integer judge){
-        //查询数据库
+    public APIResult RandomGenerate(Integer[] chapterid,Integer num,String type,Integer choice,Integer fill,Integer judge,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IProblemDao problemDao=session.getMapper(IProblemDao.class);
         List<Problem> returnproblems=new ArrayList<>();
@@ -250,8 +257,9 @@ public class PaperController {
      */
     @RequestMapping(path = "/updatetestgrade",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult UpdateTestGrade(String sno,int paperid,Float grade){
-        //查询数据库
+    public APIResult UpdateTestGrade(String sno,int paperid,Float grade,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IPaperDao paperDao=session.getMapper(IPaperDao.class);
         try {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -62,8 +63,9 @@ public class StudentController {
      */
     @RequestMapping(path = "/updatestudent",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult updateStudent(String sno,String cla,String password,String name,String sex,String email,String avatar,Integer status){
-        //查询数据库
+    public APIResult updateStudent(String sno,String cla,String password,String name,String sex,String email,String avatar,Integer status,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IStudentDao studentDao=session.getMapper(IStudentDao.class);
         try {
@@ -133,8 +135,9 @@ public class StudentController {
      */
     @RequestMapping(path = "/choicecourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addProblems(int courseid,String [] classid){
-        //查询数据库
+    public APIResult addProblems(int courseid,String [] classid,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IStudentDao studentDao=session.getMapper(IStudentDao.class);
         try {

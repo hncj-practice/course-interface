@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
+import util.AccountUtil;
 
 //控制器类
 @Controller
@@ -51,7 +52,7 @@ public class AccountController {
             }
         } else if (account.getType() == 3) {//管理员
             IAdminDao adminDao = session.getMapper(IAdminDao.class);
-            Admin admin = adminDao.findByTnoAndPwd(account.getUsername(), account.getPassword());
+            Admin admin = adminDao.findByAdminAndPwd(account.getUsername(), account.getPassword());
             if (admin != null) {
                 System.out.println(admin.toString());
                 return APIResult.createOk("登录成功", admin);
@@ -72,10 +73,12 @@ public class AccountController {
      */
     @RequestMapping(path = "/addstudent", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult StudentAdd(Student student) {
+    public APIResult StudentAdd(Student student,String adminuser,String adminpwd) {
         //查询数据库
         SqlSession session = util.MyBatis.getSession();
         IStudentDao studentDao = session.getMapper(IStudentDao.class);
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         try {
             studentDao.addStudent(student);
             session.commit();
@@ -95,10 +98,12 @@ public class AccountController {
      */
     @RequestMapping(path = "/addteacher", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult TeacherAdd(Teacher teacher) {
+    public APIResult TeacherAdd(Teacher teacher,String adminuser,String adminpwd) {
         //查询数据库
         SqlSession session = util.MyBatis.getSession();
         ITeacherDao teacherDao = session.getMapper(ITeacherDao.class);
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         try {
             teacherDao.addTeacher(teacher);
             session.commit();
@@ -118,10 +123,12 @@ public class AccountController {
      */
     @RequestMapping(path = "/addadmin", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult AdminAdd(Admin admin) {
+    public APIResult AdminAdd(Admin admin,String adminuser,String adminpwd) {
         //查询数据库
         SqlSession session = util.MyBatis.getSession();
         IAdminDao iAdminDao = session.getMapper(IAdminDao.class);
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         try {
             iAdminDao.addAdmin(admin);
             session.commit();
@@ -141,19 +148,20 @@ public class AccountController {
      */
     @RequestMapping(path = "/delete", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult Delete(Account account) {
-        //查询数据库
+    public APIResult Delete(Account account,String adminuser,String adminpwd) {
+        if(!AccountUtil.isAdmin(adminuser,adminpwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
         int status=0;
         if (account.getType() == 1) {           //学生
             IStudentDao studentDao = session.getMapper(IStudentDao.class);
-            status=studentDao.deleteStudent(account.getUsername(),account.getAdmin_user(),account.getAdmin_pwd());
+            status=studentDao.deleteStudent(account.getUsername());
         } else if (account.getType() == 2) {    //教师
             ITeacherDao teacherDao = session.getMapper(ITeacherDao.class);
-            status=teacherDao.deleteTeacher(account.getUsername(),account.getAdmin_user(),account.getAdmin_pwd());
+            status=teacherDao.deleteTeacher(account.getUsername());
         } else if (account.getType() == 3) {    //管理员
             IAdminDao adminDao = session.getMapper(IAdminDao.class);
-            status=adminDao.deleteAdmin(account.getAdmin_user(),account.getAdmin_pwd());
+            status=adminDao.deleteAdmin(account.getUsername());
         } else {
             return APIResult.createNg("请求参数不合法");
         }
@@ -204,12 +212,12 @@ public class AccountController {
      */
     @RequestMapping(path = "/resetpwdbyadmin", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult ResetPwdByAdmin(Account account) {
+    public APIResult ResetPwdByAdmin(Account account,String adminuser,String adminpwd) {
         //查询数据库
         SqlSession session = util.MyBatis.getSession();
         int status=0;
         IAdminDao adminDao=session.getMapper(IAdminDao.class);
-        if(adminDao.findByTnoAndPwd(account.getAdmin_user(),account.getAdmin_pwd())==null){
+        if(adminDao.findByAdminAndPwd(adminuser,adminpwd)==null){
             //没有传入管理员账号和密码或传入信息错误，退出该操作
             return APIResult.createNg("无操作权限");
         }

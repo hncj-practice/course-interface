@@ -25,7 +25,6 @@ public interface ICourseDao {
             "select kc.kc_bh,kc.xq_bh,kc.js_gh,js.js_xm,kc.kc_mc,kc.kc_fm,kc.kc_zt,count(xskc.xs_xh) " +
             "from js,kc,xskc " +
             "where js.js_gh=kc.js_gh and xskc.kc_bh=kc.kc_bh " +
-//            "and js.js_gh=#{tno} " +
             "and ${condition} " +
             "group by kc_bh " +
             " limit #{start},#{end};" +
@@ -56,9 +55,9 @@ public interface ICourseDao {
 
     //查询所有课程的信息
     @Select("<script>" +
-            "select kc.kc_bh,kc.xq_bh,kc.js_gh,js.js_xm,kc.kc_mc,kc.kc_fm,kc.kc_zt\n" +
-            "from js,kc\n" +
-            "where js.js_gh=kc.js_gh\n" +
+            "select kc.kc_bh,kc.xq_bh,kc.js_gh,js.js_xm,kc.kc_mc,kc.kc_fm,kc.kc_zt,count(xskc.xs_xh)\n" +
+            "from js,kc,xskc\n" +
+            "where js.js_gh=kc.js_gh and kc.kc_bh=xskc.kc_bh\n" +
             "group by kc_bh " +
             "${limit}"+
             "</script>")
@@ -74,7 +73,11 @@ public interface ICourseDao {
     int delCourse(@Param("courseid") String courseid);
 
     //按课程号查找课程
-    @Select("select * from kc where kc_bh=#{courseid}")
+//    @SelectKey(statement = "select count(kc_bh) from kc where kc_bh=#{courseid};",before = false, keyProperty = "total", resultType =int.class )
+    @Select("\n" +
+            "select kc.kc_bh,kc.xq_bh,kc.js_gh,js.js_xm,kc.kc_mc,kc.kc_fm,kc.kc_zt,count(xskc.xs_xh)\n" +
+            "from js,kc,xskc\n" +
+            "where js.js_gh=kc.js_gh and kc.kc_bh=xskc.kc_bh and kc.kc_bh=#{courseid}\n")
     @ResultMap(value = {"courseMap"})
     Course getCourseByCid(@Param("courseid") int courseid);
 

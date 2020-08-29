@@ -5,8 +5,6 @@ import java.io.Serializable;
 public class Account implements Serializable {
     private String username;
     private String password;
-    private String admin_user;
-    private String admin_pwd;
     private String newpwd;
     private int type;
 
@@ -32,22 +30,6 @@ public class Account implements Serializable {
 
     public void setType(int type) {
         this.type = type;
-    }
-
-    public String getAdmin_user() {
-        return admin_user;
-    }
-
-    public void setAdmin_user(String admin_user) {
-        this.admin_user = admin_user;
-    }
-
-    public String getAdmin_pwd() {
-        return admin_pwd;
-    }
-
-    public void setAdmin_pwd(String admin_pwd) {
-        this.admin_pwd = admin_pwd;
     }
 
     public String getNewpwd() {

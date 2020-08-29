@@ -59,8 +59,8 @@ public interface IStudentDao {
 
     //删除学生
 //    @Delete("delete from xs where xs_xh=#{username} and xs_mm=#{password}")
-    @Delete("delete from xs where xs_xh=#{sno} and #{admin_pwd}=(select gly_mm from gly where gly_zh=#{admin_user} )")
-    int deleteStudent(@Param("sno") String sno,@Param("admin_user") String admin_user,@Param("admin_pwd") String admin_pwd);
+    @Delete("delete from xs where xs_xh=#{sno}")
+    int deleteStudent(@Param("sno") String sno);
 
     //重置学生密码
     @Update("update xs set xs_mm=#{newpwd} where xs_xh=#{username} and xs_mm=#{oldpwd}")

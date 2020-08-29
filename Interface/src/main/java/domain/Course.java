@@ -10,7 +10,7 @@ public class Course {
     private String status;      //课程状态
     private String snum;        //学习本门课程的人数
 
-    private int total;          //课程总数
+    private Integer total;          //课程总数
 
 
     public int getCid() {
@@ -77,11 +77,11 @@ public class Course {
         this.snum = snum;
     }
 
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
