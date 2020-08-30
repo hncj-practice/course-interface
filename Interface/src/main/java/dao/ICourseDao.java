@@ -27,7 +27,8 @@ public interface ICourseDao {
             "where js.js_gh=kc.js_gh and xskc.kc_bh=kc.kc_bh " +
             "and ${condition} " +
             "group by kc_bh " +
-            " limit #{start},#{end};" +
+            "<if test='start!=null'> limit #{start},#{end} </if>" +
+            " " +
             "</script>")
     List<Course> findTeachCourse(@Param("condition") String condition,@Param("start") Integer start, @Param("end") Integer end);
 

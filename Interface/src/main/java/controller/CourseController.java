@@ -171,9 +171,16 @@ public class CourseController {
     @ResponseBody
     public APIResult StudentLogin(String condition,Integer page,Integer num,Integer type){
         //查询数据库
-        if(page==null||num==null||page<1||num<1){
-            return APIResult.createNg("参数不合法");
+        if(page!=null&&page>=1){
+            if(num!=null&&num>=1){
+                page=(page-1)*num;
+            }else{
+                page=null;num=null;
+            }
         }
+//        if(page==null||num==null){
+//            page=num=0;
+//        }
         if(type==1){//按教师号查询
             condition="js.js_gh="+condition;
         }else if(type==2){//按课程名称模糊查询
@@ -183,7 +190,7 @@ public class CourseController {
         }
         SqlSession session=util.MyBatis.getSession();
         ICourseDao iCourseDao=session.getMapper(ICourseDao.class);
-        List<Course> courses=iCourseDao.findTeachCourse(condition,(page-1)*num,num);
+        List<Course> courses=iCourseDao.findTeachCourse(condition,page,num);
         session.close();
         if(!courses.isEmpty()){
             for(Course course:courses)
