@@ -1,15 +1,14 @@
 package domain;
 
 public class Semester {
-    private int semesterid;
+    private Integer semesterid;
     private String semestername;
 
-
-    public int getSemesterid() {
+    public Integer getSemesterid() {
         return semesterid;
     }
 
-    public void setSemesterid(int semesterid) {
+    public void setSemesterid(Integer semesterid) {
         this.semesterid = semesterid;
     }
 
@@ -24,7 +23,7 @@ public class Semester {
     @Override
     public String toString() {
         return "Semester{" +
-                "semesterid='" + semesterid + '\'' +
+                "semesterid=" + semesterid +
                 ", semestername='" + semestername + '\'' +
                 '}';
     }

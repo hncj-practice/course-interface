@@ -113,31 +113,33 @@
 <a href="paper/delpaper?paperid=3&user=wsgly&pwd=000000">删除试卷</a>
 <br><br><br>
 <a href="student/getstudentbycid?classid=0814171">查询某班级所有学生</a>
-<a href="teacher/allteacher?page=1&num=3">查询所有的教师信息</a>
 <a href="student/allstudent?page=1&num=3">查询所有的学生信息</a>
-<a href="class/allclass?page=1&num=3">查询所有的班级信息</a>
-<a href="course/allcourse?page=1&num=3">查询所有的课程信息</a>
 <br>
-<a href="course/getcoursebycid?courseid=1">按课程号查找课程</a>
-<a href="topic/gettopicbycid?courseid=1">按课程号查找话题</a>
-<a href="problem/getproblembychapterid?chapterid=1&chapterid=2&type=0">按章节号查找题目</a>
-<a href="chapter/getchapterbycourseid?courseid=1">按课程号查找章节</a>
+<a href="problem/getproblembychapterid?chapterid=1&chapterid=2&type=0&user=wsgly&pwd=000000">按章节号查找题目</a>
+<a href="problem/getproblembypaperid?paperid=1&user=wsgly&pwd=000000">按试卷编号查找试题</a>
 <br>
+<a href="teacher/allteacher?page=1&num=3">查询所有的教师信息</a>
 <a href="teacher/getteacherbytno?tno=888888888">按教师号查找教师</a>
+<br>
+<a href="topic/gettopicbycid?courseid=1">按课程号查找话题</a>
 <a href="comment/getcommentbytopicid?topicid=1&page=1&num=2">按话题号查找评论</a>
+<a href="class/allclass?page=1&num=3">查询所有的班级信息</a>
+<a href="chapter/getchapterbycourseid?courseid=1">按课程号查找章节</a>
 <a href="data/getdatabycourseid?courseid=1&page=1&num=2">按课程号查找资料</a>
 <a href="paper/addproblems?paperid=1&problemids=1&problemids=2&problemids=3&problemids=4&problemids=5">向一张试卷中添加多个问题（组卷）</a>
 <br>
-<a href="student/choicecourse?courseid=1&classid=0814171&user=wsgly&pwd=000000">选课</a>
-<a href="problem/getproblembypaperid?paperid=1">按试卷编号查找试题</a>
 <br>
 <a href="paper/randomgenerate?chapterid=1&chapterid=2&num=5&type=1&user=wsgly&pwd=000000">随机组卷</a>
 <a href="paper/randomgenerate?chapterid=1&chapterid=2&choice=3&fill=0&judge=2&type=2&user=wsgly&pwd=000000">按各类型数量组卷</a>
 <a href="paper/getpaperbycourseid?courseid=1">按课程号查找试卷</a>
 <a href="paper/releasepaper?paperid=1&courseid=1">教师发布试卷</a>
-<a href="paper/updatetestgrade?sno=081417162&paperid=1&grade=95.5&user=wsgly&pwd=000000">更新学生测验成绩</a>
 <br>
 <a href="grade/gettestgradebyclassidandpaperid?classid=0814171&paperid=1&sort=3">成绩排序</a>
+<a href="paper/updatetestgrade?sno=081417162&paperid=1&grade=95.5&user=wsgly&pwd=000000">更新学生测验成绩</a>
+<br>
+<a href="student/choicecourse?courseid=1&classid=0814171&user=wsgly&pwd=000000">选课</a>
+<a href="course/allcourse?page=1&num=3">查询所有的课程信息</a>
+<a href="course/getcoursebycid?courseid=1">按课程号查找课程</a>
 <a href="course/getcoursebytnoorcoursename?condition=888888888&page=1&num=3&type=1">按教师号查找课程</a>
 <a href="course/getcoursebytnoorcoursename?condition=移动&page=1&num=3&type=2">按课程名模糊查找课程</a>
 <br>

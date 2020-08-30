@@ -74,6 +74,7 @@ public class CourseController {
         List<Course> teachers=courseDao.findAll(limit);
         int total=0;
         total=courseDao.Total();
+        session.close();
         if(!teachers.isEmpty()&&total!=0){
             for(Course course:teachers){
                 course.setTotal(total);
@@ -129,6 +130,7 @@ public class CourseController {
         ICourseDao courseDao = session.getMapper(ICourseDao.class);
         status=courseDao.delCourse(courseid);
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{
@@ -143,12 +145,13 @@ public class CourseController {
      */
     @RequestMapping(path = "/getcoursebycid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetCourseByCid(int courseid){
+    public APIResult GetCourseByCid(Integer courseid){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         ICourseDao courseDao=session.getMapper(ICourseDao.class);
         Course course=courseDao.getCourseByCid(courseid);
-        if(course!=null){
+        session.close();
+        if(course!=null&&!course.getSnum().equals("0")){
             return APIResult.createOk("查询成功",course);
         }else{
             return APIResult.createNg("查询结果为空");
@@ -181,6 +184,7 @@ public class CourseController {
         SqlSession session=util.MyBatis.getSession();
         ICourseDao iCourseDao=session.getMapper(ICourseDao.class);
         List<Course> courses=iCourseDao.findTeachCourse(condition,(page-1)*num,num);
+        session.close();
         if(!courses.isEmpty()){
             for(Course course:courses)
                 if(course.getTname()==null){

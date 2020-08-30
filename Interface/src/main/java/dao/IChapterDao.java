@@ -45,7 +45,7 @@ public interface IChapterDao {
     @Select("select zj_bh,kc_bh,zj_mc\n" +
             "from zj\n" +
             "where zj.kc_bh=#{courseid}")
-    List<Chapter> findChapterByCourseid(@Param("courseid") int courseid);
+    List<Chapter> findChapterByCourseid(@Param("courseid") Integer courseid);
 
 
 

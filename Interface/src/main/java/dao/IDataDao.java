@@ -16,7 +16,7 @@ public interface IDataDao {
     @Select("select * " +
             "from zl " +
             "limit #{start},#{end};")
-    List<Data> findAll(@Param("start") int start, @Param("end") int end);
+    List<Data> findAll(@Param("start") Integer start, @Param("end") Integer end);
 
 
     //添加资料
@@ -25,18 +25,18 @@ public interface IDataDao {
 
     //删除资料
     @Delete("delete from zl where zl_bh=#{dataid}")
-    int delData(@Param("dataid") int dataid);
+    int delData(@Param("dataid") Integer dataid);
 
     //按课程号查找资料
     @Select("select * from zl " +
             "where kc_bh=#{courseid} " +
             "limit #{start},#{end}")
     @ResultMap(value = {"dataMap"})
-    List<Data> getDataByCourseid(@Param("courseid") int courseid,@Param("start") int start, @Param("end") int end);
+    List<Data> getDataByCourseid(@Param("courseid") Integer courseid,@Param("start") Integer start, @Param("end") Integer end);
 
     //统计某话题下的评论总数
     @Select("select count(*) from zl where kc_bh=#{courseid}")
-    int Total(@Param("courseid") int courseid);
+    int Total(@Param("courseid") Integer courseid);
 
     //修改资料(资料名、资料链接)
     @Update("<script>" +
@@ -47,5 +47,5 @@ public interface IDataDao {
             "</set>" +
             " where zl_bh=#{dataid}" +
             "</script>")
-    void updateData(@Param("dataid") int dataid, @Param("name") String name, @Param("link") String link);
+    void updateData(@Param("dataid") Integer dataid, @Param("name") String name, @Param("link") String link);
 }

@@ -44,5 +44,5 @@ public interface ITopicDao {
     //按课程号查找话题
     @Select("select * from ht where kc_bh=#{courseid}")
     @ResultMap(value = {"topicMap"})
-    List<Topic> getTopicByCid(@Param("courseid") int courseid);
+    List<Topic> getTopicByCid(@Param("courseid") Integer courseid);
 }

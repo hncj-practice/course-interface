@@ -83,7 +83,7 @@ public class PaperController {
      */
     @RequestMapping(path = "/delpaper", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeletePaper(int paperid,String user,String pwd) {
+    public APIResult DeletePaper(Integer paperid,String user,String pwd) {
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
@@ -91,6 +91,7 @@ public class PaperController {
         IPaperDao paperDao = session.getMapper(IPaperDao.class);
         status=paperDao.delPaper(paperid);
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{
@@ -105,10 +106,11 @@ public class PaperController {
      */
     @RequestMapping(path = "/getpaperbycourseid", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult GetPaperByCourseid(int courseid) {
+    public APIResult GetPaperByCourseid(Integer courseid) {
         SqlSession session = util.MyBatis.getSession();
         IPaperDao paperDao = session.getMapper(IPaperDao.class);
         List<Paper> papers = paperDao.getPaperByCourseid(courseid);
+        session.close();
         if (!papers.isEmpty()) {
             return APIResult.createOk("查找成功", papers);
         } else {
@@ -126,7 +128,7 @@ public class PaperController {
      */
     @RequestMapping(path = "/addproblems",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addProblems(int paperid,int [] problemids,String user,String pwd){
+    public APIResult addProblems(Integer paperid,Integer [] problemids,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
@@ -231,7 +233,7 @@ public class PaperController {
      */
     @RequestMapping(path = "/releasepaper",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addProblems(int paperid,String courseid){
+    public APIResult addProblems(Integer paperid,Integer courseid){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         IPaperDao paperDao=session.getMapper(IPaperDao.class);
@@ -257,7 +259,7 @@ public class PaperController {
      */
     @RequestMapping(path = "/updatetestgrade",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult UpdateTestGrade(String sno,int paperid,Float grade,String user,String pwd){
+    public APIResult UpdateTestGrade(String sno,Integer paperid,Float grade,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();

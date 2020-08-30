@@ -1,43 +1,35 @@
 package domain;
 
 public class Problem {
-    private int pid;            //题目编号
-    private int chapterid;      //章节编号
-    private int ptype;          //题目类型
+    private Integer pid;            //题目编号
+    private Integer chapterid;      //章节编号
+    private Integer ptype;          //题目类型
     private String question;    //题目题干
     private String panswer;     //题目答案
 
     private String ptypename;   //题目类型名称
 
-    public String getPtypename() {
-        return ptypename;
-    }
-
-    public void setPtypename(String ptypename) {
-        this.ptypename = ptypename;
-    }
-
-    public int getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 
-    public int getChapterid() {
+    public Integer getChapterid() {
         return chapterid;
     }
 
-    public void setChapterid(int chapterid) {
+    public void setChapterid(Integer chapterid) {
         this.chapterid = chapterid;
     }
 
-    public int getPtype() {
+    public Integer getPtype() {
         return ptype;
     }
 
-    public void setPtype(int ptype) {
+    public void setPtype(Integer ptype) {
         this.ptype = ptype;
     }
 
@@ -57,6 +49,14 @@ public class Problem {
         this.panswer = panswer;
     }
 
+    public String getPtypename() {
+        return ptypename;
+    }
+
+    public void setPtypename(String ptypename) {
+        this.ptypename = ptypename;
+    }
+
     @Override
     public String toString() {
         return "Problem{" +
@@ -65,6 +65,7 @@ public class Problem {
                 ", ptype=" + ptype +
                 ", question='" + question + '\'' +
                 ", panswer='" + panswer + '\'' +
+                ", ptypename='" + ptypename + '\'' +
                 '}';
     }
 }

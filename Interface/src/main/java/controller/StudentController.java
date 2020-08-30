@@ -26,26 +26,17 @@ public class StudentController {
     /**
      * 学生登录
      * @param account
-     * @param model
      * @return
      */
     @RequestMapping(path = "/login",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult StudentLogin(Account account, Model model){
+    public APIResult StudentLogin(Account account){
 
-        System.out.println(account.toString());
-
-        //查询数据库
         SqlSession session=util.MyBatis.getSession();
         IStudentDao studentDao=session.getMapper(IStudentDao.class);
         Student student=studentDao.findBySnoAndPwd(account.getUsername(),account.getPassword());
-
-//        List<Student> students =studentDao.findAll();
-//        for(Student student:students)
-//            System.out.println(student.toString());
         session.close();
         if(student!=null){
-            System.out.println(student.toString());
             return APIResult.createOk("登录成功",student);
         }else{
             return APIResult.createNg("用户名或密码错误");
@@ -86,13 +77,14 @@ public class StudentController {
      */
     @RequestMapping(path = "/allstudent",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult AllTeacher(int page,int num){
+    public APIResult AllTeacher(Integer page,Integer num){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         IStudentDao studentDao=session.getMapper(IStudentDao.class);
         List<Student> students=studentDao.findAll((page-1)*num,num);
         int total=0;
         total=studentDao.Total();
+        session.close();
         if(!students.isEmpty()&&total!=0){
             for(Student student:students)
                 student.setTotal(total);
@@ -109,12 +101,13 @@ public class StudentController {
      */
     @RequestMapping(path = "/getstudentbycid", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult Login(int classid) {
+    public APIResult Login(String classid) {
         SqlSession session = util.MyBatis.getSession();
         IStudentDao studentDao = session.getMapper(IStudentDao.class);
         List<Student> students = studentDao.findAllStudentByCid(classid);
         int total =0;
         total=studentDao.TotalByClassid(classid);
+        session.close();
         if (!students.isEmpty()) {
             for(Student student:students){
                 student.setTotal(total);
@@ -135,7 +128,7 @@ public class StudentController {
      */
     @RequestMapping(path = "/choicecourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult addProblems(int courseid,String [] classid,String user,String pwd){
+    public APIResult addProblems(Integer courseid,String [] classid,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();

@@ -71,6 +71,7 @@ public class TeacherController {
         List<Teacher> teachers=teacherDao.findAll(limit);
         int total=0;
         total=teacherDao.Total();
+        session.close();
         if(!teachers.isEmpty()&&total!=0){
             for(Teacher teacher:teachers)
                 teacher.setTotal(total);
@@ -87,11 +88,12 @@ public class TeacherController {
      */
     @RequestMapping(path = "/getteacherbytno",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetTeacherByTno(int tno){
+    public APIResult GetTeacherByTno(Integer tno){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         ITeacherDao teacherDao=session.getMapper(ITeacherDao.class);
         List<Teacher> teachers=teacherDao.getTeacherByTno(tno);
+        session.close();
         if(!teachers.isEmpty()){
             return APIResult.createOk("查询成功",teachers);
         }else{

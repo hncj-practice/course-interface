@@ -20,7 +20,7 @@ public interface ICommentDao {
     @Select("select * " +
             "from pl " +
             "limit #{start},#{end};")
-    List<Comment> findAll(@Param("start") int start, @Param("end") int end);
+    List<Comment> findAll(@Param("start") Integer start, @Param("Integer") int end);
 
     //修改评论
     @Update("<script>" +
@@ -47,9 +47,9 @@ public interface ICommentDao {
             "where ht_bh=#{topicid} " +
             "limit #{start},#{end}")
     @ResultMap(value = {"commentMap"})
-    List<Comment> getCommentByTopicid(@Param("topicid") int topicid,@Param("start") int start, @Param("end") int end);
+    List<Comment> getCommentByTopicid(@Param("topicid") Integer topicid,@Param("start") Integer start, @Param("end") Integer end);
 
     //统计某话题下的评论总数
     @Select("select count(*) from pl where ht_bh=#{topicid}")
-    int Total(@Param("topicid") int topicid);
+    int Total(@Param("topicid") Integer topicid);
 }

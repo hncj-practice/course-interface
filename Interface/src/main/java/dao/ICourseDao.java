@@ -29,7 +29,7 @@ public interface ICourseDao {
             "group by kc_bh " +
             " limit #{start},#{end};" +
             "</script>")
-    List<Course> findTeachCourse(@Param("condition") String condition,@Param("start") int start, @Param("end") int end);
+    List<Course> findTeachCourse(@Param("condition") String condition,@Param("start") Integer start, @Param("end") Integer end);
 
 
 
@@ -79,6 +79,6 @@ public interface ICourseDao {
             "from js,kc,xskc\n" +
             "where js.js_gh=kc.js_gh and kc.kc_bh=xskc.kc_bh and kc.kc_bh=#{courseid}\n")
     @ResultMap(value = {"courseMap"})
-    Course getCourseByCid(@Param("courseid") int courseid);
+    Course getCourseByCid(@Param("courseid") Integer courseid);
 
 }

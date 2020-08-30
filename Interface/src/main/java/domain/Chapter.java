@@ -1,23 +1,23 @@
 package domain;
 
 public class Chapter {
-    private int chapterid;          //章节号
-    private int courseid;           //课程号
+    private Integer chapterid;          //章节号
+    private Integer courseid;           //课程号
     private String chaptername;     //章节名
 
-    public int getChapterid() {
+    public Integer getChapterid() {
         return chapterid;
     }
 
-    public void setChapterid(int chapterid) {
+    public void setChapterid(Integer chapterid) {
         this.chapterid = chapterid;
     }
 
-    public int getCourseid() {
+    public Integer getCourseid() {
         return courseid;
     }
 
-    public void setCourseid(int courseid) {
+    public void setCourseid(Integer courseid) {
         this.courseid = courseid;
     }
 

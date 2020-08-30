@@ -32,7 +32,7 @@ public interface ITeacherDao {
     //按教师编号查找教师
     @Select("select js_gh,js_xm,js_xb,js_yx,js_tx,js_zt from js where js_gh=#{tno}")
     @ResultMap(value = {"teacherMap"})
-    List<Teacher> getTeacherByTno(@Param("tno") int tno);
+    List<Teacher> getTeacherByTno(@Param("tno") Integer tno);
 
 
     //教师登录

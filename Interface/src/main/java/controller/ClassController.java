@@ -57,13 +57,14 @@ public class ClassController {
 
         SqlSession session=util.MyBatis.getSession();
         IClassDao classDao=session.getMapper(IClassDao.class);
-        List<Clase> teachers=classDao.findAll(limit);
+        List<Clase> clases=classDao.findAll(limit);
         int total=0;
         total=classDao.Total();
-        if(!teachers.isEmpty()&&total!=0){
-            for(Clase clase:teachers)
+        session.close();
+        if(!clases.isEmpty()&&total!=0){
+            for(Clase clase:clases)
                 clase.setTotal(total);
-            return APIResult.createOk("查询成功",teachers);
+            return APIResult.createOk("查询成功",clases);
         }else{
             return APIResult.createNg("查询结果为空");
         }
@@ -85,6 +86,7 @@ public class ClassController {
         IClassDao classDao = session.getMapper(IClassDao.class);
         status=classDao.delClase(classid);
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{
@@ -100,7 +102,7 @@ public class ClassController {
      */
     @RequestMapping(path = "/changeclassname",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult changeClassname(int classid,String classname,String adminuser,String adminpwd){
+    public APIResult changeClassname(String classid,String classname,String adminuser,String adminpwd){
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();

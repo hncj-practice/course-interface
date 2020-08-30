@@ -81,6 +81,7 @@ public class SemesterController {
         ISemesterDao semesterDao = session.getMapper(ISemesterDao.class);
         status=semesterDao.delSemester(semesterid);
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{

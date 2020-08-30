@@ -88,6 +88,7 @@ public class TopicController {
         ITopicDao topicDao = session.getMapper(ITopicDao.class);
         status=topicDao.delTopic(topicid);
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{
@@ -102,11 +103,12 @@ public class TopicController {
      */
     @RequestMapping(path = "/gettopicbycid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetTopicByCid(int courseid){
+    public APIResult GetTopicByCid(Integer courseid){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         ITopicDao topicDao=session.getMapper(ITopicDao.class);
         List<Topic> topics=topicDao.getTopicByCid(courseid);
+        session.close();
         if(!topics.isEmpty()){
             return APIResult.createOk("查询成功",topics);
         }else{

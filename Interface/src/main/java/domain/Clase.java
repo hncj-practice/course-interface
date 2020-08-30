@@ -3,7 +3,7 @@ package domain;
 public class Clase {
     private String classid;
     private String classname;
-    private int total;
+    private Integer total;
 
     public String getClassid() {
         return classid;
@@ -21,11 +21,11 @@ public class Clase {
         this.classname = classname;
     }
 
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 

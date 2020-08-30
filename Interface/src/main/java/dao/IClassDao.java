@@ -37,5 +37,5 @@ public interface IClassDao {
 
     //修改班级名称
     @Update("update bj set bj_mc=#{classname} where bj_bh=#{classid}")
-    void changeClassname(@Param("classid") int classid,@Param("classname") String classname);
+    void changeClassname(@Param("classid") String classid,@Param("classname") String classname);
 }

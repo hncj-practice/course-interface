@@ -1,26 +1,18 @@
 package domain;
 
 public class Comment {
-    private int commentid;          //评论编号
+    private Integer commentid;          //评论编号
     private String sno;             //学生学号
-    private int topicid;            //话题编号
+    private Integer topicid;            //话题编号
     private String commentcontent;  //评论内容
     private String commenttime;     //评论时间
-    private int total;
+    private Integer total;
 
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public int getCommentid() {
+    public Integer getCommentid() {
         return commentid;
     }
 
-    public void setCommentid(int commentid) {
+    public void setCommentid(Integer commentid) {
         this.commentid = commentid;
     }
 
@@ -32,11 +24,11 @@ public class Comment {
         this.sno = sno;
     }
 
-    public int getTopicid() {
+    public Integer getTopicid() {
         return topicid;
     }
 
-    public void setTopicid(int topicid) {
+    public void setTopicid(Integer topicid) {
         this.topicid = topicid;
     }
 
@@ -56,6 +48,14 @@ public class Comment {
         this.commenttime = commenttime;
     }
 
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -64,6 +64,7 @@ public class Comment {
                 ", topicid=" + topicid +
                 ", commentcontent='" + commentcontent + '\'' +
                 ", commenttime='" + commenttime + '\'' +
+                ", total=" + total +
                 '}';
     }
 }

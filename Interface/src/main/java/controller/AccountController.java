@@ -35,8 +35,8 @@ public class AccountController {
         if (account.getType() == 1) {//学生
             IStudentDao studentDao = session.getMapper(IStudentDao.class);
             Student student = studentDao.findBySnoAndPwd(account.getUsername(), account.getPassword());
+            session.close();
             if (student != null) {
-                System.out.println(student.toString());
                 return APIResult.createOk("登录成功", student);
             } else {
                 return APIResult.createNg("用户名或密码错误");
@@ -44,8 +44,8 @@ public class AccountController {
         } else if (account.getType() == 2) {//教师
             ITeacherDao teacherDao = session.getMapper(ITeacherDao.class);
             Teacher teacher = teacherDao.findByTnoAndPwd(account.getUsername(), account.getPassword());
+            session.close();
             if (teacher != null) {
-                System.out.println(teacher.toString());
                 return APIResult.createOk("登录成功", teacher);
             } else {
                 return APIResult.createNg("用户名或密码错误");
@@ -53,13 +53,14 @@ public class AccountController {
         } else if (account.getType() == 3) {//管理员
             IAdminDao adminDao = session.getMapper(IAdminDao.class);
             Admin admin = adminDao.findByAdminAndPwd(account.getUsername(), account.getPassword());
+            session.close();
             if (admin != null) {
-                System.out.println(admin.toString());
                 return APIResult.createOk("登录成功", admin);
             } else {
                 return APIResult.createNg("用户名或密码错误");
             }
         } else {
+            session.close();
             return APIResult.createNg("请求参数不合法");
         }
 
@@ -166,6 +167,7 @@ public class AccountController {
             return APIResult.createNg("请求参数不合法");
         }
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{
@@ -197,6 +199,7 @@ public class AccountController {
             return APIResult.createNg("请求参数不合法");
         }
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("密码重置成功");
         }else{
@@ -231,6 +234,7 @@ public class AccountController {
             return APIResult.createNg("请求参数不合法");
         }
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("密码重置成功");
         }else{

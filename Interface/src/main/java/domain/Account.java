@@ -6,7 +6,7 @@ public class Account implements Serializable {
     private String username;
     private String password;
     private String newpwd;
-    private int type;
+    private Integer type;
 
     public String getUsername() {
         return username;
@@ -24,20 +24,20 @@ public class Account implements Serializable {
         this.password = password;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public String getNewpwd() {
         return newpwd;
     }
 
     public void setNewpwd(String newpwd) {
         this.newpwd = newpwd;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     @Override

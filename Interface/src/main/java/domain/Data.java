@@ -1,33 +1,25 @@
 package domain;
 
 public class Data {
-    private int dataid;         //资料编号
-    private int courseid;       //课程编号
+    private Integer dataid;         //资料编号
+    private Integer courseid;       //课程编号
     private String dataname;    //资料名称
     private String datalink;    //资料链接
-    private int total;
+    private Integer total;
 
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public int getDataid() {
+    public Integer getDataid() {
         return dataid;
     }
 
-    public void setDataid(int dataid) {
+    public void setDataid(Integer dataid) {
         this.dataid = dataid;
     }
 
-    public int getCourseid() {
+    public Integer getCourseid() {
         return courseid;
     }
 
-    public void setCourseid(int courseid) {
+    public void setCourseid(Integer courseid) {
         this.courseid = courseid;
     }
 
@@ -47,6 +39,14 @@ public class Data {
         this.datalink = datalink;
     }
 
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
     @Override
     public String toString() {
         return "Data{" +
@@ -54,6 +54,7 @@ public class Data {
                 ", courseid=" + courseid +
                 ", dataname='" + dataname + '\'' +
                 ", datalink='" + datalink + '\'' +
+                ", total=" + total +
                 '}';
     }
 }

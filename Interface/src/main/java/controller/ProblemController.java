@@ -88,6 +88,7 @@ public class ProblemController {
         IProblemDao problemDao = session.getMapper(IProblemDao.class);
         status=problemDao.delProblem(problemid);
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{
@@ -102,11 +103,13 @@ public class ProblemController {
      */
     @RequestMapping(path = "/getproblembychapterid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetProblemByChapterid(Integer[] chapterid,Integer type){
-        //查询数据库
+    public APIResult GetProblemByChapterid(Integer[] chapterid,Integer type,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IProblemDao problemDao=session.getMapper(IProblemDao.class);
         List<Problem> problems=problemDao.getProblemByChapterid(chapterid,type);
+        session.close();
         if(!problems.isEmpty()){
             return APIResult.createOk("查询成功",problems);
         }else{
@@ -121,11 +124,13 @@ public class ProblemController {
      */
     @RequestMapping(path = "/getproblembypaperid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetProblemByPaperid(int paperid){
-        //查询数据库
+    public APIResult GetProblemByPaperid(Integer paperid,String user,String pwd){
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IProblemDao problemDao=session.getMapper(IProblemDao.class);
         List<Problem> problems=problemDao.getProblemByPaperid(paperid);
+        session.close();
         if(!problems.isEmpty()){
             return APIResult.createOk("查询成功",problems);
         }else{

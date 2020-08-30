@@ -52,7 +52,7 @@ public class DataController {
      */
     @RequestMapping(path = "/updatedata",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult changeData(int dataid,String name,String link,String user,String pwd){
+    public APIResult changeData(Integer dataid,String name,String link,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
@@ -76,7 +76,7 @@ public class DataController {
      */
     @RequestMapping(path = "/deldata", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult DeleteData(int dataid,String user,String pwd) {
+    public APIResult DeleteData(Integer dataid,String user,String pwd) {
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session = util.MyBatis.getSession();
@@ -84,6 +84,7 @@ public class DataController {
         IDataDao dataDao = session.getMapper(IDataDao.class);
         status=dataDao.delData(dataid);
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{
@@ -98,13 +99,14 @@ public class DataController {
      */
     @RequestMapping(path = "/getdatabycourseid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetDataByCourseid(int courseid,int page,int num){
+    public APIResult GetDataByCourseid(Integer courseid,Integer page,Integer num){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         IDataDao dataDao=session.getMapper(IDataDao.class);
         List<Data> comments=dataDao.getDataByCourseid(courseid,(page-1)*num,num);
         int total=0;
         total=dataDao.Total(courseid);
+        session.close();
         if(!comments.isEmpty()&&total!=0){
             for(Data data:comments){
                 data.setTotal(total);

@@ -22,7 +22,7 @@ public interface IStudentDao {
     @Select("select xs_xh,bj_bh,xs_xm,xs_xb,xs_yx,xs_zt " +
             "from xs " +
             "limit #{start},#{end};")
-    List<Student> findAll(@Param("start") int start, @Param("end") int end);
+    List<Student> findAll(@Param("start") Integer start, @Param("end") Integer end);
 
     //统计学生的总数
     @Select("select count(*) from xs")
@@ -76,11 +76,11 @@ public interface IStudentDao {
     @Select("select xs_xh,bj_bh,xs_xm,xs_xb,xs_yx from xs \n" +
             "where bj_bh=#{classid}")
     @ResultMap(value = {"studentMap"})
-    List<Student> findAllStudentByCid(@Param("classid") int classid);
+    List<Student> findAllStudentByCid(@Param("classid") String classid);
 
     //统计某班级的学生的总数
     @Select("select count(*) from xs where bj_bh=#{classid}")
-    int TotalByClassid(@Param("classid") int classid);
+    int TotalByClassid(@Param("classid") String classid);
 
 
     //将课程同学生教师关联
@@ -91,5 +91,5 @@ public interface IStudentDao {
             "#{item}" +
             "</foreach>" +
             "</script>")
-    void ChoiceCourse(@Param("courseid") int courseid,@Param("classid") String[] classid);
+    void ChoiceCourse(@Param("courseid") Integer courseid,@Param("classid") String[] classid);
 }

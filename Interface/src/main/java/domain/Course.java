@@ -1,8 +1,8 @@
 package domain;
 
 public class Course {
-    private int cid;            //课程编号
-    private int semester;       //学期编号
+    private Integer cid;        //课程编号
+    private Integer semester;   //学期编号
     private String tno;         //教师学号
     private String tname;       //教师姓名
     private String cname;       //课程名称
@@ -13,19 +13,19 @@ public class Course {
     private Integer total;          //课程总数
 
 
-    public int getCid() {
+    public Integer getCid() {
         return cid;
     }
 
-    public void setCid(int cid) {
+    public void setCid(Integer cid) {
         this.cid = cid;
     }
 
-    public int getSemester() {
+    public Integer getSemester() {
         return semester;
     }
 
-    public void setSemester(int semester) {
+    public void setSemester(Integer semester) {
         this.semester = semester;
     }
 
@@ -89,13 +89,14 @@ public class Course {
     public String toString() {
         return "Course{" +
                 "cid=" + cid +
-                ", semester='" + semester + '\'' +
+                ", semester=" + semester +
                 ", tno='" + tno + '\'' +
                 ", tname='" + tname + '\'' +
                 ", cname='" + cname + '\'' +
                 ", coverimg='" + coverimg + '\'' +
                 ", status='" + status + '\'' +
                 ", snum='" + snum + '\'' +
+                ", total=" + total +
                 '}';
     }
 }

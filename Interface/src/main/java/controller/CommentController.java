@@ -86,6 +86,7 @@ public class CommentController {
         ICommentDao commentDao = session.getMapper(ICommentDao.class);
         status=commentDao.delComment(commentid);
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{
@@ -100,13 +101,14 @@ public class CommentController {
      */
     @RequestMapping(path = "/getcommentbytopicid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetCommentByTopicid(int topicid,int page,int num){
+    public APIResult GetCommentByTopicid(Integer topicid,Integer page,Integer num){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         ICommentDao commentDao=session.getMapper(ICommentDao.class);
         List<Comment> comments=commentDao.getCommentByTopicid(topicid,(page-1)*num,num);
         int total=0;
         total=commentDao.Total(topicid);
+        session.close();
         if(!comments.isEmpty()&&total!=0){
             for(Comment comment:comments){
                 comment.setTotal(total);

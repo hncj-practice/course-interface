@@ -48,6 +48,7 @@ public class GradeController {
         SqlSession session=util.MyBatis.getSession();
         IGradeDao gradeDao=session.getMapper(IGradeDao.class);
         List<Grade> grades=gradeDao.GetTestGradeByClassidAndPaperid(classid,paperid,sorttype);
+        session.close();
         if(!grades.isEmpty()){
             return APIResult.createOk("查询成功",grades);
         }else{

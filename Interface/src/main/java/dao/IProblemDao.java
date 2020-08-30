@@ -56,5 +56,5 @@ public interface IProblemDao {
             "where tm_bh in(select tm_bh from sjst where sj_bh=#{paperid}) " +
             "and tmlx.tmlx_bh=tm.tmlx_bh")
     @ResultMap(value = {"problemMap"})
-    List<Problem> getProblemByPaperid(@Param("paperid") int paperid);
+    List<Problem> getProblemByPaperid(@Param("paperid") Integer paperid);
 }

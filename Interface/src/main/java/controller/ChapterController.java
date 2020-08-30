@@ -83,6 +83,7 @@ public class ChapterController {
         IChapterDao chapterDao = session.getMapper(IChapterDao.class);
         status=chapterDao.delChapter(chapterid);
         session.commit();
+        session.close();
         if(status!=0){
             return APIResult.createOKMessage("删除成功");
         }else{
@@ -98,11 +99,12 @@ public class ChapterController {
      */
     @RequestMapping(path = "/getchapterbycourseid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetChapterByCid(int courseid){
+    public APIResult GetChapterByCid(Integer courseid){
         //查询数据库
         SqlSession session=util.MyBatis.getSession();
         IChapterDao chapterDao=session.getMapper(IChapterDao.class);
         List<Chapter> chapters=chapterDao.findChapterByCourseid(courseid);
+        session.close();
         if(!chapters.isEmpty()){
             return APIResult.createOk("查询成功",chapters);
         }else{
