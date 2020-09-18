@@ -24,7 +24,7 @@ public class ChapterController {
      * @param chapter
      * @return
      */
-    @RequestMapping(path = "/addchapter",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addchapter",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult AddChapter(Chapter chapter,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -49,7 +49,7 @@ public class ChapterController {
      * @param name
      * @return
      */
-    @RequestMapping(path = "/updatechapter",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatechapter",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult updateChapter(Integer chapterid,String name,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -73,7 +73,7 @@ public class ChapterController {
      * @param chapterid
      * @return
      */
-    @RequestMapping(path = "/delchapter", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/delchapter", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult DeleteClase(String chapterid,String user,String pwd) {
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))

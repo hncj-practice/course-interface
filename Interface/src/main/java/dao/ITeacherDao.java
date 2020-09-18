@@ -72,6 +72,6 @@ public interface ITeacherDao {
     int updatePwd(@Param("username") String username,@Param("oldpwd") String oldpwd,@Param("newpwd") String newpwd);
 
     //管理员重置教师密码（无需知道用户密码）
-    @Update("update js set js_mm=000000 where js_gh=#{username}")
+    @Update("update js set js_mm='000000' where js_gh=#{username}")
     int updatePwdByAdmin(@Param("username") String usernamed);
 }

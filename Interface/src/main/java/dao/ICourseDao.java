@@ -28,7 +28,6 @@ public interface ICourseDao {
             "and ${condition} " +
             "group by kc_bh " +
             "<if test='start!=null'> limit #{start},#{end} </if>" +
-            " " +
             "</script>")
     List<Course> findTeachCourse(@Param("condition") String condition,@Param("start") Integer start, @Param("end") Integer end);
 

@@ -28,7 +28,7 @@ public class PaperController {
      * @param paper
      * @return
      */
-    @RequestMapping(path = "/addpaper",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addpaper",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addPaper(Paper paper,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -57,7 +57,7 @@ public class PaperController {
      * @param status
      * @return
      */
-    @RequestMapping(path = "/updatepaper",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatepaper",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult updatePaper(Integer paperid,String name,Integer choice,Integer judge,Integer fill,Integer status,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -81,7 +81,7 @@ public class PaperController {
      * @param paperid
      * @return
      */
-    @RequestMapping(path = "/delpaper", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/delpaper", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult DeletePaper(Integer paperid,String user,String pwd) {
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -126,7 +126,7 @@ public class PaperController {
      * @param problemids
      * @return
      */
-    @RequestMapping(path = "/addproblems",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addproblems",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addProblems(Integer paperid,Integer [] problemids,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -231,7 +231,7 @@ public class PaperController {
      * @param courseid
      * @return
      */
-    @RequestMapping(path = "/releasepaper",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/releasepaper",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addProblems(Integer paperid,Integer courseid){
         //查询数据库
@@ -257,7 +257,7 @@ public class PaperController {
      * @param grade
      * @return
      */
-    @RequestMapping(path = "/updatetestgrade",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatetestgrade",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult UpdateTestGrade(String sno,Integer paperid,Float grade,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))

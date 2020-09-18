@@ -31,7 +31,7 @@ public class TeacherController {
      * @param status
      * @return
      */
-    @RequestMapping(path = "/updateteacher",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updateteacher",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult updateTeacher(String tno,String password,String name,String sex,String email,String avatar,Integer status,String adminuser,String adminpwd){
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
@@ -55,7 +55,7 @@ public class TeacherController {
      * 查询所有的教师信息
      * @return
      */
-    @RequestMapping(path = "/allteacher",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/allteacher",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult AllTeacher(Integer page,Integer num){
         //查询数据库
@@ -86,7 +86,7 @@ public class TeacherController {
      * @param tno
      * @return
      */
-    @RequestMapping(path = "/getteacherbytno",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/getteacherbytno",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult GetTeacherByTno(Integer tno){
         //查询数据库

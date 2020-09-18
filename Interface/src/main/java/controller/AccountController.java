@@ -27,7 +27,7 @@ public class AccountController {
      * @param account
      * @return 账号信息或错误信息
      */
-    @RequestMapping(path = "/login", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/login", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult Login(Account account) {
         //查询数据库
@@ -72,7 +72,7 @@ public class AccountController {
      * @param student
      * @return
      */
-    @RequestMapping(path = "/addstudent", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/addstudent", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult StudentAdd(Student student,String adminuser,String adminpwd) {
         //查询数据库
@@ -97,7 +97,7 @@ public class AccountController {
      * @param teacher
      * @return
      */
-    @RequestMapping(path = "/addteacher", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/addteacher", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult TeacherAdd(Teacher teacher,String adminuser,String adminpwd) {
         //查询数据库
@@ -122,7 +122,7 @@ public class AccountController {
      * @param admin
      * @return
      */
-    @RequestMapping(path = "/addadmin", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/addadmin", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult AdminAdd(Admin admin,String adminuser,String adminpwd) {
         //查询数据库
@@ -147,7 +147,7 @@ public class AccountController {
      * @param account
      * @return
      */
-    @RequestMapping(path = "/delete", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/delete", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult Delete(Account account,String adminuser,String adminpwd) {
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
@@ -180,7 +180,7 @@ public class AccountController {
      * @param account
      * @return
      */
-    @RequestMapping(path = "/resetpwd", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/resetpwd", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult ResetPwd(Account account) {
         //查询数据库
@@ -213,7 +213,7 @@ public class AccountController {
      * @param account
      * @return
      */
-    @RequestMapping(path = "/resetpwdbyadmin", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/resetpwdbyadmin", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult ResetPwdByAdmin(Account account,String adminuser,String adminpwd) {
         //查询数据库

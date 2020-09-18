@@ -29,7 +29,7 @@ public class CourseController {
      * @param course
      * @return
      */
-    @RequestMapping(path = "/addcourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addcourse",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addClass(Course course,String[] classid,String adminuser,String adminpwd){
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
@@ -96,7 +96,7 @@ public class CourseController {
      * @param status
      * @return
      */
-    @RequestMapping(path = "/updatecourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatecourse",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult changeData(Integer courseid,String name,String avatar,Integer status,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -120,7 +120,7 @@ public class CourseController {
      * @param courseid
      * @return
      */
-    @RequestMapping(path = "/delcourse", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/delcourse", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult DeleteClase(String courseid,String adminuser,String adminpwd) {
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
@@ -170,7 +170,6 @@ public class CourseController {
     @RequestMapping(path = "/getcoursebytnoorcoursename",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
     public APIResult StudentLogin(String condition,Integer page,Integer num,Integer type){
-        //查询数据库
         if(page!=null&&page>=1){
             if(num!=null&&num>=1){
                 page=(page-1)*num;
@@ -178,9 +177,6 @@ public class CourseController {
                 page=null;num=null;
             }
         }
-//        if(page==null||num==null){
-//            page=num=0;
-//        }
         if(type==1){//按教师号查询
             condition="js.js_gh="+condition;
         }else if(type==2){//按课程名称模糊查询

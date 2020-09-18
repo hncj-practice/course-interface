@@ -23,7 +23,7 @@ public class DataController {
      * @param data
      * @return
      */
-    @RequestMapping(path = "/adddata",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/adddata",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addComment(Data data,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -50,7 +50,7 @@ public class DataController {
      * @param link      资料链接
      * @return
      */
-    @RequestMapping(path = "/updatedata",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatedata",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult changeData(Integer dataid,String name,String link,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -74,7 +74,7 @@ public class DataController {
      * @param dataid
      * @return
      */
-    @RequestMapping(path = "/deldata", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/deldata", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult DeleteData(Integer dataid,String user,String pwd) {
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))

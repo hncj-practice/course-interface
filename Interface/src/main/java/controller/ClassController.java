@@ -21,7 +21,7 @@ public class ClassController {
      * @param clase
      * @return
      */
-    @RequestMapping(path = "/addclass",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addclass",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addClass(Clase clase,String adminuser,String adminpwd){
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
@@ -76,7 +76,7 @@ public class ClassController {
      * @param classid
      * @return
      */
-    @RequestMapping(path = "/delclass", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/delclass", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult DeleteClase(String classid,String adminuser,String adminpwd) {
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
@@ -100,7 +100,7 @@ public class ClassController {
      * @param classname      新的班级名称
      * @return
      */
-    @RequestMapping(path = "/changeclassname",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/changeclassname",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult changeClassname(String classid,String classname,String adminuser,String adminpwd){
         if(!AccountUtil.isAdmin(adminuser,adminpwd))

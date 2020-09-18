@@ -22,7 +22,7 @@ public class SemesterController {
      * @param semester
      * @return
      */
-    @RequestMapping(path = "/addsemester",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addsemester",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addClass(Semester semester,String adminuser,String adminpwd){
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
@@ -47,7 +47,7 @@ public class SemesterController {
      * @param name
      * @return
      */
-    @RequestMapping(path = "/updatesemester",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatesemester",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult updateSemester(Integer semesterid,String name,String adminuser,String adminpwd){
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
@@ -71,7 +71,7 @@ public class SemesterController {
      * @param semesterid
      * @return
      */
-    @RequestMapping(path = "/delsemester", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/delsemester", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult DeleteClase(int semesterid,String adminuser,String adminpwd) {
         if(!AccountUtil.isAdmin(adminuser,adminpwd))

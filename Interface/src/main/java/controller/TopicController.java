@@ -27,7 +27,7 @@ public class TopicController {
      * @param topic
      * @return
      */
-    @RequestMapping(path = "/addtopic",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addtopic",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addTopic(Topic topic,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -54,7 +54,7 @@ public class TopicController {
      * @param status
      * @return
      */
-    @RequestMapping(path = "/updatetopic",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatetopic",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult changeData(Integer topicid,String title,String content,Integer status,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -78,7 +78,7 @@ public class TopicController {
      * @param topicid
      * @return
      */
-    @RequestMapping(path = "/deltopic", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/deltopic", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult DeleteClase(String topicid,String user,String pwd) {
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))

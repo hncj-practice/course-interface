@@ -27,7 +27,7 @@ public class ProblemController {
      * @param problem
      * @return
      */
-    @RequestMapping(path = "/addproblem",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addproblem",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addComment(Problem problem,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -54,7 +54,7 @@ public class ProblemController {
      * @param answer
      * @return
      */
-    @RequestMapping(path = "/updateproblem",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updateproblem",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult changeData(Integer problemid,Integer ptype,String content,String answer,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -78,7 +78,7 @@ public class ProblemController {
      * @param problemid
      * @return
      */
-    @RequestMapping(path = "/delproblem", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/delproblem", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult DeleteProblem(String problemid,String user,String pwd) {
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))

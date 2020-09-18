@@ -21,10 +21,10 @@ public class AccountUtil {
         Admin admin=adminDao.findByAdminAndPwd(username,password);
         session.close();
         if(admin!=null){//是管理员
-            System.out.println("是管理员");
+//            System.out.println("是管理员");
             return true;
         }else{//不是管理员
-            System.out.println("不是管理员");
+//            System.out.println("不是管理员");
             return false;
         }
     }
@@ -41,10 +41,10 @@ public class AccountUtil {
         Teacher teacher=teacherDao.findByTnoAndPwd(username,password);
         session.close();
         if(teacher!=null){//是教师
-            System.out.println("是教师");
+//            System.out.println("是教师");
             return true;
         }else{//不是教师
-            System.out.println("不是教师");
+//            System.out.println("不是教师");
             return false;
         }
     }

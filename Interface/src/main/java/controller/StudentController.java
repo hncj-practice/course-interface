@@ -28,7 +28,7 @@ public class StudentController {
      * @param account
      * @return
      */
-    @RequestMapping(path = "/login",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/login",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult StudentLogin(Account account){
 
@@ -52,7 +52,7 @@ public class StudentController {
      * @param name
      * @return
      */
-    @RequestMapping(path = "/updatestudent",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatestudent",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult updateStudent(String sno,String cla,String password,String name,String sex,String email,String avatar,Integer status,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -75,7 +75,7 @@ public class StudentController {
      * 查询所有的学生信息
      * @return
      */
-    @RequestMapping(path = "/allstudent",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/allstudent",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult AllTeacher(Integer page,Integer num){
         //查询数据库
@@ -99,7 +99,7 @@ public class StudentController {
      * @param classid
      * @return 账号信息或错误信息
      */
-    @RequestMapping(path = "/getstudentbycid", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/getstudentbycid", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult Login(String classid) {
         SqlSession session = util.MyBatis.getSession();
@@ -126,7 +126,7 @@ public class StudentController {
      * @param classid
      * @return
      */
-    @RequestMapping(path = "/choicecourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/choicecourse",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addProblems(Integer courseid,String [] classid,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))

@@ -26,7 +26,7 @@ public class CommentController {
      * @param comment
      * @return
      */
-    @RequestMapping(path = "/addcomment",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/addcomment",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult addComment(Comment comment,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -52,7 +52,7 @@ public class CommentController {
      * @param content
      * @return
      */
-    @RequestMapping(path = "/updatecomment",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/updatecomment",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult updateComment(Integer commentid,String content,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -76,7 +76,7 @@ public class CommentController {
      * @param commentid
      * @return
      */
-    @RequestMapping(path = "/delcomment", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @RequestMapping(path = "/delcomment", method = {RequestMethod.POST}, headers = {"Accept"})
     @ResponseBody
     public APIResult DeleteClase(String commentid,String user,String pwd) {
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
