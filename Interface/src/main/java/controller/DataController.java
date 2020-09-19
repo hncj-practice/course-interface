@@ -100,7 +100,9 @@ public class DataController {
     @RequestMapping(path = "/getdatabycourseid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
     public APIResult GetDataByCourseid(Integer courseid,Integer page,Integer num){
-        //查询数据库
+        if(page==null||num==null){
+            page=1;num=9999;
+        }
         SqlSession session=util.MyBatis.getSession();
         IDataDao dataDao=session.getMapper(IDataDao.class);
         List<Data> comments=dataDao.getDataByCourseid(courseid,(page-1)*num,num);

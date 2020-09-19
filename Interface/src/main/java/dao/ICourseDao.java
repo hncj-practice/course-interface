@@ -73,12 +73,19 @@ public interface ICourseDao {
     int delCourse(@Param("courseid") String courseid);
 
     //按课程号查找课程
-//    @SelectKey(statement = "select count(kc_bh) from kc where kc_bh=#{courseid};",before = false, keyProperty = "total", resultType =int.class )
-    @Select("\n" +
-            "select kc.kc_bh,kc.xq_bh,kc.js_gh,js.js_xm,kc.kc_mc,kc.kc_fm,kc.kc_zt,count(xskc.xs_xh)\n" +
+    @Select("select kc.kc_bh,kc.xq_bh,kc.js_gh,js.js_xm,kc.kc_mc,kc.kc_fm,kc.kc_zt,count(xskc.xs_xh)\n" +
             "from js,kc,xskc\n" +
             "where js.js_gh=kc.js_gh and kc.kc_bh=xskc.kc_bh and kc.kc_bh=#{courseid}\n")
     @ResultMap(value = {"courseMap"})
     Course getCourseByCid(@Param("courseid") Integer courseid);
+
+    //按学号和学期查找课程
+    @Select("select kc.kc_bh,kc.xq_bh,kc.js_gh,js.js_xm,kc.kc_mc,kc.kc_fm,kc.kc_zt,count(xskc.xs_xh)\n" +
+            "from js,kc,xskc\n" +
+            "where xq_bh=#{semesterid} and js.js_gh=kc.js_gh and kc.kc_bh=xskc.kc_bh and kc.kc_bh in\n" +
+            "(select kc_bh from xskc where xs_xh=#{studentid})\n" +
+            "group by kc.kc_bh;")
+    @ResultMap(value = {"courseMap"})
+    List<Course> getCourseBySno(@Param("studentid") Integer studentid,@Param("semesterid") Integer semesterid);
 
 }

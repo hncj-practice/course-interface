@@ -34,6 +34,10 @@ public class CourseController {
     public APIResult addClass(Course course,String[] classid,String adminuser,String adminpwd){
         if(!AccountUtil.isAdmin(adminuser,adminpwd))
             return APIResult.createNg("无操作权限");
+        if(course==null){
+            return APIResult.createNg("参数不合法");
+        }
+        course.setCoverimg("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3672347654,250980527&fm=26&gp=0.jpg");
         SqlSession session=util.MyBatis.getSession();
         ICourseDao courseDao=session.getMapper(ICourseDao.class);
         try {
@@ -152,6 +156,27 @@ public class CourseController {
         Course course=courseDao.getCourseByCid(courseid);
         session.close();
         if(course!=null&&!course.getSnum().equals("0")){
+            return APIResult.createOk("查询成功",course);
+        }else{
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
+     * 按学号查找课程
+     * @param studentid
+     * @param semesterid
+     * @return
+     */
+    @RequestMapping(path = "/getcoursebysno",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult GetCourseBySno(Integer studentid,Integer semesterid){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ICourseDao courseDao=session.getMapper(ICourseDao.class);
+        List<Course> course=courseDao.getCourseBySno(studentid,semesterid);
+        session.close();
+        if(course.size()>0){
             return APIResult.createOk("查询成功",course);
         }else{
             return APIResult.createNg("查询结果为空");
