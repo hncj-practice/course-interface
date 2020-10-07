@@ -59,13 +59,13 @@ public class PaperController {
      */
     @RequestMapping(path = "/updatepaper",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
-    public APIResult updatePaper(Integer paperid,String name,Integer choice,Integer judge,Integer fill,Integer status,String user,String pwd){
+    public APIResult updatePaper(Integer paperid,String name,Integer choice,Integer judge,Integer fill,String starttime,String endtime,Integer status,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IPaperDao paperDao=session.getMapper(IPaperDao.class);
         try {
-            paperDao.UpdatePaper(paperid,name,choice,judge,fill,status);
+            paperDao.UpdatePaper(paperid,name,choice,judge,fill,status,starttime,endtime);
             session.commit();
             return APIResult.createOKMessage("修改成功");
         } catch (Exception e) {
@@ -100,6 +100,25 @@ public class PaperController {
     }
 
     /**
+     * 按课程编号和学号查找试卷
+     * @param courseid
+     * @return
+     */
+    @RequestMapping(path = "/getpaperbycourseidandsno", method = {RequestMethod.POST, RequestMethod.GET}, headers = {"Accept"})
+    @ResponseBody
+    public APIResult GetPaperByCourseid(Integer courseid,String studentid) {
+        SqlSession session = util.MyBatis.getSession();
+        IPaperDao paperDao = session.getMapper(IPaperDao.class);
+        List<Paper> papers = paperDao.getPaperByCourseidAndSno(courseid,studentid);
+        session.close();
+        if (!papers.isEmpty()) {
+            return APIResult.createOk("查找成功", papers);
+        } else {
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
      * 按课程编号查找试卷
      * @param courseid
      * @return
@@ -113,6 +132,45 @@ public class PaperController {
         session.close();
         if (!papers.isEmpty()) {
             return APIResult.createOk("查找成功", papers);
+        } else {
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
+     * 查找某学生学习所有课程的所有试卷
+     * @param studentid
+     * @return
+     */
+    @RequestMapping(path = "/findpaperbysno", method = {RequestMethod.POST,RequestMethod.GET}, headers = {"Accept"})
+    @ResponseBody
+    public APIResult findPaperBySno(String studentid) {
+        SqlSession session = util.MyBatis.getSession();
+        IPaperDao paperDao = session.getMapper(IPaperDao.class);
+        List<Paper> papers=paperDao.findPaperBySno(studentid);
+        if (!papers.isEmpty()) {
+            for(Paper paper:papers){
+                System.out.println(paper.toString());
+            }
+            return APIResult.createOk("查找成功", papers);
+        } else {
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
+     * 查找某学生某次测试的成绩
+     * @param studentid
+     * @return
+     */
+    @RequestMapping(path = "/findscorebysnoandpaperid", method = {RequestMethod.POST,RequestMethod.GET}, headers = {"Accept"})
+    @ResponseBody
+    public APIResult findScoreBySnoAndPaperid(String studentid,Integer paperid) {
+        SqlSession session = util.MyBatis.getSession();
+        IPaperDao paperDao = session.getMapper(IPaperDao.class);
+        Float score=paperDao.findScoreBySnoAndPaperid(studentid,paperid);
+        if (score!=null) {
+            return APIResult.createOk("查找成功", score);
         } else {
             return APIResult.createNg("查询结果为空");
         }
@@ -239,6 +297,7 @@ public class PaperController {
         IPaperDao paperDao=session.getMapper(IPaperDao.class);
         try {
             paperDao.ReleasePaper(paperid,courseid);
+            paperDao.UpdatePaper(paperid,null,null,null,null,1,null,null);
             session.commit();
             return APIResult.createOk("发布成功", courseid);
         } catch (Exception e) {
@@ -259,9 +318,7 @@ public class PaperController {
      */
     @RequestMapping(path = "/updatetestgrade",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
-    public APIResult UpdateTestGrade(String sno,Integer paperid,Float grade,String user,String pwd){
-        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
-            return APIResult.createNg("无操作权限");
+    public APIResult UpdateTestGrade(String sno,Integer paperid,Float grade){
         SqlSession session=util.MyBatis.getSession();
         IPaperDao paperDao=session.getMapper(IPaperDao.class);
         try {

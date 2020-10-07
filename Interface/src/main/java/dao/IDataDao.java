@@ -11,7 +11,8 @@ public interface IDataDao {
             @Result(column = "zl_bh",property = "dataid",id = true),
             @Result(column = "kc_bh",property = "courseid"),
             @Result(column = "zl_mc",property = "dataname"),
-            @Result(column = "zl_lj",property = "datalink")
+            @Result(column = "zl_lj",property = "datalink"),
+            @Result(column = "zl_lx",property = "datatype")
     })
     @Select("select * " +
             "from zl " +
@@ -20,7 +21,7 @@ public interface IDataDao {
 
 
     //添加资料
-    @Insert("insert into zl(kc_bh,zl_mc,zl_lj) values(#{courseid},#{dataname},#{datalink})")
+    @Insert("insert into zl(kc_bh,zl_mc,zl_lj,zl_lx) values(#{courseid},#{dataname},#{datalink},#{datatype})")
     void addData(Data data);
 
     //删除资料
@@ -44,8 +45,9 @@ public interface IDataDao {
             "<set>" +
             "<if test='name!=null'>zl_mc=#{name},</if>" +
             "<if test='link!=null'>zl_lj=#{link},</if>" +
+            "<if test='type!=null'>zl_lx=#{type},</if>" +
             "</set>" +
             " where zl_bh=#{dataid}" +
             "</script>")
-    void updateData(@Param("dataid") Integer dataid, @Param("name") String name, @Param("link") String link);
+    void updateData(@Param("dataid") Integer dataid, @Param("name") String name, @Param("link") String link, @Param("type") Integer type);
 }

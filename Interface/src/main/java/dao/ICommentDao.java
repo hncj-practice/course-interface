@@ -12,6 +12,8 @@ public interface ICommentDao {
     @Results(id = "commentMap",value = {
             @Result(column = "pl_bh",property = "commentid",id = true),
             @Result(column = "xs_xh",property = "sno"),
+            @Result(column = "xs_xm",property = "sname"),
+            @Result(column = "xs_tx",property = "savatar"),
             @Result(column = "ht_bh",property = "topicid"),
             @Result(column = "pl_nr",property = "commentcontent"),
             @Result(column = "pl_sj",property = "commenttime")
@@ -43,8 +45,9 @@ public interface ICommentDao {
     int delComment(@Param("commentid") String commentid);
 
     //按话题号查找评论
-    @Select("select * from pl " +
-            "where ht_bh=#{topicid} " +
+    @Select("select pl_bh,pl.xs_xh,xs.xs_xm,xs.xs_tx,ht_bh,pl_nr,pl_sj from pl,xs "+
+            "where xs.xs_xh=pl.xs_xh and pl.ht_bh=#{topicid} " +
+            "order by pl_sj desc " +
             "limit #{start},#{end}")
     @ResultMap(value = {"commentMap"})
     List<Comment> getCommentByTopicid(@Param("topicid") Integer topicid,@Param("start") Integer start, @Param("end") Integer end);

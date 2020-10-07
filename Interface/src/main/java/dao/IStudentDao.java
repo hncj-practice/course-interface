@@ -1,7 +1,6 @@
 package dao;
 
-import domain.Student;
-import domain.Teacher;
+import domain.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -78,6 +77,8 @@ public interface IStudentDao {
     @ResultMap(value = {"studentMap"})
     List<Student> findAllStudentByCid(@Param("classid") String classid);
 
+
+
     //统计某班级的学生的总数
     @Select("select count(*) from xs where bj_bh=#{classid}")
     int TotalByClassid(@Param("classid") String classid);
@@ -92,4 +93,45 @@ public interface IStudentDao {
             "</foreach>" +
             "</script>")
     void ChoiceCourse(@Param("courseid") Integer courseid,@Param("classid") String[] classid);
+
+
+
+    /**
+     * 下方语句用于
+     * 统计学生评论情况以及试卷完成情况
+     */
+
+    //查找某课程的所有学生
+    @Select("select xs_xh,xs_xm from xs where xs_xh in\n" +
+            "(select xs_xh from xskc where kc_bh=#{courseid})")
+    @Results(id = "statistic", value = {
+            @Result(column = "xs_xh",property = "sno",id = true),
+            @Result(column = "xs_xm",property = "sname")
+    })
+    List<Statistic> findAllStudentByCourseid(@Param("courseid") Integer courseid);
+
+    //根据学号查找讨论次数
+    @Select("select count(pl_bh) from pl where xs_xh=#{sno}")
+    int findCommentNumBySno(@Param("sno") String sno);
+
+    //查询某课程下所有已发布的试卷数量
+    @Select("select count(sj_bh) from sj where sj_zt=1 and kc_bh=#{courseid}")
+    int findTotalPaperByCourseid(@Param("courseid") Integer courseid);
+
+    //根据学号和课程号查找该学生完成该课程的试卷数量(对应试卷成绩不为0代表完成)
+//    @Select("select count(xs_xh) from xssj \n" +
+//            "where xs_xh=#{sno} and xssj_cj!=0 and sj_bh in(select sj_bh from sj where kc_bh=#{courseid});")
+    @Select("select count(xs_xh) from xssj \n" +
+            "where xs_xh=#{sno} and xssj_zt=1 and sj_bh in(select sj_bh from sj where kc_bh=#{courseid});\n")
+    int findFinPaperNumBySnoAndCourseid(@Param("sno") String sno,@Param("courseid") Integer courseid);
+
+    //查找某课程下所有学生的平均分数
+    @Select("select xs_xh,avg(xssj_cj) from xssj " +
+            "where sj_bh in(select sj_bh from sj where kc_bh=#{courseid}) \n" +
+            "group by xs_xh;")
+    @Results(value = {
+            @Result(column = "xs_xh",property = "sno"),
+            @Result(column = "avg(xssj_cj)",property = "average")
+    })
+    List<Score> findAverageScore(@Param("courseid") Integer courseid);
 }

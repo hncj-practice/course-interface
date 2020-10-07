@@ -31,10 +31,11 @@ public interface ITopicDao {
             "<if test='title!=null'> ht_bt=#{title},</if>" +
             "<if test='content!=null'> ht_nr=#{content},</if>" +
             "<if test='status!=null'> ht_zt=#{status},</if>" +
+            "<if test='commenttime!=null'> ht_fbsj=#{commenttime},</if>" +
             "</set>" +
-            "where ht_bh=#{topicid}" +
+            "where ht_bh=#{topicid} " +
             "</script>")
-    void UpdateTopic(@Param("topicid") Integer topicid,@Param("title") String title,@Param("content") String content,@Param("status") Integer status);
+    void UpdateTopic(@Param("topicid") Integer topicid,@Param("title") String title,@Param("content") String content,@Param("status") Integer status,@Param("commenttime") Integer commenttime);
 
 
     //删除话题

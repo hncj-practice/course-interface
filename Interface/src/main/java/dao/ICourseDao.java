@@ -49,7 +49,6 @@ public interface ICourseDao {
             "<if test='status!=null'> kc_zt=#{status},</if>" +
             "</set>" +
             "where kc_bh=#{courseid}" +
-
             "</script>")
     void UpdateCourse(@Param("courseid") Integer courseid,@Param("name") String name,@Param("avatar") String avatar,@Param("status") Integer status);
 

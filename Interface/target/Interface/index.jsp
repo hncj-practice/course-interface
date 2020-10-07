@@ -131,7 +131,7 @@
 <br>
 <a href="paper/randomgenerate?chapterid=1&chapterid=2&num=5&type=1&user=wsgly&pwd=000000">随机组卷</a>
 <a href="paper/randomgenerate?chapterid=1&chapterid=2&choice=3&fill=0&judge=2&type=2&user=wsgly&pwd=000000">按各类型数量组卷</a>
-<a href="paper/getpaperbycourseid?courseid=1">按课程号查找试卷</a>
+<a href="paper/getpaperbycourseid?courseid=1&studentid=888888888">按课程号查找试卷</a>
 <a href="paper/releasepaper?paperid=1&courseid=1">教师发布试卷</a>
 <br>
 <a href="grade/gettestgradebyclassidandpaperid?classid=0814171&paperid=1&sort=3">成绩排序</a>
@@ -145,5 +145,11 @@
 <br>
 <a href="student/updatestudent?sno=081417162&password=123456&status=2&user=wsgly&pwd=000000">更新学生信息</a>
 <a href="teacher/updateteacher?tno=555555&password=123456&status=2&adminuser=wsgly&adminpwd=000000">更新教师信息</a>
+<br>
+<a href="student/statistic?courseid=1">学生统计</a>
+<a href="paper/findpaperbysno?studentid=081417162">查找某学生学习的所有课程的试卷</a>
+<a href="paper/findscorebysnoandpaperid?studentid=888888888&paperid=1">某学生某次测试成绩</a>
+<a href="semester/allsemester">所有学期</a>
+<a href="grade/getfinalgrade?studentid=888888888&semesterid=1">查找期末成绩</a>
 </body>
 </html>

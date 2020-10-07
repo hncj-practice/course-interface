@@ -3,6 +3,7 @@ package controller;
 import dao.ICourseDao;
 import dao.IGradeDao;
 import domain.Course;
+import domain.FinalGrade;
 import domain.Grade;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
@@ -48,6 +49,26 @@ public class GradeController {
         SqlSession session=util.MyBatis.getSession();
         IGradeDao gradeDao=session.getMapper(IGradeDao.class);
         List<Grade> grades=gradeDao.GetTestGradeByClassidAndPaperid(classid,paperid,sorttype);
+        session.close();
+        if(!grades.isEmpty()){
+            return APIResult.createOk("查询成功",grades);
+        }else{
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+    /**
+     * 查询某学生某学期的全部课程的期末成绩
+     * @param studentid
+     * @param semesterid
+     * @return
+     */
+    @RequestMapping(path = "/getfinalgrade",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult getFinalGrade(String studentid,Integer semesterid){
+        SqlSession session=util.MyBatis.getSession();
+        IGradeDao gradeDao=session.getMapper(IGradeDao.class);
+        List<FinalGrade> grades=gradeDao.getFinalGrade(studentid,semesterid);
         session.close();
         if(!grades.isEmpty()){
             return APIResult.createOk("查询成功",grades);

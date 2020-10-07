@@ -5,6 +5,7 @@ public class Data {
     private Integer courseid;       //课程编号
     private String dataname;    //资料名称
     private String datalink;    //资料链接
+    private Integer datatype;       //资料类型
     private Integer total;
 
     public Integer getDataid() {
@@ -39,6 +40,14 @@ public class Data {
         this.datalink = datalink;
     }
 
+    public Integer getDatatype() {
+        return datatype;
+    }
+
+    public void setDatatype(Integer datatype) {
+        this.datatype = datatype;
+    }
+
     public Integer getTotal() {
         return total;
     }
@@ -54,6 +63,7 @@ public class Data {
                 ", courseid=" + courseid +
                 ", dataname='" + dataname + '\'' +
                 ", datalink='" + datalink + '\'' +
+                ", datatype=" + datatype +
                 ", total=" + total +
                 '}';
     }

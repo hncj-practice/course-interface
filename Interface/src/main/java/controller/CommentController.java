@@ -28,9 +28,7 @@ public class CommentController {
      */
     @RequestMapping(path = "/addcomment",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
-    public APIResult addComment(Comment comment,String user,String pwd){
-        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
-            return APIResult.createNg("无操作权限");
+    public APIResult addComment(Comment comment){
         SqlSession session=util.MyBatis.getSession();
         ICommentDao commentDao=session.getMapper(ICommentDao.class);
         try {
@@ -102,7 +100,9 @@ public class CommentController {
     @RequestMapping(path = "/getcommentbytopicid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
     public APIResult GetCommentByTopicid(Integer topicid,Integer page,Integer num){
-        //查询数据库
+        if(page==null||num==null){
+            page=1;num=9999;
+        }
         SqlSession session=util.MyBatis.getSession();
         ICommentDao commentDao=session.getMapper(ICommentDao.class);
         List<Comment> comments=commentDao.getCommentByTopicid(topicid,(page-1)*num,num);

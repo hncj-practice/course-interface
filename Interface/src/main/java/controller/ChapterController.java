@@ -46,18 +46,18 @@ public class ChapterController {
     /**
      * 更新章节信息
      * @param chapterid
-     * @param name
+     * @param chaptername
      * @return
      */
     @RequestMapping(path = "/updatechapter",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
-    public APIResult updateChapter(Integer chapterid,String name,String user,String pwd){
+    public APIResult updateChapter(Integer chapterid,String chaptername,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IChapterDao chapterDao=session.getMapper(IChapterDao.class);
         try {
-            chapterDao.updateChapter(chapterid,name);
+            chapterDao.updateChapter(chapterid,chaptername);
             session.commit();
             return APIResult.createOKMessage("修改成功");
         } catch (Exception e) {

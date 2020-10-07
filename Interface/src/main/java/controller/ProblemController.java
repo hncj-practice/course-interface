@@ -103,9 +103,7 @@ public class ProblemController {
      */
     @RequestMapping(path = "/getproblembychapterid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetProblemByChapterid(Integer[] chapterid,Integer type,String user,String pwd){
-        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
-            return APIResult.createNg("无操作权限");
+    public APIResult GetProblemByChapterid(Integer[] chapterid,Integer type){
         SqlSession session=util.MyBatis.getSession();
         IProblemDao problemDao=session.getMapper(IProblemDao.class);
         List<Problem> problems=problemDao.getProblemByChapterid(chapterid,type);

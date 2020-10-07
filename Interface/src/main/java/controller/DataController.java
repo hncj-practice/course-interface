@@ -52,13 +52,13 @@ public class DataController {
      */
     @RequestMapping(path = "/updatedata",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
-    public APIResult changeData(Integer dataid,String name,String link,String user,String pwd){
+    public APIResult changeData(Integer dataid,String name,String link,Integer type,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IDataDao dataDao=session.getMapper(IDataDao.class);
         try {
-            dataDao.updateData(dataid,name,link);
+            dataDao.updateData(dataid,name,link,type);
             session.commit();
             return APIResult.createOKMessage("修改成功");
         } catch (Exception e) {

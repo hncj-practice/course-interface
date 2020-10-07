@@ -17,7 +17,8 @@ public interface IPaperDao {
             @Result(column = "sj_tkfz",property = "fillpoints"),
             @Result(column = "sj_kssj",property = "starttime"),
             @Result(column = "sj_jssj",property = "endtime"),
-            @Result(column = "sj_zt",property = "status")
+            @Result(column = "sj_zt",property = "status"),
+            @Result(column = "xssj_zt",property = "spstatus")
     })
     @Select("select * from sj")
     List<Paper> findAll();
@@ -34,6 +35,27 @@ public interface IPaperDao {
     @ResultMap(value = {"paperMap"})
     List<Paper> getPaperByCourseid(@Param("courseid") Integer courseid);
 
+    //按课程号和学生号查找试卷
+    @Select("select sj.sj_bh,sj.kc_bh,sj.sj_mc,sj.sj_xzfz,sj.sj_pdfz,sj.sj_tkfz,sj.sj_kssj,sj.sj_jssj,sj.sj_zt,xssj.xssj_zt \n" +
+            "from sj,xssj\n" +
+            "where xssj.xs_xh=#{sno} and sj.sj_bh=xssj.sj_bh and kc_bh=#{courseid};")
+    @ResultMap(value = {"paperMap"})
+    List<Paper> getPaperByCourseidAndSno(@Param("courseid") Integer courseid,@Param("sno") String sno);
+
+    //查找某学生学习所有课程的所有试卷
+//    @Select("select * from sj where kc_bh in " +
+//            "(select kc_bh from xskc where xs_xh=#{sno}) ")
+    @Select("select sj.sj_bh,sj.kc_bh,sj.sj_mc,sj.sj_xzfz,sj.sj_pdfz,sj.sj_tkfz,sj.sj_kssj,sj.sj_jssj,sj.sj_zt,xssj.xssj_zt " +
+            "from sj,xssj where sj.sj_bh=xssj.sj_bh and xssj.xs_xh=#{sno} and kc_bh " +
+            "in (select kc_bh from xskc where xs_xh=#{sno})")
+    @ResultMap(value = {"paperMap"})
+    List<Paper> findPaperBySno(@Param("sno") String sno);
+
+    //查找某学生某次测试的成绩
+    @Select("select xssj_cj from xssj where xs_xh=#{sno} and sj_bh=#{paperid};")
+    Float findScoreBySnoAndPaperid(@Param("sno") String sno,@Param("paperid") Integer paperid);
+
+
     //修改试卷
     @Update("<script>" +
             "update sj" +
@@ -42,11 +64,13 @@ public interface IPaperDao {
             "<if test='choice!=null'> sj_xzfz=#{choice},</if>" +
             "<if test='judge!=null'> sj_pdfz=#{judge},</if>" +
             "<if test='fill!=null'> sj_tkfz=#{fill},</if>" +
+            "<if test='starttime!=null'> sj_kssj=#{starttime},</if>" +
+            "<if test='endtime!=null'> sj_jssj=#{endtime},</if>" +
             "<if test='status!=null'> sj_zt=#{status},</if>" +
             "</set>" +
             "where sj_bh=#{paperid}" +
             "</script>")
-    void UpdatePaper(@Param("paperid") Integer paperid,@Param("name") String name,@Param("choice") Integer choice,@Param("judge") Integer judge,@Param("fill") Integer fill,@Param("status") Integer status);
+    void UpdatePaper(@Param("paperid") Integer paperid,@Param("name") String name,@Param("choice") Integer choice,@Param("judge") Integer judge,@Param("fill") Integer fill,@Param("status") Integer status,@Param("starttime") String starttime,@Param("endtime") String endtime);
 
 
     //删除试卷
@@ -71,6 +95,6 @@ public interface IPaperDao {
 
 
     //更新学生测验成绩
-    @Update("update xssj set xssj_cj=#{grade} where xs_xh=#{sno} and sj_bh=#{paperid}")
+    @Update("update xssj set xssj_cj=#{grade},xssj_zt=1 where xs_xh=#{sno} and sj_bh=#{paperid}")
     void UpdateTestGrade(@Param("sno") String sno,@Param("paperid") Integer paperid,@Param("grade") Float grade);
 }

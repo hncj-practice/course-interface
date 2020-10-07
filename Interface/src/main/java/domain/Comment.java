@@ -3,6 +3,8 @@ package domain;
 public class Comment {
     private Integer commentid;          //评论编号
     private String sno;             //学生学号
+    private String sname;               //学生姓名
+    private String savatar;             //学生头像
     private Integer topicid;            //话题编号
     private String commentcontent;  //评论内容
     private String commenttime;     //评论时间
@@ -22,6 +24,22 @@ public class Comment {
 
     public void setSno(String sno) {
         this.sno = sno;
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
+    }
+
+    public String getSavatar() {
+        return savatar;
+    }
+
+    public void setSavatar(String savatar) {
+        this.savatar = savatar;
     }
 
     public Integer getTopicid() {
@@ -61,6 +79,8 @@ public class Comment {
         return "Comment{" +
                 "commentid=" + commentid +
                 ", sno='" + sno + '\'' +
+                ", sname='" + sname + '\'' +
+                ", savatar='" + savatar + '\'' +
                 ", topicid=" + topicid +
                 ", commentcontent='" + commentcontent + '\'' +
                 ", commenttime='" + commenttime + '\'' +

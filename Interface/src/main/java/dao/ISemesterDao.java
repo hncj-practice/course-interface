@@ -8,7 +8,11 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 public interface ISemesterDao {
-
+    @Results(value = {
+            @Result(column = "xq_bh",property = "semesterid",id = true),
+            @Result(column = "xq_mc",property = "semestername")
+    })
+    //查找全部学期
     @Select("select * from xq")
     List<Semester> findAll();
 
@@ -27,7 +31,7 @@ public interface ISemesterDao {
     void UpdateSemester(@Param("semesterid") Integer semesterid,@Param("name") String name);
 
 
-    //删除班级
+    //删除学期
     @Delete("delete from xq where xq_bh=#{semesterid}")
     int delSemester(@Param("semesterid") Integer semesterid);
 }

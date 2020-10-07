@@ -10,6 +10,7 @@ public class Paper {
     private String starttime;   //考试开始时间
     private String endtime;     //考试结束时间
     private Integer status;         //试卷状态
+    private Integer spstatus;       //该试卷学生是否已完成
 
     public Integer getPaperid() {
         return paperid;
@@ -83,6 +84,14 @@ public class Paper {
         this.status = status;
     }
 
+    public Integer getSpstatus() {
+        return spstatus;
+    }
+
+    public void setSpstatus(Integer spstatus) {
+        this.spstatus = spstatus;
+    }
+
     @Override
     public String toString() {
         return "Paper{" +
@@ -95,6 +104,7 @@ public class Paper {
                 ", starttime='" + starttime + '\'' +
                 ", endtime='" + endtime + '\'' +
                 ", status=" + status +
+                ", spstatus=" + spstatus +
                 '}';
     }
 }

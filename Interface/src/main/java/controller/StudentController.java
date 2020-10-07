@@ -1,9 +1,7 @@
 package controller;
 
 import dao.*;
-import domain.Account;
-import domain.Student;
-import domain.Teacher;
+import domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -144,5 +142,38 @@ public class StudentController {
             session.close();
         }
     }
+
+    /**
+     * 统计学生评论情况、试题完成情况
+     * @param courseid
+     * @return
+     */
+    @RequestMapping(path = "/statistic", method = {RequestMethod.POST,RequestMethod.GET}, headers = {"Accept"})
+    @ResponseBody
+    public APIResult Login(Integer courseid) {
+        SqlSession session = util.MyBatis.getSession();
+        IStudentDao studentDao = session.getMapper(IStudentDao.class);
+        int totalpaper=studentDao.findTotalPaperByCourseid(courseid);
+        List<Statistic> students = studentDao.findAllStudentByCourseid(courseid);
+        List<Score> scores=studentDao.findAverageScore(courseid);
+        if (!students.isEmpty()) {
+            for(Statistic student:students){
+                student.setCommentnum(studentDao.findCommentNumBySno(student.getSno()));
+                student.setFinpapernum(studentDao.findFinPaperNumBySnoAndCourseid(student.getSno(),courseid));
+                student.setTotalpapernum(totalpaper);
+                for(Score score:scores){
+                    if(score.getSno().equals(student.getSno())){
+                        student.setAverage(score.getAverage());
+                    }
+                }
+                System.out.println(student.toString());
+            }
+            return APIResult.createOk("查找成功", students);
+        } else {
+            return APIResult.createNg("查询结果为空");
+        }
+    }
+
+
 
 }

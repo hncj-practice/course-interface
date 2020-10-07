@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import util.APIResult;
 import util.AccountUtil;
 
+import java.util.List;
+
 //控制器类
 @Controller
 @RequestMapping(path = "/semester")
@@ -86,6 +88,23 @@ public class SemesterController {
             return APIResult.createOKMessage("删除成功");
         }else{
             return APIResult.createNg("删除失败");
+        }
+    }
+
+    /**
+     * 查询所有的学期信息
+     * @return
+     */
+    @RequestMapping(path = "/allsemester",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult AllTeacher(){
+        SqlSession session=util.MyBatis.getSession();
+        ISemesterDao semesterDao=session.getMapper(ISemesterDao.class);
+        List<Semester> semesters=semesterDao.findAll();
+        if(!semesters.isEmpty()){
+            return APIResult.createOk("查询成功",semesters);
+        }else{
+            return APIResult.createNg("查询结果为空");
         }
     }
 }

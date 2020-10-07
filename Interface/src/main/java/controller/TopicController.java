@@ -56,13 +56,13 @@ public class TopicController {
      */
     @RequestMapping(path = "/updatetopic",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
-    public APIResult changeData(Integer topicid,String title,String content,Integer status,String user,String pwd){
+    public APIResult changeData(Integer topicid,String title,String content,Integer commenttime,Integer status,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         ITopicDao topicDao=session.getMapper(ITopicDao.class);
         try {
-            topicDao.UpdateTopic(topicid,title,content,status);
+            topicDao.UpdateTopic(topicid,title,content,status,commenttime);
             session.commit();
             return APIResult.createOKMessage("修改成功");
         } catch (Exception e) {
