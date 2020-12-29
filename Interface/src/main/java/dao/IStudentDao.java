@@ -33,8 +33,11 @@ public interface IStudentDao {
     @ResultMap(value = {"studentMap"})
     Student findBySnoAndPwd(@Param("username") String username,@Param("password") String password);
 
-    //添加学生
-    @Insert("insert into xs(xs_xh,bj_bh,xs_mm,xs_xm,xs_xb,xs_yx,xs_tx,xs_zt) values(#{sno},#{cla},#{pwd},#{name},#{sex},#{email},#{avatar},#{status})")
+//    //添加学生
+//    @Insert("insert into xs(xs_xh,bj_bh,xs_mm,xs_xm,xs_xb,xs_yx,xs_tx,xs_zt) values(#{sno},#{cla},#{pwd},#{name},#{sex},#{email},#{avatar},#{status})")
+//    void addStudent(Student student);
+//添加学生
+    @Insert("insert into xs(xs_xh,bj_bh,xs_mm,xs_xm,xs_xb,xs_yx,xs_zt) values(#{sno},#{cla},#{pwd},#{name},#{sex},#{email},#{status})")
     void addStudent(Student student);
 
     //修改学生信息

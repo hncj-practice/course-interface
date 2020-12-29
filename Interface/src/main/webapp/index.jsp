@@ -88,7 +88,7 @@
 <a href="semester/updatesemester?semesterid=1&name=2020-2021学年第一学期新名称&adminuser=wsgly&adminpwd=000000">更新学期信息</a>
 <a href="semester/delsemester?semesterid=2&adminuser=wsgly&adminpwd=000000">删除学期</a>
 <br>
-<a href="course/addcourse?semester=1&tno=888888888&cname=人工智能&coverimg=https://i0.hdslb.com/bfs/sycp/creative_img/202008/26449dd779b45fca0fec993f66de6192.png&status=1&classid=0814171&adminuser=wsgly&adminpwd=000000">添加课程</a>
+<a href="course/addcourse?semester=1&tno=888888888&cname=人工智能&status=1&classid=0814171&adminuser=wsgly&adminpwd=000000">添加课程</a>
 <a href="course/updatecourse?courseid=1&name=移动终端开发新名称&avatar=http://i0.hdslb.com/bfs/archive/15c333700bf0c23e481110eab37a9531d1fe7ef7.png@880w_388h_1c_95q&status=2&user=wsgly&pwd=000000">修改课程信息</a>
 <a href="course/delcourse?courseid=6&adminuser=wsgly&adminpwd=000000">删除课程</a>
 <br>
@@ -115,7 +115,7 @@
 <a href="student/getstudentbycid?classid=0814171">查询某班级所有学生</a>
 <a href="student/allstudent?page=1&num=3">查询所有的学生信息</a>
 <br>
-<a href="problem/getproblembychapterid?chapterid=1&chapterid=2&type=0&user=wsgly&pwd=000000">按章节号查找题目</a>
+<a href="problem/getproblembychapterid?chapterid=1&chapterid=2&type=1&user=wsgly&pwd=000000">按章节号查找题目</a>
 <a href="problem/getproblembypaperid?paperid=1&user=wsgly&pwd=000000">按试卷编号查找试题</a>
 <br>
 <a href="teacher/allteacher?page=1&num=3">查询所有的教师信息</a>

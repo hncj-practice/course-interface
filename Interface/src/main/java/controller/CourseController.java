@@ -37,7 +37,6 @@ public class CourseController {
         if(course==null){
             return APIResult.createNg("参数不合法");
         }
-        course.setCoverimg("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3672347654,250980527&fm=26&gp=0.jpg");
         SqlSession session=util.MyBatis.getSession();
         ICourseDao courseDao=session.getMapper(ICourseDao.class);
         try {

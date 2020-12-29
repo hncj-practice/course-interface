@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Interface:war">
+    <output-path>$PROJECT_DIR$/Interface/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Interface</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Interface.war">
+      <element id="artifact" artifact-name="Interface:war exploded" />
+    </root>
+  </artifact>
+</component>

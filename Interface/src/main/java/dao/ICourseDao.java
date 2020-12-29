@@ -35,7 +35,7 @@ public interface ICourseDao {
 
 
     //添加课程
-    @Insert("insert into kc(xq_bh,js_gh,kc_mc,kc_fm,kc_zt) values(#{semester},#{tno},#{cname},#{coverimg},#{status})")
+    @Insert("insert into kc(xq_bh,js_gh,kc_mc,kc_zt) values(#{semester},#{tno},#{cname},#{status})")
     @SelectKey(statement="select last_insert_id();",before=false,keyColumn="kc_bh",resultType=int.class,keyProperty="cid")
     void addCourse(Course course);
 

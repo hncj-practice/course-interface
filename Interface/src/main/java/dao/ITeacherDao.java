@@ -40,8 +40,11 @@ public interface ITeacherDao {
     @ResultMap(value = {"teacherMap"})
     Teacher findByTnoAndPwd(@Param("username") String username, @Param("password") String password);
 
+//    //添加教师
+//    @Insert("insert into js values(#{tno},#{pwd},#{name},#{sex},#{email},#{avatar},#{status})")
+//    void addTeacher(Teacher teacher);
     //添加教师
-    @Insert("insert into js values(#{tno},#{pwd},#{name},#{sex},#{email},#{avatar},#{status})")
+    @Insert("insert into js(js_gh,js_mm,js_xm,js_xb,js_yx,js_zt) values(#{tno},#{pwd},#{name},#{sex},#{email},#{status})")
     void addTeacher(Teacher teacher);
 
     //修改教师信息

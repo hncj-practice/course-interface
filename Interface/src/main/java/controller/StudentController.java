@@ -150,7 +150,7 @@ public class StudentController {
      */
     @RequestMapping(path = "/statistic", method = {RequestMethod.POST,RequestMethod.GET}, headers = {"Accept"})
     @ResponseBody
-    public APIResult Login(Integer courseid) {
+    public APIResult Statistic(Integer courseid) {
         SqlSession session = util.MyBatis.getSession();
         IStudentDao studentDao = session.getMapper(IStudentDao.class);
         int totalpaper=studentDao.findTotalPaperByCourseid(courseid);
