@@ -124,9 +124,9 @@ public class ProblemController {
      */
     @RequestMapping(path = "/getproblembypaperid",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
-    public APIResult GetProblemByPaperid(Integer paperid,String user,String pwd){
-        if(!AccountUtil.isAdmin(user,pwd))
-            return APIResult.createNg("无操作权限");
+    public APIResult GetProblemByPaperid(Integer paperid/*,String user,String pwd*/){
+//        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
+//            return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IProblemDao problemDao=session.getMapper(IProblemDao.class);
         List<Problem> problems=problemDao.getProblemByPaperid(paperid);

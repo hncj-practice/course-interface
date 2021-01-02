@@ -157,7 +157,6 @@
 <a href="topic/gettopicbytopicid?topicid=1">按话题号查找话题</a>
 
 <br>
-<a href="upload/upload">上传</a>
 <a href="upload/doUpload">上传</a>
 </body>
 </html>
