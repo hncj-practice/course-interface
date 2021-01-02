@@ -124,7 +124,7 @@ public class StudentController {
      * @param classid
      * @return
      */
-    @RequestMapping(path = "/choicecourse",method = {RequestMethod.POST},headers = {"Accept"})
+    @RequestMapping(path = "/choicecourse",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
     @ResponseBody
     public APIResult addProblems(Integer courseid,String [] classid,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
@@ -156,6 +156,9 @@ public class StudentController {
         int totalpaper=studentDao.findTotalPaperByCourseid(courseid);
         List<Statistic> students = studentDao.findAllStudentByCourseid(courseid);
         List<Score> scores=studentDao.findAverageScore(courseid);
+//        for(Score s:scores){
+//            System.out.println(s.toString());
+//        }
         if (!students.isEmpty()) {
             for(Statistic student:students){
                 student.setCommentnum(studentDao.findCommentNumBySno(student.getSno()));
@@ -166,7 +169,7 @@ public class StudentController {
                         student.setAverage(score.getAverage());
                     }
                 }
-                System.out.println(student.toString());
+//                System.out.println(student.toString());
             }
             return APIResult.createOk("查找成功", students);
         } else {

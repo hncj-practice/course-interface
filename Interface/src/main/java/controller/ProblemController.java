@@ -101,10 +101,10 @@ public class ProblemController {
      * @param chapterid
      * @return
      */
-    @RequestMapping(path = "/getproblembychapterid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/getproblembychapterid",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult GetProblemByChapterid(Integer[] chapterid,Integer type,String user,String pwd){
-        if(!AccountUtil.isAdmin(user,pwd))
+        if(!AccountUtil.isAdmin(user,pwd)&&!AccountUtil.isTeacher(user,pwd))
             return APIResult.createNg("无操作权限");
         SqlSession session=util.MyBatis.getSession();
         IProblemDao problemDao=session.getMapper(IProblemDao.class);
@@ -122,7 +122,7 @@ public class ProblemController {
      * @param paperid
      * @return
      */
-    @RequestMapping(path = "/getproblembypaperid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @RequestMapping(path = "/getproblembypaperid",method = {RequestMethod.POST},headers = {"Accept"})
     @ResponseBody
     public APIResult GetProblemByPaperid(Integer paperid,String user,String pwd){
         if(!AccountUtil.isAdmin(user,pwd))

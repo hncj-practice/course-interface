@@ -115,4 +115,25 @@ public class TopicController {
             return APIResult.createNg("查询结果为空");
         }
     }
+
+
+    /**
+     * 按话题号查找话题
+     * @param topicid
+     * @return
+     */
+    @RequestMapping(path = "/gettopicbytopicid",method = {RequestMethod.POST,RequestMethod.GET},headers = {"Accept"})
+    @ResponseBody
+    public APIResult GetTopicByTopicid(Integer topicid){
+        //查询数据库
+        SqlSession session=util.MyBatis.getSession();
+        ITopicDao topicDao=session.getMapper(ITopicDao.class);
+        List<Topic> topics=topicDao.getTopicByTopicid(topicid);
+        session.close();
+        if(!topics.isEmpty()){
+            return APIResult.createOk("查询成功",topics);
+        }else{
+            return APIResult.createNg("查询结果为空");
+        }
+    }
 }

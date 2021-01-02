@@ -64,6 +64,7 @@ public class Statistic {
                 ", commentnum=" + commentnum +
                 ", finpapernum=" + finpapernum +
                 ", totalpapernum=" + totalpapernum +
+                ", average=" + average +
                 '}';
     }
 }

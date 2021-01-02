@@ -122,6 +122,7 @@
 <a href="teacher/getteacherbytno?tno=888888888">按教师号查找教师</a>
 <br>
 <a href="topic/gettopicbycid?courseid=1">按课程号查找话题</a>
+<a href="topic/gettopicbytopicid?topicid=4">按话题号查找话题</a>
 <a href="comment/getcommentbytopicid?topicid=1&page=1&num=2">按话题号查找评论</a>
 <a href="class/allclass?page=1&num=3">查询所有的班级信息</a>
 <a href="chapter/getchapterbycourseid?courseid=1">按课程号查找章节</a>
@@ -151,5 +152,12 @@
 <a href="paper/findscorebysnoandpaperid?studentid=888888888&paperid=1">某学生某次测试成绩</a>
 <a href="semester/allsemester">所有学期</a>
 <a href="grade/getfinalgrade?studentid=888888888&semesterid=1">查找期末成绩</a>
+<br>
+<a href="student/statistic?courseid=1">统计</a>
+<a href="topic/gettopicbytopicid?topicid=1">按话题号查找话题</a>
+
+<br>
+<a href="upload/upload">上传</a>
+<a href="upload/doUpload">上传</a>
 </body>
 </html>

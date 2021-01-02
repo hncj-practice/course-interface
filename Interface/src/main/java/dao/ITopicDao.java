@@ -14,7 +14,9 @@ public interface ITopicDao {
             @Result(column = "ht_bt",property = "topictitle"),
             @Result(column = "ht_nr",property = "topiccontent"),
             @Result(column = "ht_fbsj",property = "committime"),
-            @Result(column = "ht_zt",property = "topicstatus")
+            @Result(column = "ht_zt",property = "topicstatus"),
+            @Result(column = "js_xm",property = "name"),
+            @Result(column = "js_tx",property = "avatar")
     })
     @Select("select * from ht")
     List<Topic> findAll();
@@ -43,7 +45,16 @@ public interface ITopicDao {
     int delTopic(@Param("topicid") String topicid);
 
     //按课程号查找话题
-    @Select("select * from ht where kc_bh=#{courseid}")
+//    @Select("select * from ht where kc_bh=#{courseid}")
+    @Select("select ht.ht_bh,ht.kc_bh,ht_bt,ht_nr,ht_fbsj,ht_zt,js.js_xm,js.js_tx from ht,js,kc " +
+            "where ht.kc_bh=#{courseid} and kc.kc_bh=ht.kc_bh and js.js_gh=kc.js_gh ;")
     @ResultMap(value = {"topicMap"})
     List<Topic> getTopicByCid(@Param("courseid") Integer courseid);
+
+    //按话题号查找话题
+//    @Select("select * from ht where ht_bh=#{topicid}")
+    @Select("select ht.ht_bh,ht.kc_bh,ht_bt,ht_nr,ht_fbsj,ht_zt,js.js_xm,js.js_tx from ht,js,kc " +
+            "where ht.ht_bh=#{topicid} and kc.kc_bh=ht.kc_bh and js.js_gh=kc.js_gh ;")
+    @ResultMap(value = {"topicMap"})
+        List<Topic> getTopicByTopicid(@Param("topicid") Integer topicid);
 }
